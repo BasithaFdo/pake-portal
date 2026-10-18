@@ -1,4 +1,4 @@
-# PAKE Portal — Ubuntu Apache + PHP + MySQL
+# SkyLine Hub — Ubuntu Apache + PHP + MySQL
 
 ## Requirements
 Ubuntu, Apache 2.4, PHP 8.1+ with PDO MySQL and mbstring, MySQL 8+
