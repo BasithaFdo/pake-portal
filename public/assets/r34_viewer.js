@@ -9,14 +9,14 @@
 
   // Core Three.js variables
   let scene, camera, renderer, carGroup;
-  let wheelMeshes = [];
-  let steerableNodes = [];
+  let wheelNodes = [];
   let underglowLights = [];
   let headlightObjects = [];
   let taillightObjects = [];
   let groundGrid, roadGroup, speedLinesGroup;
   let nosParticles = [];
   let exhaustParticles = [];
+  let totalDistance = 0;
 
   // Animation & state flags
   let isDrivingMode = true; // true = Highway Drive, false = Showroom Turntable
@@ -189,7 +189,7 @@
   }
 
   function setupLighting() {
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
     scene.add(ambientLight);
 
     // Key Overhead Floodlight (Silver pearlescent reflection)
@@ -228,7 +228,26 @@
     roadMesh.receiveShadow = true;
     roadGroup.add(roadMesh);
 
-    // Moving Neon Center Road Lines (Double Yellow & Cyan Speed Lines)
+    // Contact shadow underneath car to ground it on asphalt
+    const shadowGeo = new THREE.PlaneGeometry(2.3, 4.8);
+    const shadowCanvas = document.createElement('canvas');
+    shadowCanvas.width = 128;
+    shadowCanvas.height = 256;
+    const sCtx = shadowCanvas.getContext('2d');
+    const sGrad = sCtx.createRadialGradient(64, 128, 15, 64, 128, 70);
+    sGrad.addColorStop(0, 'rgba(0, 0, 0, 0.88)');
+    sGrad.addColorStop(0.5, 'rgba(0, 0, 0, 0.45)');
+    sGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    sCtx.fillStyle = sGrad;
+    sCtx.fillRect(0, 0, 128, 256);
+    const shadowTex = new THREE.CanvasTexture(shadowCanvas);
+    const shadowMat = new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, opacity: 0.8 });
+    const shadowMesh = new THREE.Mesh(shadowGeo, shadowMat);
+    shadowMesh.rotation.x = -Math.PI / 2;
+    shadowMesh.position.set(0, 0.003, 0);
+    scene.add(shadowMesh);
+
+    // Moving Neon Center Road Lines (Cyan Speed Lines)
     const lineMatCyan = new THREE.MeshBasicMaterial({ color: 0x00f0ff });
     const lineMatWhite = new THREE.MeshBasicMaterial({ color: 0xf1f5f9 });
 
@@ -301,10 +320,10 @@
   }
 
   function initParticleEffects() {
-    // NOS Purge Mist Particles (shoot from hood vents)
-    const nosCount = 80;
+    // NOS Purge Mist Particles (shoot from hood cowl vents)
+    const nosCount = 60;
     for (let i = 0; i < nosCount; i++) {
-      const pGeo = new THREE.SphereGeometry(0.06, 6, 6);
+      const pGeo = new THREE.SphereGeometry(0.08, 8, 8);
       const pMat = new THREE.MeshBasicMaterial({
         color: 0xe0f7ff,
         transparent: true,
@@ -324,12 +343,12 @@
       });
     }
 
-    // Exhaust Boost Flames (shoot from rear exhaust tips)
-    const flameCount = 50;
+    // Exhaust Boost Flames (shoot from rear titanium exhaust tip)
+    const flameCount = 40;
     for (let i = 0; i < flameCount; i++) {
-      const fGeo = new THREE.SphereGeometry(0.08, 6, 6);
+      const fGeo = new THREE.SphereGeometry(0.07, 8, 8);
       const fMat = new THREE.MeshBasicMaterial({
-        color: 0x00bfff,
+        color: 0x00f0ff,
         transparent: true,
         opacity: 0,
         blending: THREE.AdditiveBlending
@@ -386,9 +405,14 @@
         carGroup.add(model);
         scene.add(carGroup);
 
-        // Scan model nodes for wheels, lights, and materials
-        wheelMeshes = [];
-        steerableNodes = [];
+        // Identify ONLY the 4 exact root wheel parent nodes (so sub-meshes are never detached)
+        wheelNodes = [];
+        const EXACT_WHEEL_NAMES = [
+          '3DWheel Front L',
+          '3DWheel Front R',
+          '3DWheel Rear L',
+          '3DWheel Rear R'
+        ];
 
         model.traverse((child) => {
           if (child.isMesh) {
@@ -398,21 +422,23 @@
             // Enhance Brian's platinum silver & blue stripes paint
             if (child.material) {
               child.material.roughness = 0.22;
-              child.material.metalness = 0.85;
+              child.material.metalness = 0.82;
               if (child.material.map) {
                 child.material.map.anisotropy = 16;
               }
             }
           }
 
-          const nodeName = child.name || '';
-
-          // Identify 4 Rigged Wheels
-          if (nodeName.includes('3DWheel') || (nodeName.toLowerCase().includes('wheel') && !nodeName.includes('Caliper'))) {
-            wheelMeshes.push(child);
-            if (nodeName.includes('Front')) {
-              steerableNodes.push(child);
-            }
+          if (EXACT_WHEEL_NAMES.includes(child.name)) {
+            // Save initial local socket position and quaternion
+            wheelNodes.push({
+              node: child,
+              name: child.name,
+              initialPos: child.position.clone(),
+              initialQuat: child.quaternion.clone(),
+              isRight: child.name.includes(' R'),
+              isFront: child.name.includes('Front')
+            });
           }
         });
 
@@ -454,14 +480,14 @@
   function buildUnderglowLights() {
     underglowLights = [];
     const positions = [
-      { x: -0.85, y: 0.1, z: 0 },   // Left side tube
-      { x: 0.85, y: 0.1, z: 0 },    // Right side tube
-      { x: 0, y: 0.1, z: 1.8 },     // Front lip glow
-      { x: 0, y: 0.1, z: -1.8 }     // Rear diffuser glow
+      { x: -0.85, y: 0.18, z: 0 },   // Left side tube
+      { x: 0.85, y: 0.18, z: 0 },    // Right side tube
+      { x: 0, y: 0.18, z: 1.5 },     // Front lip glow
+      { x: 0, y: 0.18, z: -1.5 }     // Rear diffuser glow
     ];
 
     positions.forEach((pos) => {
-      const neonLight = new THREE.PointLight(0x00f0ff, 4.0, 3.5);
+      const neonLight = new THREE.PointLight(0x00f0ff, 2.8, 3.2, 1.8);
       neonLight.position.set(pos.x, pos.y, pos.z);
       carGroup.add(neonLight);
       underglowLights.push(neonLight);
@@ -497,8 +523,8 @@
     const views = {
       chase: { x: 0, y: 1.8, z: -6.2, lookY: 0.7, lookZ: 2.0 },
       orbit: { x: 5.2, y: 2.0, z: 5.2, lookY: 0.5, lookZ: 0 },
-      hood: { x: 0, y: 1.2, z: 0.6, lookY: 0.8, lookZ: 8 },
-      low: { x: -3.2, y: 0.4, z: 2.5, lookY: 0.3, lookZ: 0 }
+      hood: { x: 0, y: 1.15, z: 0.5, lookY: 0.75, lookZ: 8 },
+      low: { x: -3.2, y: 0.45, z: 2.5, lookY: 0.35, lookZ: 0 }
     };
 
     const v = views[viewName] || views.chase;
@@ -628,7 +654,7 @@
       btnNeon.addEventListener('click', () => {
         underglowOn = !underglowOn;
         underglowLights.forEach((l) => {
-          l.intensity = underglowOn ? 4.0 : 0;
+          l.intensity = underglowOn ? 2.8 : 0;
         });
         btnNeon.classList.toggle('active', underglowOn);
       });
@@ -674,26 +700,28 @@
     isNosActive = true;
     playNosSound();
 
-    // Spurt NOS Mist Particles from Hood
-    nosParticles.forEach((p, idx) => {
+    // Spurt NOS Mist Particles from Base of Hood (Cowl Vent Nozzles)
+    nosParticles.forEach((p) => {
       p.mesh.visible = true;
-      p.mesh.position.set(p.side * 0.45, 0.95, 1.4);
-      p.vx = p.side * (Math.random() * 0.15 + 0.1);
-      p.vy = Math.random() * 0.2 + 0.15;
-      p.vz = (Math.random() - 0.5) * 0.05;
-      p.life = 1.0;
-      p.mesh.material.opacity = 0.9;
+      p.mesh.scale.set(0.12, 0.12, 0.12);
+      p.mesh.position.set(p.side * 0.35, 0.68, 0.85);
+      p.vx = p.side * (Math.random() * 0.4 + 0.3);
+      p.vy = Math.random() * 0.6 + 0.4;
+      p.vz = (Math.random() - 0.5) * 0.1 + 0.15;
+      p.life = 0.9;
+      p.mesh.material.opacity = 0.65;
     });
 
-    // Spurt Exhaust Flame Particles
+    // Spurt Exhaust Flame Particles from Rear Titanium Tip
     exhaustParticles.forEach((f) => {
       f.mesh.visible = true;
-      f.mesh.position.set(-0.62 + (Math.random() - 0.5) * 0.1, 0.25, -2.4);
+      f.mesh.scale.set(0.15, 0.15, 0.15);
+      f.mesh.position.set(-0.68 + (Math.random() - 0.5) * 0.06, 0.22, -2.28);
       f.vx = (Math.random() - 0.5) * 0.05;
       f.vy = (Math.random() - 0.5) * 0.04;
-      f.vz = -(Math.random() * 0.35 + 0.25);
+      f.vz = -(Math.random() * 0.8 + 0.8);
       f.life = 1.0;
-      f.mesh.material.opacity = 1.0;
+      f.mesh.material.opacity = 0.9;
     });
 
     // Speed lines visible
@@ -711,7 +739,7 @@
 
     // Neon flash
     underglowLights.forEach((l) => {
-      l.intensity = 8.0;
+      l.intensity = 5.5;
       l.color.setHex(0x00ffff);
     });
 
@@ -721,7 +749,7 @@
       targetRpm = 6800;
       if (speedLinesGroup) speedLinesGroup.visible = false;
       underglowLights.forEach((l) => {
-        l.intensity = underglowOn ? 4.0 : 0;
+        l.intensity = underglowOn ? 2.8 : 0;
         l.color.setHex(0x00f0ff);
       });
       if (revText) {
@@ -770,23 +798,33 @@
         roadGroup.position.z = roadOffset;
       }
 
-      // Roll all wheels realistically
-      const wheelRollDelta = (roadSpeed * dt) / 0.35; // v = w * r
-      wheelMeshes.forEach((w) => {
-        w.rotation.x += wheelRollDelta;
-      });
+      // Roll all wheels realistically inside their wheel wells
+      totalDistance += roadSpeed * dt;
+      const rollAngle = totalDistance / 0.35; // v = w * r
 
-      // Steer front wheels
-      steerableNodes.forEach((sn) => {
-        sn.rotation.y = steerAngle;
+      wheelNodes.forEach((w) => {
+        // LOCK POSITION INSIDE THE WHEEL WELL SOCKET (PREVENTS MIGRATION TO ROOF)
+        w.node.position.copy(w.initialPos);
+
+        // Roll around wheel's local axle (X axis)
+        const rollAxis = new THREE.Vector3(w.isRight ? -1 : 1, 0, 0);
+        const rollQuat = new THREE.Quaternion().setFromAxisAngle(rollAxis, rollAngle);
+
+        if (w.isFront) {
+          const steerAxis = new THREE.Vector3(0, 1, 0);
+          const steerQuat = new THREE.Quaternion().setFromAxisAngle(steerAxis, steerAngle);
+          w.node.quaternion.copy(w.initialQuat).multiply(steerQuat).multiply(rollQuat);
+        } else {
+          w.node.quaternion.copy(w.initialQuat).multiply(rollQuat);
+        }
       });
 
       // Subtle suspension micro-bounce and chassis sway
       if (carGroup) {
-        carGroup.position.y = Math.sin(now * 0.015) * 0.008 + (isNosActive ? Math.random() * 0.02 - 0.01 : 0);
-        carGroup.rotation.z = -steerAngle * 0.08; // Lean into corners
-        carGroup.rotation.x = isNosActive ? -0.025 : 0; // Squat on acceleration
-        carGroup.position.x = steerAngle * 1.5;
+        carGroup.position.y = Math.sin(now * 0.015) * 0.005 + (isNosActive ? Math.random() * 0.012 - 0.006 : 0);
+        carGroup.rotation.z = -steerAngle * 0.06; // Lean into corners
+        carGroup.rotation.x = isNosActive ? -0.015 : 0; // Squat on acceleration
+        carGroup.position.x = steerAngle * 1.2;
       }
     } else {
       // Showroom Turntable Mode: Auto-rotate car
@@ -796,8 +834,9 @@
         carGroup.rotation.z = 0;
         carGroup.rotation.x = 0;
       }
-      wheelMeshes.forEach((w) => {
-        w.rotation.x += 0.008;
+      wheelNodes.forEach((w) => {
+        w.node.position.copy(w.initialPos);
+        w.node.quaternion.copy(w.initialQuat);
       });
     }
 
@@ -805,17 +844,17 @@
     if (isNosActive) {
       nosParticles.forEach((p) => {
         if (p.mesh.visible) {
-          p.mesh.position.x += p.vx * dt * 8;
-          p.mesh.position.y += p.vy * dt * 8;
-          p.mesh.position.z += p.vz * dt * 8;
-          p.life -= dt * 1.4;
-          p.mesh.material.opacity = Math.max(0, p.life);
-          p.mesh.scale.multiplyScalar(1.05);
+          p.mesh.position.x += p.vx * dt * 4;
+          p.mesh.position.y += p.vy * dt * 4;
+          p.mesh.position.z += p.vz * dt * 4;
+          p.life -= dt * 1.5;
+          p.mesh.material.opacity = Math.max(0, p.life * 0.65);
+          p.mesh.scale.multiplyScalar(1.04);
 
           if (p.life <= 0) {
-            p.mesh.position.set(p.side * 0.45, 0.95, 1.4);
-            p.life = 0.8;
-            p.mesh.scale.set(1, 1, 1);
+            p.mesh.position.set(p.side * 0.35, 0.68, 0.85);
+            p.mesh.scale.set(0.12, 0.12, 0.12);
+            p.life = 0.85;
           }
         }
       });
@@ -823,14 +862,16 @@
       // Animate Exhaust Flame Particles
       exhaustParticles.forEach((f) => {
         if (f.mesh.visible) {
-          f.mesh.position.x += f.vx * dt * 10;
-          f.mesh.position.y += f.vy * dt * 10;
-          f.mesh.position.z += f.vz * dt * 15;
-          f.life -= dt * 3.5;
+          f.mesh.position.x += f.vx * dt * 6;
+          f.mesh.position.y += f.vy * dt * 6;
+          f.mesh.position.z += f.vz * dt * 8;
+          f.life -= dt * 4.0;
           f.mesh.material.opacity = Math.max(0, f.life);
+          f.mesh.scale.multiplyScalar(1.03);
 
           if (f.life <= 0) {
-            f.mesh.position.set(-0.62 + (Math.random() - 0.5) * 0.08, 0.25, -2.4);
+            f.mesh.position.set(-0.68 + (Math.random() - 0.5) * 0.06, 0.22, -2.28);
+            f.mesh.scale.set(0.15, 0.15, 0.15);
             f.life = 1.0;
           }
         }
@@ -843,16 +884,16 @@
       camera.position.x = distance * Math.sin(orbitAngleY) * Math.cos(orbitAngleX);
       camera.position.y = Math.max(0.5, distance * Math.sin(orbitAngleX));
       camera.position.z = distance * Math.cos(orbitAngleY) * Math.cos(orbitAngleX);
-      camera.lookAt(0, 0.6, 0);
+      camera.lookAt(0, 0.55, 0);
     } else {
       camera.position.lerp(targetCamPos, 0.08);
       camLookAt.lerp(targetCamLook, 0.08);
       camera.lookAt(camLookAt);
 
-      // Camera shake during NOS
+      // Subtle camera shake during NOS
       if (isNosActive) {
-        camera.position.x += (Math.random() - 0.5) * 0.04;
-        camera.position.y += (Math.random() - 0.5) * 0.04;
+        camera.position.x += (Math.random() - 0.5) * 0.03;
+        camera.position.y += (Math.random() - 0.5) * 0.03;
       }
     }
 
