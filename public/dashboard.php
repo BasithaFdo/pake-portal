@@ -1,0 +1,6 @@
+<?php
+require __DIR__.'/bootstrap.php';
+if(!isset($_SESSION['user_id'])) redirect('/login.php');
+$stmt=$pdo->prepare('SELECT name,email,created_at FROM users WHERE id=? LIMIT 1');$stmt->execute([$_SESSION['user_id']]);$user=$stmt->fetch();
+if(!$user){session_unset();session_destroy();redirect('/login.php');}
+?><!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Dashboard | PAKE Portal</title><link rel="stylesheet" href="/assets/style.css"></head><body><nav class="nav"><a class="logo" href="/">PAKE<span> PORTAL</span></a><div class="links"><a href="/">Home</a><form action="/logout.php" method="post" class="inline"><input type="hidden" name="csrf" value="<?= h(csrf()) ?>"><button class="ghost">Logout</button></form></div></nav><main class="dashboard"><div class="eyebrow">YOUR WORKSPACE</div><h1>Hello, <?= h($user['name']) ?> <span>👋</span></h1><p class="muted">You are signed in successfully.</p><section class="panel"><h2>Your account</h2><p><b>Name:</b> <?= h($user['name']) ?></p><p><b>Email:</b> <?= h($user['email']) ?></p><p><b>Member since:</b> <?= h($user['created_at']) ?></p></section><p class="muted">Starter dashboard — add your own modules and features here.</p></main></body></html>
