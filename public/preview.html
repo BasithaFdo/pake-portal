@@ -630,7 +630,7 @@
         userLabel.textContent = 'Admin (Logged In)';
         userLabel.style.color = '#34d399';
         navLinks.innerHTML = `
-          <a class="btn small" href="dashboard.php">Dashboard (Admin)</a>
+          <a class="btn small" href="dashboard_preview.html">Dashboard (Admin)</a>
           <button class="ghost" onclick="toggleBtn.click()">Logout</button>
         `;
         primaryCta.innerHTML = `
@@ -638,12 +638,12 @@
             <path d="M5 12h14"></path>
             <path d="m12 5 7 7-7 7"></path>
           </svg>
-          Open Your Dashboard
+          Open Your Cloud Drive
         `;
-        primaryCta.href = 'dashboard.php';
+        primaryCta.href = 'dashboard_preview.html';
         secondaryCta.style.display = 'none';
-        bottomCta.textContent = 'Go to Dashboard →';
-        bottomCta.href = 'dashboard.php';
+        bottomCta.textContent = 'Go to Cloud Drive →';
+        bottomCta.href = 'dashboard_preview.html';
       } else {
         userLabel.textContent = 'Guest';
         userLabel.style.color = '#38bdf8';
