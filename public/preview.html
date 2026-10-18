@@ -75,6 +75,7 @@
       </a>
 
       <ul class="nav-menu">
+        <li><a href="#r34-showcase">Skyline 3D</a></li>
         <li><a href="#features">Features</a></li>
         <li><a href="#architecture">Architecture</a></li>
         <li><a href="#security">Security</a></li>
@@ -179,6 +180,90 @@
                   <span>PHP Engine: v8.1+</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nissan Skyline GT-R R34 3D Interactive Showcase -->
+    <section id="r34-showcase" class="container r34-showcase-container">
+      <div class="r34-showcase-box">
+        <!-- Header Bar -->
+        <div class="r34-header-bar">
+          <div class="r34-badge-title">
+            <span class="gtr-badge">GT-R</span>
+            <span class="r34-title-text">
+              Nissan Skyline GT-R V-Spec II <span style="color:#64748b;font-weight:400;font-size:13px">(BNR34)</span>
+            </span>
+          </div>
+          <div class="r34-specs-ticker">
+            <span><span class="pulse-dot" style="width:6px;height:6px"></span> TWIN TURBO RB26DETT</span>
+            <span>•</span>
+            <span>ATTESA E-TS AWD</span>
+            <span>•</span>
+            <span id="r34RevStatus" style="color:#38bdf8">⚡ IDLE: 950 RPM • READY</span>
+          </div>
+        </div>
+
+        <!-- 3D Canvas Area -->
+        <div class="r34-canvas-wrapper" id="r34CanvasWrapper">
+          <div class="tech-corner top-left"></div>
+          <div class="tech-corner top-right"></div>
+          <div class="tech-corner bottom-left"></div>
+          <div class="tech-corner bottom-right"></div>
+
+          <!-- Telemetry HUD Overlay -->
+          <div class="r34-hud-telemetry">
+            <div><span class="cyan">CHASSIS:</span> BNR34 V-SPEC II</div>
+            <div><span class="cyan">AERO:</span> Carbon Lip + High GT Wing</div>
+            <div><span class="cyan">WHEELS:</span> NISMO LMGT4 18"</div>
+            <div><span class="green">INTERACT:</span> Drag to Orbit • Scroll to Zoom</div>
+          </div>
+
+          <!-- 3D WebGL Canvas Container -->
+          <div id="r34-3d-canvas"></div>
+
+          <!-- Cockpit Controls Bar -->
+          <div class="r34-controls-bar">
+            <!-- Color Customizer -->
+            <div class="r34-color-palette">
+              <span class="r34-color-label">Color:</span>
+              <button class="r34-color-swatch active" data-color="baysideBlue" style="background:#0044cc" title="Bayside Blue"></button>
+              <button class="r34-color-swatch" data-color="midnightPurple" style="background:#3d1a54" title="Midnight Purple III"></button>
+              <button class="r34-color-swatch" data-color="millenniumJade" style="background:#6e7f72" title="Millennium Jade"></button>
+              <button class="r34-color-swatch" data-color="kuroBlack" style="background:#11161f" title="Kuro Black"></button>
+              <button class="r34-color-swatch" data-color="activeRed" style="background:#bb1122" title="Active Red"></button>
+              <button class="r34-color-swatch" data-color="nismoWhite" style="background:#f0f3f6" title="NISMO White"></button>
+            </div>
+
+            <!-- Action Toggles -->
+            <div class="r34-action-buttons">
+              <button class="r34-toggle-btn active" id="btnR34Lights" title="Toggle Xenon Headlights & Halo Taillights">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                Lights
+              </button>
+
+              <button class="r34-toggle-btn active" id="btnR34Neon" title="Toggle Underglow Neon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"></path></svg>
+                Underglow
+              </button>
+
+              <button class="r34-toggle-btn active" id="btnR34Turntable" title="Toggle 360° Turntable Rotation">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                Turntable
+              </button>
+
+              <button class="r34-rev-btn" id="btnR34Rev" title="Rev Engine & Boost">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                Rev & Boost
+              </button>
+
+              <label class="r34-toggle-btn" style="cursor:pointer;" title="Load your custom .glb 3D model">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                Import .GLB
+                <input type="file" id="r34GlbInput" accept=".glb,.gltf" style="display:none">
+              </label>
             </div>
           </div>
         </div>
@@ -612,6 +697,9 @@
   </footer>
 
   <!-- Interactive Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="assets/r34_viewer.js"></script>
   <script src="assets/landing.js"></script>
 
   <!-- Static Preview Auth State Simulator -->
