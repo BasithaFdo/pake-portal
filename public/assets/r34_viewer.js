@@ -1,55 +1,158 @@
 /**
- * SkyLine Hub - Nissan Skyline GT-R R34 3D Interactive WebGL Engine
- * Built with Three.js (Procedural BNR34 Architecture + Custom GLTF Loader support)
+ * SkyLine Hub - Brian's Nissan Skyline GT-R R34 (2 Fast 2 Furious)
+ * Full Interactive WebGL 3D Animation Engine
+ * Built with Three.js & GLTFLoader
  */
 
 (function () {
   'use strict';
 
-  let scene, camera, renderer, carGroup, wheels = [];
-  let isOrbiting = true;
+  // Core Three.js variables
+  let scene, camera, renderer, carGroup;
+  let wheelMeshes = [];
+  let steerableNodes = [];
+  let underglowLights = [];
+  let headlightObjects = [];
+  let taillightObjects = [];
+  let groundGrid, roadGroup, speedLinesGroup;
+  let nosParticles = [];
+  let exhaustParticles = [];
+
+  // Animation & state flags
+  let isDrivingMode = true; // true = Highway Drive, false = Showroom Turntable
+  let isOrbiting = false;
   let headlightsOn = true;
   let underglowOn = true;
-  let underglowColor = 0x00f0ff; // Neon cyan
-  let carColor = 0x0044cc; // Iconic Bayside Blue
-  let carMaterials = [];
-  let lightMaterials = [];
-  let underglowLights = [];
-  let exhaustParticles = [];
-  let isRevving = false;
-  let container;
+  let soundEnabled = true;
+  let isNosActive = false;
+  let currentSpeed = 128; // MPH
+  let targetSpeed = 128;
+  let currentRpm = 6800;
+  let targetRpm = 6800;
+  let steerAngle = 0;
+  let currentCameraView = 'chase'; // 'orbit', 'chase', 'hood', 'low'
 
-  // Color Presets for Nissan Skyline GT-R R34
-  const COLOR_PRESETS = {
-    baysideBlue: 0x0044cc,
-    midnightPurple: 0x3d1a54,
-    millenniumJade: 0x6e7f72,
-    kuroBlack: 0x11161f,
-    activeRed: 0xbb1122,
-    nismoWhite: 0xf0f3f6,
-    sonicSilver: 0x8a939e
-  };
+  // Model URL resolver (works across file://, local dev, and Apache production)
+  const MODEL_URL = (function () {
+    if (window.location.protocol === 'file:' || !window.location.pathname.startsWith('/')) {
+      return 'assets/models/brians_r34_from_2_fast_2_furious.glb';
+    }
+    return '/assets/models/brians_r34_from_2_fast_2_furious.glb';
+  })();
+
+  // Audio Context for Procedural Turbo, BOV & NOS Sound Synthesis
+  let audioCtx = null;
+
+  function initAudio() {
+    if (!audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) {
+        audioCtx = new AudioContext();
+      }
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  }
+
+  // Synthesize turbo blow-off valve flutter (Stututu) and NOS hiss
+  function playNosSound() {
+    if (!soundEnabled) return;
+    initAudio();
+    if (!audioCtx) return;
+
+    try {
+      const now = audioCtx.currentTime;
+
+      // 1. High-pressure NOS Purge Hiss (White noise burst)
+      const bufferSize = audioCtx.sampleRate * 1.4;
+      const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      const whiteNoise = audioCtx.createBufferSource();
+      whiteNoise.buffer = noiseBuffer;
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(2400, now);
+      filter.Q.setValueAtTime(3.0, now);
+
+      const noiseGain = audioCtx.createGain();
+      noiseGain.gain.setValueAtTime(0.01, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.35, now + 0.1);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+
+      whiteNoise.connect(filter);
+      filter.connect(noiseGain);
+      noiseGain.connect(audioCtx.destination);
+      whiteNoise.start(now);
+
+      // 2. Twin-Turbo Spool Whine (High frequency sine sweep)
+      const osc = audioCtx.createOscillator();
+      const oscGain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(450, now);
+      osc.frequency.exponentialRampToValueAtTime(2200, now + 0.9);
+
+      oscGain.gain.setValueAtTime(0.01, now);
+      oscGain.gain.linearRampToValueAtTime(0.12, now + 0.5);
+      oscGain.gain.exponentialRampToValueAtTime(0.001, now + 1.1);
+
+      osc.connect(oscGain);
+      oscGain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 1.2);
+
+      // 3. Blow-Off Valve Compressor Surge (Stututu flutter after purge)
+      setTimeout(() => {
+        if (!audioCtx) return;
+        const flutterTime = audioCtx.currentTime;
+        for (let i = 0; i < 4; i++) {
+          const chirp = audioCtx.createOscillator();
+          const chirpGain = audioCtx.createGain();
+          chirp.type = 'triangle';
+          const t = flutterTime + i * 0.08;
+          chirp.frequency.setValueAtTime(1400 - i * 150, t);
+          chirp.frequency.exponentialRampToValueAtTime(700 - i * 100, t + 0.06);
+
+          chirpGain.gain.setValueAtTime(0.18 / (i + 1), t);
+          chirpGain.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+
+          chirp.connect(chirpGain);
+          chirpGain.connect(audioCtx.destination);
+          chirp.start(t);
+          chirp.stop(t + 0.07);
+        }
+      }, 700);
+    } catch (e) {
+      console.warn('Audio synthesis error:', e);
+    }
+  }
+
+  let container;
 
   function initR34Viewer() {
     container = document.getElementById('r34-3d-canvas');
     if (!container) return;
 
     if (typeof THREE === 'undefined') {
-      console.warn('Three.js not yet loaded, waiting...');
       setTimeout(initR34Viewer, 200);
       return;
     }
 
     const width = container.clientWidth || 800;
-    const height = container.clientHeight || 500;
+    const height = container.clientHeight || 520;
 
     // 1. Scene Setup
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x070b14, 0.035);
+    scene.fog = new THREE.FogExp2(0x060a14, 0.028);
 
     // 2. Camera Setup
-    camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
-    camera.position.set(5.5, 2.2, 5.5);
+    camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 150);
+    setCameraView('chase');
 
     // 3. Renderer Setup
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
@@ -58,418 +161,374 @@
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 1.25;
     container.innerHTML = '';
     container.appendChild(renderer.domElement);
 
-    // 4. Lighting Setup
+    // 4. Lighting & Environment
     setupLighting();
 
-    // 5. Build Showroom Floor
-    buildShowroomFloor();
+    // 5. Dynamic Highway & Cyber Road
+    buildDynamicRoad();
 
-    // 6. Build Nissan Skyline GT-R R34
-    buildSkylineR34();
+    // 6. NOS & Exhaust Particle Systems
+    initParticleEffects();
 
-    // 7. Setup Mouse & Touch Controls
+    // 7. Load Brian's Nissan Skyline GT-R R34 Model
+    loadBriansR34();
+
+    // 8. Setup Controls & Interactivity
     setupControls();
-
-    // 8. Setup UI Listeners
     setupUIControls();
 
     // 9. Resize Listener
     window.addEventListener('resize', onWindowResize);
 
-    // 10. Animation Loop
+    // 10. Start Animation Loop
     animate();
   }
 
   function setupLighting() {
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
     scene.add(ambientLight);
 
-    // Key Light (overhead showroom flood)
-    const overheadLight = new THREE.DirectionalLight(0xffffff, 1.4);
-    overheadLight.position.set(5, 8, 4);
-    overheadLight.castShadow = true;
-    overheadLight.shadow.mapSize.width = 1024;
-    overheadLight.shadow.mapSize.height = 1024;
-    overheadLight.shadow.bias = -0.0005;
-    scene.add(overheadLight);
+    // Key Overhead Floodlight (Silver pearlescent reflection)
+    const overhead = new THREE.DirectionalLight(0xffffff, 1.8);
+    overhead.position.set(6, 12, 6);
+    overhead.castShadow = true;
+    overhead.shadow.mapSize.width = 2048;
+    overhead.shadow.mapSize.height = 2048;
+    overhead.shadow.bias = -0.0004;
+    scene.add(overhead);
 
-    // Fill Light (electric blue rim light)
-    const rimLight = new THREE.DirectionalLight(0x38bdf8, 1.2);
-    rimLight.position.set(-6, 3, -4);
-    scene.add(rimLight);
+    // Electric Blue Rim Light (Iconic 2F2F Blue theme)
+    const blueRim = new THREE.DirectionalLight(0x00d4ff, 2.2);
+    blueRim.position.set(-8, 4, -6);
+    scene.add(blueRim);
 
-    // Rear Specular Light (violet halo)
-    const rearLight = new THREE.DirectionalLight(0xa855f7, 0.9);
-    rearLight.position.set(0, 4, -6);
-    scene.add(rearLight);
+    // Front Warm Streetlamp Glare
+    const frontWarm = new THREE.DirectionalLight(0x93c5fd, 1.2);
+    frontWarm.position.set(0, 5, 10);
+    scene.add(frontWarm);
   }
 
-  function buildShowroomFloor() {
-    // Reflective Turntable Disc
-    const discGeo = new THREE.CylinderGeometry(4.2, 4.2, 0.08, 64);
-    const discMat = new THREE.MeshStandardMaterial({
-      color: 0x0b1324,
+  function buildDynamicRoad() {
+    roadGroup = new THREE.Group();
+
+    // Infinite Asphalt Floor
+    const roadGeo = new THREE.PlaneGeometry(24, 180, 1, 32);
+    const roadMat = new THREE.MeshStandardMaterial({
+      color: 0x070b14,
       metalness: 0.85,
-      roughness: 0.25
+      roughness: 0.35
     });
-    const turntable = new THREE.Mesh(discGeo, discMat);
-    turntable.position.y = -0.04;
-    turntable.receiveShadow = true;
-    scene.add(turntable);
+    const roadMesh = new THREE.Mesh(roadGeo, roadMat);
+    roadMesh.rotation.x = -Math.PI / 2;
+    roadMesh.position.y = -0.02;
+    roadMesh.receiveShadow = true;
+    roadGroup.add(roadMesh);
 
-    // Neon Rim on Turntable
-    const ringGeo = new THREE.RingGeometry(4.18, 4.25, 64);
-    const ringMat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
-      side: THREE.DoubleSide
-    });
-    const ring = new THREE.Mesh(ringGeo, ringMat);
-    ring.rotation.x = -Math.PI / 2;
-    ring.position.y = 0.005;
-    scene.add(ring);
+    // Moving Neon Center Road Lines (Double Yellow & Cyan Speed Lines)
+    const lineMatCyan = new THREE.MeshBasicMaterial({ color: 0x00f0ff });
+    const lineMatWhite = new THREE.MeshBasicMaterial({ color: 0xf1f5f9 });
 
-    // Cyber Grid Floor
-    const grid = new THREE.GridHelper(30, 30, 0x1e3a8a, 0x0f172a);
-    grid.position.y = -0.05;
-    scene.add(grid);
-  }
-
-  function buildSkylineR34() {
-    carGroup = new THREE.Group();
-    wheels = [];
-    carMaterials = [];
-    lightMaterials = [];
-
-    // Metallic Car Paint Material (Bayside Blue)
-    const bodyMaterial = new THREE.MeshPhysicalMaterial({
-      color: carColor,
-      metalness: 0.75,
-      roughness: 0.18,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.1,
-      reflectivity: 0.9
-    });
-    carMaterials.push(bodyMaterial);
-
-    const darkTrimMaterial = new THREE.MeshStandardMaterial({
-      color: 0x111620,
-      metalness: 0.9,
-      roughness: 0.4
-    });
-
-    const carbonMaterial = new THREE.MeshStandardMaterial({
-      color: 0x181818,
-      metalness: 0.5,
-      roughness: 0.6
-    });
-
-    const glassMaterial = new THREE.MeshPhysicalMaterial({
-      color: 0x0a101d,
-      transmission: 0.8,
-      opacity: 0.85,
-      transparent: true,
-      roughness: 0.05,
-      ior: 1.5
-    });
-
-    const chromeMaterial = new THREE.MeshStandardMaterial({
-      color: 0xf1f5f9,
-      metalness: 0.98,
-      roughness: 0.1
-    });
-
-    // 1. MAIN CHASSIS & LOWER BODY
-    const lowerBodyGeo = new THREE.BoxGeometry(1.85, 0.42, 4.4);
-    const lowerBody = new THREE.Mesh(lowerBodyGeo, bodyMaterial);
-    lowerBody.position.set(0, 0.45, 0);
-    lowerBody.castShadow = true;
-    carGroup.add(lowerBody);
-
-    // Front Bumper with R34 Aero Splitter
-    const frontBumperGeo = new THREE.BoxGeometry(1.86, 0.32, 0.55);
-    const frontBumper = new THREE.Mesh(frontBumperGeo, bodyMaterial);
-    frontBumper.position.set(0, 0.36, 2.3);
-    frontBumper.castShadow = true;
-    carGroup.add(frontBumper);
-
-    // Front Intercooler Grille
-    const icGeo = new THREE.BoxGeometry(1.1, 0.22, 0.08);
-    const icMat = new THREE.MeshStandardMaterial({ color: 0xcccccc, metalness: 0.9, roughness: 0.3 });
-    const intercooler = new THREE.Mesh(icGeo, icMat);
-    intercooler.position.set(0, 0.32, 2.58);
-    carGroup.add(intercooler);
-
-    // Front Carbon Lip Splitter
-    const splitterGeo = new THREE.BoxGeometry(1.92, 0.05, 0.5);
-    const splitter = new THREE.Mesh(splitterGeo, carbonMaterial);
-    splitter.position.set(0, 0.2, 2.35);
-    carGroup.add(splitter);
-
-    // 2. MUSCULAR R34 WIDEBODY HOOD & FENDERS
-    const hoodGeo = new THREE.BoxGeometry(1.78, 0.15, 1.55);
-    const hood = new THREE.Mesh(hoodGeo, bodyMaterial);
-    hood.position.set(0, 0.65, 1.35);
-    hood.rotation.x = -0.04;
-    hood.castShadow = true;
-    carGroup.add(hood);
-
-    // R34 NACA Hood Duct
-    const nacaGeo = new THREE.ConeGeometry(0.08, 0.2, 3);
-    const naca = new THREE.Mesh(nacaGeo, darkTrimMaterial);
-    naca.rotation.x = Math.PI / 2;
-    naca.position.set(-0.35, 0.73, 1.45);
-    carGroup.add(naca);
-
-    // Flared Widebody Wheel Arches (Front & Rear)
-    [-0.95, 0.95].forEach((sideX) => {
-      // Front flare
-      const fArchGeo = new THREE.BoxGeometry(0.12, 0.35, 0.95);
-      const fArch = new THREE.Mesh(fArchGeo, bodyMaterial);
-      fArch.position.set(sideX, 0.5, 1.35);
-      carGroup.add(fArch);
-
-      // Rear flare (signature muscular GT-R hips)
-      const rArchGeo = new THREE.BoxGeometry(0.14, 0.4, 1.05);
-      const rArch = new THREE.Mesh(rArchGeo, bodyMaterial);
-      rArch.position.set(sideX, 0.55, -1.25);
-      carGroup.add(rArch);
-
-      // Side Skirt Aero Extension
-      const skirtGeo = new THREE.BoxGeometry(0.08, 0.1, 2.2);
-      const skirt = new THREE.Mesh(skirtGeo, carbonMaterial);
-      skirt.position.set(sideX * 1.02, 0.25, 0);
-      carGroup.add(skirt);
-    });
-
-    // 3. CABIN & GREENHOUSE (TINTED GLASS & PILLARS)
-    const cabinGeo = new THREE.BoxGeometry(1.55, 0.55, 2.1);
-    const cabin = new THREE.Mesh(cabinGeo, glassMaterial);
-    cabin.position.set(0, 0.92, -0.15);
-    cabin.castShadow = true;
-    carGroup.add(cabin);
-
-    // Roof Panel
-    const roofGeo = new THREE.BoxGeometry(1.48, 0.06, 1.6);
-    const roof = new THREE.Mesh(roofGeo, bodyMaterial);
-    roof.position.set(0, 1.21, -0.2);
-    roof.castShadow = true;
-    carGroup.add(roof);
-
-    // 4. REAR TRUNK & BUMPER
-    const trunkGeo = new THREE.BoxGeometry(1.78, 0.35, 0.95);
-    const trunk = new THREE.Mesh(trunkGeo, bodyMaterial);
-    trunk.position.set(0, 0.65, -1.75);
-    trunk.castShadow = true;
-    carGroup.add(trunk);
-
-    const rearBumperGeo = new THREE.BoxGeometry(1.85, 0.38, 0.45);
-    const rearBumper = new THREE.Mesh(rearBumperGeo, bodyMaterial);
-    rearBumper.position.set(0, 0.42, -2.25);
-    rearBumper.castShadow = true;
-    carGroup.add(rearBumper);
-
-    // Rear Carbon Diffuser
-    const diffuserGeo = new THREE.BoxGeometry(1.65, 0.12, 0.35);
-    const diffuser = new THREE.Mesh(diffuserGeo, carbonMaterial);
-    diffuser.position.set(0, 0.22, -2.35);
-    carGroup.add(diffuser);
-
-    // Titanium Exhaust Tips with Blued Finish
-    [-0.65, -0.5].forEach((exX) => {
-      const exhaustGeo = new THREE.CylinderGeometry(0.06, 0.06, 0.35, 16);
-      const exhaustMat = new THREE.MeshStandardMaterial({
-        color: 0x3b82f6,
-        metalness: 0.95,
-        roughness: 0.15
-      });
-      const exhaust = new THREE.Mesh(exhaustGeo, exhaustMat);
-      exhaust.rotation.x = Math.PI / 2;
-      exhaust.position.set(exX, 0.22, -2.48);
-      carGroup.add(exhaust);
-    });
-
-    // 5. ICONIC NISSAN SKYLINE R34 GT-R REAR WING / SPOILER
-    [-0.65, 0.65].forEach((uprightX) => {
-      const uprightGeo = new THREE.BoxGeometry(0.05, 0.38, 0.22);
-      const upright = new THREE.Mesh(uprightGeo, darkTrimMaterial);
-      upright.position.set(uprightX, 0.98, -1.95);
-      carGroup.add(upright);
-    });
-
-    // Main Carbon Wing Blade with Endplates
-    const wingGeo = new THREE.BoxGeometry(1.82, 0.05, 0.36);
-    const wing = new THREE.Mesh(wingGeo, carbonMaterial);
-    wing.position.set(0, 1.18, -1.98);
-    wing.rotation.x = -0.06;
-    wing.castShadow = true;
-    carGroup.add(wing);
-
-    // Wing Endplates
-    [-0.91, 0.91].forEach((epX) => {
-      const epGeo = new THREE.BoxGeometry(0.04, 0.22, 0.42);
-      const ep = new THREE.Mesh(epGeo, carbonMaterial);
-      ep.position.set(epX, 1.18, -1.98);
-      carGroup.add(ep);
-    });
-
-    // 6. ICONIC QUAD ROUND SKYLINE TAILLIGHTS (SIGNATURE HALO)
-    const tailPositions = [
-      { x: -0.62, r: 0.12 }, // Outer left
-      { x: -0.32, r: 0.09 }, // Inner left
-      { x: 0.32, r: 0.09 },  // Inner right
-      { x: 0.62, r: 0.12 }   // Outer right
-    ];
-
-    tailPositions.forEach((pos) => {
-      const tailGeo = new THREE.CylinderGeometry(pos.r, pos.r, 0.06, 32);
-      const tailMat = new THREE.MeshStandardMaterial({
-        color: 0xff0022,
-        emissive: 0xff0022,
-        emissiveIntensity: 1.8,
-        roughness: 0.2
-      });
-      lightMaterials.push(tailMat);
-      const tailMesh = new THREE.Mesh(tailGeo, tailMat);
-      tailMesh.rotation.x = Math.PI / 2;
-      tailMesh.position.set(pos.x, 0.62, -2.48);
-      carGroup.add(tailMesh);
-    });
-
-    // 7. FRONT XENON HEADLIGHTS
-    [-0.68, 0.68].forEach((hlX) => {
-      const hlHousingGeo = new THREE.BoxGeometry(0.38, 0.14, 0.12);
-      const hlHousingMat = new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.2 });
-      const hlHousing = new THREE.Mesh(hlHousingGeo, hlHousingMat);
-      hlHousing.position.set(hlX, 0.56, 2.52);
-      hlHousing.rotation.y = hlX > 0 ? -0.15 : 0.15;
-      carGroup.add(hlHousing);
-
-      // Xenon Bulb
-      const bulbGeo = new THREE.SphereGeometry(0.06, 16, 16);
-      const bulbMat = new THREE.MeshStandardMaterial({
-        color: 0xe0f2fe,
-        emissive: 0x38bdf8,
-        emissiveIntensity: 2.2,
-        roughness: 0.1
-      });
-      lightMaterials.push(bulbMat);
-      const bulb = new THREE.Mesh(bulbGeo, bulbMat);
-      bulb.position.set(hlX, 0.56, 2.58);
-      carGroup.add(bulb);
-    });
-
-    // 8. NISMO LMGT4 6-SPOKE WHEELS & BRAKES
-    const wheelPositions = [
-      { x: -0.92, z: 1.35 },  // Front Left
-      { x: 0.92, z: 1.35 },   // Front Right
-      { x: -0.94, z: -1.25 }, // Rear Left
-      { x: 0.94, z: -1.25 }   // Rear Right
-    ];
-
-    wheelPositions.forEach((pos) => {
-      const wheelAssembly = buildNismoWheel(pos.x > 0);
-      wheelAssembly.position.set(pos.x, 0.35, pos.z);
-      carGroup.add(wheelAssembly);
-      wheels.push(wheelAssembly);
-    });
-
-    // 9. UNDERGLOW NEON LIGHTS
-    underglowLights = [];
-    const underPositions = [
-      { x: 0, z: 1.2 },
-      { x: 0, z: -1.0 },
-      { x: -0.7, z: 0 },
-      { x: 0.7, z: 0 }
-    ];
-
-    underPositions.forEach((p) => {
-      const light = new THREE.PointLight(underglowColor, 2.8, 2.6);
-      light.position.set(p.x, 0.12, p.z);
-      carGroup.add(light);
-      underglowLights.push(light);
-    });
-
-    // GT-R Front & Rear Chrome Badges
-    const badgeGeo = new THREE.BoxGeometry(0.14, 0.06, 0.02);
-    const badgeMat = new THREE.MeshStandardMaterial({ color: 0xef4444, metalness: 0.8, roughness: 0.2 });
-    const badgeFront = new THREE.Mesh(badgeGeo, badgeMat);
-    badgeFront.position.set(0.35, 0.5, 2.58);
-    carGroup.add(badgeFront);
-
-    const badgeRear = new THREE.Mesh(badgeGeo, badgeMat);
-    badgeRear.position.set(0.35, 0.65, -2.48);
-    carGroup.add(badgeRear);
-
-    scene.add(carGroup);
-  }
-
-  function buildNismoWheel(isRightSide) {
-    const wheelGroup = new THREE.Group();
-
-    // Rubber Tire with tread profile
-    const tireGeo = new THREE.CylinderGeometry(0.35, 0.35, 0.24, 32);
-    const tireMat = new THREE.MeshStandardMaterial({
-      color: 0x18181b,
-      roughness: 0.85,
-      metalness: 0.1
-    });
-    const tire = new THREE.Mesh(tireGeo, tireMat);
-    tire.rotation.z = Math.PI / 2;
-    tire.castShadow = true;
-    wheelGroup.add(tire);
-
-    // Alloy Rim Outer Ring
-    const rimRingGeo = new THREE.CylinderGeometry(0.26, 0.26, 0.25, 32);
-    const rimMat = new THREE.MeshStandardMaterial({
-      color: 0xd4d4d8,
-      metalness: 0.92,
-      roughness: 0.2
-    });
-    const rim = new THREE.Mesh(rimRingGeo, rimMat);
-    rim.rotation.z = Math.PI / 2;
-    wheelGroup.add(rim);
-
-    // 6-Spoke NISMO LMGT4 Pattern
-    const spokeGeo = new THREE.BoxGeometry(0.04, 0.23, 0.05);
-    for (let i = 0; i < 6; i++) {
-      const spoke = new THREE.Mesh(spokeGeo, rimMat);
-      spoke.rotation.x = (i * Math.PI) / 3;
-      spoke.position.x = isRightSide ? 0.06 : -0.06;
-      wheelGroup.add(spoke);
+    for (let i = -80; i < 80; i += 8) {
+      const dashGeo = new THREE.PlaneGeometry(0.25, 4.5);
+      const dash = new THREE.Mesh(dashGeo, lineMatCyan);
+      dash.rotation.x = -Math.PI / 2;
+      dash.position.set(0, 0.005, i);
+      roadGroup.add(dash);
     }
 
-    // Drilled Disc Rotor
-    const discGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.03, 24);
-    const discMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, metalness: 0.95, roughness: 0.3 });
-    const brakeDisc = new THREE.Mesh(discGeo, discMat);
-    brakeDisc.rotation.z = Math.PI / 2;
-    wheelGroup.add(brakeDisc);
+    // Side Neon Shoulder Barriers
+    [-5.5, 5.5].forEach((xSide) => {
+      const railGeo = new THREE.PlaneGeometry(0.18, 180);
+      const rail = new THREE.Mesh(railGeo, lineMatWhite);
+      rail.rotation.x = -Math.PI / 2;
+      rail.position.set(xSide, 0.005, 0);
+      roadGroup.add(rail);
 
-    // Gold Brembo Caliper
-    const caliperGeo = new THREE.BoxGeometry(0.06, 0.12, 0.08);
-    const caliperMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.8, roughness: 0.3 });
-    const caliper = new THREE.Mesh(caliperGeo, caliperMat);
-    caliper.position.set(0, 0.14, 0.08);
-    wheelGroup.add(caliper);
+      // Neon Highway Light Pillars
+      for (let z = -70; z < 70; z += 20) {
+        const pillarGeo = new THREE.CylinderGeometry(0.06, 0.06, 4.5, 8);
+        const pillarMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, metalness: 0.9 });
+        const pillar = new THREE.Mesh(pillarGeo, pillarMat);
+        pillar.position.set(xSide * 1.3, 2.25, z);
 
-    return wheelGroup;
+        const lampGeo = new THREE.SphereGeometry(0.2, 16, 16);
+        const lampMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+        const lamp = new THREE.Mesh(lampGeo, lampMat);
+        lamp.position.set(xSide * 1.3, 4.5, z);
+        roadGroup.add(pillar);
+        roadGroup.add(lamp);
+      }
+    });
+
+    scene.add(roadGroup);
+
+    // Speed Lines Group for NOS Warp Speed
+    speedLinesGroup = new THREE.Group();
+    const lineGeo = new THREE.BufferGeometry();
+    const lineCount = 120;
+    const positions = new Float32Array(lineCount * 6);
+
+    for (let i = 0; i < lineCount; i++) {
+      const lx = (Math.random() - 0.5) * 16;
+      const ly = Math.random() * 4 + 0.3;
+      const lz = (Math.random() - 0.5) * 60;
+      const len = Math.random() * 6 + 4;
+
+      positions[i * 6] = lx;
+      positions[i * 6 + 1] = ly;
+      positions[i * 6 + 2] = lz;
+
+      positions[i * 6 + 3] = lx;
+      positions[i * 6 + 4] = ly;
+      positions[i * 6 + 5] = lz - len;
+    }
+
+    lineGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0x00f0ff,
+      transparent: true,
+      opacity: 0.65,
+      blending: THREE.AdditiveBlending
+    });
+    const speedLines = new THREE.LineSegments(lineGeo, lineMat);
+    speedLinesGroup.add(speedLines);
+    speedLinesGroup.visible = false;
+    scene.add(speedLinesGroup);
   }
 
-  // Interactive Orbit & Touch Controls
+  function initParticleEffects() {
+    // NOS Purge Mist Particles (shoot from hood vents)
+    const nosCount = 80;
+    for (let i = 0; i < nosCount; i++) {
+      const pGeo = new THREE.SphereGeometry(0.06, 6, 6);
+      const pMat = new THREE.MeshBasicMaterial({
+        color: 0xe0f7ff,
+        transparent: true,
+        opacity: 0,
+        blending: THREE.AdditiveBlending
+      });
+      const p = new THREE.Mesh(pGeo, pMat);
+      p.visible = false;
+      scene.add(p);
+      nosParticles.push({
+        mesh: p,
+        vx: 0,
+        vy: 0,
+        vz: 0,
+        life: 0,
+        side: i % 2 === 0 ? -1 : 1
+      });
+    }
+
+    // Exhaust Boost Flames (shoot from rear exhaust tips)
+    const flameCount = 50;
+    for (let i = 0; i < flameCount; i++) {
+      const fGeo = new THREE.SphereGeometry(0.08, 6, 6);
+      const fMat = new THREE.MeshBasicMaterial({
+        color: 0x00bfff,
+        transparent: true,
+        opacity: 0,
+        blending: THREE.AdditiveBlending
+      });
+      const f = new THREE.Mesh(fGeo, fMat);
+      f.visible = false;
+      scene.add(f);
+      exhaustParticles.push({
+        mesh: f,
+        vx: 0,
+        vy: 0,
+        vz: 0,
+        life: 0
+      });
+    }
+  }
+
+  // Load Brian's R34 from GLTF
+  function loadBriansR34() {
+    const loadingOverlay = document.getElementById('r34LoadingOverlay');
+    const loadingBar = document.getElementById('r34LoadingBar');
+    const loadingText = document.getElementById('r34LoadingText');
+
+    if (typeof THREE.GLTFLoader === 'undefined') {
+      console.error('GLTFLoader not loaded!');
+      return;
+    }
+
+    const loader = new THREE.GLTFLoader();
+
+    loader.load(
+      MODEL_URL,
+      (gltf) => {
+        carGroup = new THREE.Group();
+        const model = gltf.scene;
+
+        // Auto-compute bounding box to center & ground properly
+        const box = new THREE.Box3().setFromObject(model);
+        const size = box.getSize(new THREE.Vector3());
+        const center = box.getCenter(new THREE.Vector3());
+
+        // Target length ~4.6 units
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scaleFactor = 4.6 / maxDim;
+        model.scale.set(scaleFactor, scaleFactor, scaleFactor);
+
+        // Re-calculate after scaling
+        box.setFromObject(model);
+        box.getCenter(center);
+        model.position.x = -center.x;
+        model.position.y = -box.min.y;
+        model.position.z = -center.z;
+
+        carGroup.add(model);
+        scene.add(carGroup);
+
+        // Scan model nodes for wheels, lights, and materials
+        wheelMeshes = [];
+        steerableNodes = [];
+
+        model.traverse((child) => {
+          if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+
+            // Enhance Brian's platinum silver & blue stripes paint
+            if (child.material) {
+              child.material.roughness = 0.22;
+              child.material.metalness = 0.85;
+              if (child.material.map) {
+                child.material.map.anisotropy = 16;
+              }
+            }
+          }
+
+          const nodeName = child.name || '';
+
+          // Identify 4 Rigged Wheels
+          if (nodeName.includes('3DWheel') || (nodeName.toLowerCase().includes('wheel') && !nodeName.includes('Caliper'))) {
+            wheelMeshes.push(child);
+            if (nodeName.includes('Front')) {
+              steerableNodes.push(child);
+            }
+          }
+        });
+
+        // Add 2 Fast 2 Furious Signature Electric Blue Underglow
+        buildUnderglowLights();
+
+        // Add Headlight & Taillight Beams
+        buildCarLighting();
+
+        // Hide loading overlay
+        if (loadingOverlay) {
+          loadingOverlay.style.opacity = '0';
+          setTimeout(() => {
+            loadingOverlay.style.display = 'none';
+          }, 400);
+        }
+
+        const statusText = document.getElementById('r34RevStatus');
+        if (statusText) {
+          statusText.textContent = '⚡ BRIAN\'S R34 GT-R ACTIVE • 2 FAST 2 FURIOUS SPEC';
+        }
+      },
+      (xhr) => {
+        if (xhr.lengthComputable && loadingBar && loadingText) {
+          const pct = Math.round((xhr.loaded / xhr.total) * 100);
+          loadingBar.style.width = `${pct}%`;
+          loadingText.textContent = `⚡ Loading Brian's R34 GT-R: ${pct}% (${(xhr.loaded / 1048576).toFixed(1)} MB)`;
+        }
+      },
+      (error) => {
+        console.error('Failed to load GLTF model:', error);
+        if (loadingText) {
+          loadingText.textContent = '⚡ Error loading GLB model. Falling back to procedural engine.';
+        }
+      }
+    );
+  }
+
+  function buildUnderglowLights() {
+    underglowLights = [];
+    const positions = [
+      { x: -0.85, y: 0.1, z: 0 },   // Left side tube
+      { x: 0.85, y: 0.1, z: 0 },    // Right side tube
+      { x: 0, y: 0.1, z: 1.8 },     // Front lip glow
+      { x: 0, y: 0.1, z: -1.8 }     // Rear diffuser glow
+    ];
+
+    positions.forEach((pos) => {
+      const neonLight = new THREE.PointLight(0x00f0ff, 4.0, 3.5);
+      neonLight.position.set(pos.x, pos.y, pos.z);
+      carGroup.add(neonLight);
+      underglowLights.push(neonLight);
+    });
+  }
+
+  function buildCarLighting() {
+    headlightObjects = [];
+    taillightObjects = [];
+
+    // Twin Xenon Headlight Spotlights
+    [-0.65, 0.65].forEach((xSide) => {
+      const spot = new THREE.SpotLight(0xe0f7ff, 3.5, 30, Math.PI / 6, 0.4, 1.2);
+      spot.position.set(xSide, 0.65, 2.1);
+      spot.target.position.set(xSide * 0.4, 0, 18);
+      carGroup.add(spot);
+      carGroup.add(spot.target);
+      headlightObjects.push(spot);
+    });
+
+    // Ruby Red Halo Taillights (Signature R34 Quad Halos)
+    [-0.62, -0.32, 0.32, 0.62].forEach((xPos) => {
+      const tail = new THREE.PointLight(0xff0033, 1.6, 2.2);
+      tail.position.set(xPos, 0.72, -2.25);
+      carGroup.add(tail);
+      taillightObjects.push(tail);
+    });
+  }
+
+  // Camera Presets
+  function setCameraView(viewName) {
+    currentCameraView = viewName;
+    const views = {
+      chase: { x: 0, y: 1.8, z: -6.2, lookY: 0.7, lookZ: 2.0 },
+      orbit: { x: 5.2, y: 2.0, z: 5.2, lookY: 0.5, lookZ: 0 },
+      hood: { x: 0, y: 1.2, z: 0.6, lookY: 0.8, lookZ: 8 },
+      low: { x: -3.2, y: 0.4, z: 2.5, lookY: 0.3, lookZ: 0 }
+    };
+
+    const v = views[viewName] || views.chase;
+    targetCamPos.set(v.x, v.y, v.z);
+    targetCamLook.set(0, v.lookY, v.lookZ);
+
+    const buttons = document.querySelectorAll('.r34-cam-btn');
+    buttons.forEach((b) => {
+      if (b.getAttribute('data-view') === viewName) {
+        b.classList.add('active');
+      } else {
+        b.classList.remove('active');
+      }
+    });
+  }
+
+  const targetCamPos = new THREE.Vector3(0, 1.8, -6.2);
+  const targetCamLook = new THREE.Vector3(0, 0.7, 2.0);
+  let camLookAt = new THREE.Vector3(0, 0.7, 2.0);
+
+  // Mouse & Touch Controls
   let isDragging = false;
-  let previousMousePosition = { x: 0, y: 0 };
-  let targetRotationY = 0.8;
-  let targetRotationX = 0.25;
+  let previousMouse = { x: 0, y: 0 };
+  let orbitAngleY = 0.8;
+  let orbitAngleX = 0.22;
 
   function setupControls() {
     container.addEventListener('mousedown', (e) => {
       isDragging = true;
-      isOrbiting = false;
-      previousMousePosition = { x: e.clientX, y: e.clientY };
+      previousMouse = { x: e.clientX, y: e.clientY };
     });
 
     window.addEventListener('mouseup', () => {
@@ -478,166 +537,198 @@
 
     container.addEventListener('mousemove', (e) => {
       if (!isDragging) return;
-      const deltaX = e.clientX - previousMousePosition.x;
-      const deltaY = e.clientY - previousMousePosition.y;
+      const deltaX = e.clientX - previousMouse.x;
+      const deltaY = e.clientY - previousMouse.y;
 
-      targetRotationY += deltaX * 0.008;
-      targetRotationX = Math.max(0.05, Math.min(Math.PI / 3, targetRotationX + deltaY * 0.005));
+      orbitAngleY += deltaX * 0.008;
+      orbitAngleX = Math.max(0.05, Math.min(Math.PI / 2.8, orbitAngleX + deltaY * 0.005));
 
-      previousMousePosition = { x: e.clientX, y: e.clientY };
+      previousMouse = { x: e.clientX, y: e.clientY };
     });
 
-    // Touch Support
+    // Touch support
     container.addEventListener('touchstart', (e) => {
       if (e.touches.length === 1) {
         isDragging = true;
-        isOrbiting = false;
-        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        previousMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
       }
     }, { passive: true });
 
     container.addEventListener('touchmove', (e) => {
       if (!isDragging || e.touches.length !== 1) return;
-      const deltaX = e.touches[0].clientX - previousMousePosition.x;
-      const deltaY = e.touches[0].clientY - previousMousePosition.y;
+      const deltaX = e.touches[0].clientX - previousMouse.x;
+      const deltaY = e.touches[0].clientY - previousMouse.y;
 
-      targetRotationY += deltaX * 0.008;
-      targetRotationX = Math.max(0.05, Math.min(Math.PI / 3, targetRotationX + deltaY * 0.005));
+      orbitAngleY += deltaX * 0.008;
+      orbitAngleX = Math.max(0.05, Math.min(Math.PI / 2.8, orbitAngleX + deltaY * 0.005));
 
-      previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      previousMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
     }, { passive: true });
 
     window.addEventListener('touchend', () => {
       isDragging = false;
     });
 
-    // Zoom on wheel
-    container.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      const zoomDelta = e.deltaY * 0.004;
-      const dist = camera.position.length();
-      if ((zoomDelta > 0 && dist < 12) || (zoomDelta < 0 && dist > 3.5)) {
-        camera.position.multiplyScalar(1 + zoomDelta);
+    // Keyboard Arrow Keys for Steering
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        steerAngle = Math.max(-0.45, steerAngle - 0.12);
       }
-    }, { passive: false });
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        steerAngle = Math.min(0.45, steerAngle + 0.12);
+      }
+      if (e.code === 'Space') {
+        triggerNosBoost();
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (['ArrowLeft', 'ArrowRight', 'a', 'd', 'A', 'D'].includes(e.key)) {
+        steerAngle = 0;
+      }
+    });
   }
 
-  // Setup UI Controls (Color pickers, lights, rev mode)
+  // UI Button Bindings
   function setupUIControls() {
-    // Color Swatches
-    const swatches = document.querySelectorAll('.r34-color-swatch');
-    swatches.forEach((swatch) => {
-      swatch.addEventListener('click', () => {
-        const colorKey = swatch.getAttribute('data-color');
-        if (COLOR_PRESETS[colorKey]) {
-          carColor = COLOR_PRESETS[colorKey];
-          carMaterials.forEach((m) => {
-            m.color.setHex(carColor);
-          });
-          swatches.forEach((s) => s.classList.remove('active'));
-          swatch.classList.add('active');
+    // NOS Purge & Boost Button
+    const btnNos = document.getElementById('btnR34Nos');
+    if (btnNos) {
+      btnNos.addEventListener('click', () => {
+        triggerNosBoost();
+      });
+    }
+
+    // Drive Mode / Showroom Toggle Button
+    const btnDriveMode = document.getElementById('btnR34DriveMode');
+    if (btnDriveMode) {
+      btnDriveMode.addEventListener('click', () => {
+        isDrivingMode = !isDrivingMode;
+        if (isDrivingMode) {
+          btnDriveMode.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Highway Run
+          `;
+          btnDriveMode.classList.add('active');
+          setCameraView('chase');
+        } else {
+          btnDriveMode.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+            Showroom 360°
+          `;
+          btnDriveMode.classList.remove('active');
+          setCameraView('orbit');
         }
       });
-    });
+    }
+
+    // Underglow Toggle
+    const btnNeon = document.getElementById('btnR34Neon');
+    if (btnNeon) {
+      btnNeon.addEventListener('click', () => {
+        underglowOn = !underglowOn;
+        underglowLights.forEach((l) => {
+          l.intensity = underglowOn ? 4.0 : 0;
+        });
+        btnNeon.classList.toggle('active', underglowOn);
+      });
+    }
 
     // Headlights Toggle
     const btnLights = document.getElementById('btnR34Lights');
     if (btnLights) {
       btnLights.addEventListener('click', () => {
         headlightsOn = !headlightsOn;
-        lightMaterials.forEach((m) => {
-          m.emissiveIntensity = headlightsOn ? 1.8 : 0;
+        headlightObjects.forEach((h) => {
+          h.intensity = headlightsOn ? 3.5 : 0;
         });
         btnLights.classList.toggle('active', headlightsOn);
       });
     }
 
-    // Underglow Neon Toggle
-    const btnNeon = document.getElementById('btnR34Neon');
-    if (btnNeon) {
-      btnNeon.addEventListener('click', () => {
-        underglowOn = !underglowOn;
-        underglowLights.forEach((l) => {
-          l.intensity = underglowOn ? 2.8 : 0;
-        });
-        btnNeon.classList.toggle('active', underglowOn);
+    // Sound FX Toggle
+    const btnSound = document.getElementById('btnR34Sound');
+    if (btnSound) {
+      btnSound.addEventListener('click', () => {
+        soundEnabled = !soundEnabled;
+        btnSound.classList.toggle('active', soundEnabled);
+        btnSound.innerHTML = soundEnabled
+          ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg> Audio: ON`
+          : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg> Audio: MUTED`;
       });
     }
 
-    // Auto-Rotate Turntable Toggle
-    const btnTurntable = document.getElementById('btnR34Turntable');
-    if (btnTurntable) {
-      btnTurntable.addEventListener('click', () => {
-        isOrbiting = !isOrbiting;
-        btnTurntable.classList.toggle('active', isOrbiting);
+    // Camera View Buttons
+    const camButtons = document.querySelectorAll('.r34-cam-btn');
+    camButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const view = btn.getAttribute('data-view');
+        setCameraView(view);
       });
-    }
-
-    // Rev & Boost Engine
-    const btnRev = document.getElementById('btnR34Rev');
-    if (btnRev) {
-      btnRev.addEventListener('click', () => {
-        triggerRevMode();
-      });
-    }
-
-    // Custom .GLB File Import
-    const glbInput = document.getElementById('r34GlbInput');
-    if (glbInput) {
-      glbInput.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file && typeof THREE.GLTFLoader !== 'undefined') {
-          loadCustomGlb(file);
-        }
-      });
-    }
+    });
   }
 
-  function triggerRevMode() {
-    isRevving = true;
-    const revSoundText = document.getElementById('r34RevStatus');
-    if (revSoundText) {
-      revSoundText.textContent = '🔥 8,200 RPM • RB26DETT TWIN TURBO BOOST ACTIVE';
-      revSoundText.style.color = '#f97316';
+  // Trigger 2 Fast 2 Furious Nitrous Oxide Purge & Boost
+  function triggerNosBoost() {
+    if (isNosActive) return;
+    isNosActive = true;
+    playNosSound();
+
+    // Spurt NOS Mist Particles from Hood
+    nosParticles.forEach((p, idx) => {
+      p.mesh.visible = true;
+      p.mesh.position.set(p.side * 0.45, 0.95, 1.4);
+      p.vx = p.side * (Math.random() * 0.15 + 0.1);
+      p.vy = Math.random() * 0.2 + 0.15;
+      p.vz = (Math.random() - 0.5) * 0.05;
+      p.life = 1.0;
+      p.mesh.material.opacity = 0.9;
+    });
+
+    // Spurt Exhaust Flame Particles
+    exhaustParticles.forEach((f) => {
+      f.mesh.visible = true;
+      f.mesh.position.set(-0.62 + (Math.random() - 0.5) * 0.1, 0.25, -2.4);
+      f.vx = (Math.random() - 0.5) * 0.05;
+      f.vy = (Math.random() - 0.5) * 0.04;
+      f.vz = -(Math.random() * 0.35 + 0.25);
+      f.life = 1.0;
+      f.mesh.material.opacity = 1.0;
+    });
+
+    // Speed lines visible
+    if (speedLinesGroup) speedLinesGroup.visible = true;
+
+    // Boost speed & RPM
+    targetSpeed = 168;
+    targetRpm = 8600;
+
+    const revText = document.getElementById('r34RevStatus');
+    if (revText) {
+      revText.textContent = '🔥 NOS PURGE ACTIVE • 168 MPH • TWIN TURBO 26 PSI BOOST';
+      revText.style.color = '#00f0ff';
     }
 
-    // Flash exhaust flames
-    const originalColors = underglowLights.map((l) => l.color.getHex());
+    // Neon flash
     underglowLights.forEach((l) => {
-      l.color.setHex(0xff3300);
-      l.intensity = 5.0;
+      l.intensity = 8.0;
+      l.color.setHex(0x00ffff);
     });
 
     setTimeout(() => {
-      isRevving = false;
-      underglowLights.forEach((l, idx) => {
-        l.color.setHex(originalColors[idx] || underglowColor);
-        l.intensity = underglowOn ? 2.8 : 0;
+      isNosActive = false;
+      targetSpeed = 128;
+      targetRpm = 6800;
+      if (speedLinesGroup) speedLinesGroup.visible = false;
+      underglowLights.forEach((l) => {
+        l.intensity = underglowOn ? 4.0 : 0;
+        l.color.setHex(0x00f0ff);
       });
-      if (revSoundText) {
-        revSoundText.textContent = '⚡ IDLE: 950 RPM • READY TO LAUNCH';
-        revSoundText.style.color = '#38bdf8';
+      if (revText) {
+        revText.textContent = '⚡ BRIAN\'S R34 GT-R ACTIVE • 2 FAST 2 FURIOUS SPEC';
+        revText.style.color = '#38bdf8';
       }
-    }, 2400);
-  }
-
-  function loadCustomGlb(file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const contents = e.target.result;
-      const loader = new THREE.GLTFLoader();
-      loader.parse(contents, '', (gltf) => {
-        if (carGroup) scene.remove(carGroup);
-        carGroup = gltf.scene;
-        // Scale and center
-        carGroup.scale.set(1.5, 1.5, 1.5);
-        carGroup.position.set(0, 0, 0);
-        scene.add(carGroup);
-      }, (err) => {
-        console.error('Error loading custom GLB:', err);
-      });
-    };
-    reader.readAsArrayBuffer(file);
+    }, 2800);
   }
 
   function onWindowResize() {
@@ -649,43 +740,126 @@
     renderer.setSize(width, height);
   }
 
+  // Animation Loop
+  let lastTime = performance.now();
+  let roadOffset = 0;
+
   function animate() {
     requestAnimationFrame(animate);
 
-    if (isOrbiting) {
-      targetRotationY += 0.007;
-    }
+    const now = performance.now();
+    const dt = (now - lastTime) / 1000;
+    lastTime = now;
 
-    if (isRevving) {
-      // Rapid wheel spin
-      wheels.forEach((w) => {
-        w.rotation.x += 0.45;
+    // Smooth speed & RPM interpolation
+    currentSpeed += (targetSpeed - currentSpeed) * 0.08;
+    currentRpm += (targetRpm - currentRpm) * 0.08;
+
+    // Update Telemetry Displays
+    const speedEl = document.getElementById('r34SpeedMph');
+    const rpmEl = document.getElementById('r34RpmValue');
+    if (speedEl) speedEl.textContent = Math.round(currentSpeed);
+    if (rpmEl) rpmEl.textContent = Math.round(currentRpm).toLocaleString();
+
+    // 1. Driving Mode Logic
+    if (isDrivingMode) {
+      const roadSpeed = (currentSpeed / 60) * 12; // Speed in units/sec
+      roadOffset = (roadOffset + roadSpeed * dt) % 8;
+
+      if (roadGroup) {
+        roadGroup.position.z = roadOffset;
+      }
+
+      // Roll all wheels realistically
+      const wheelRollDelta = (roadSpeed * dt) / 0.35; // v = w * r
+      wheelMeshes.forEach((w) => {
+        w.rotation.x += wheelRollDelta;
       });
-      // Subtle chassis shake
+
+      // Steer front wheels
+      steerableNodes.forEach((sn) => {
+        sn.rotation.y = steerAngle;
+      });
+
+      // Subtle suspension micro-bounce and chassis sway
       if (carGroup) {
-        carGroup.position.y = Math.sin(Date.now() * 0.08) * 0.015;
+        carGroup.position.y = Math.sin(now * 0.015) * 0.008 + (isNosActive ? Math.random() * 0.02 - 0.01 : 0);
+        carGroup.rotation.z = -steerAngle * 0.08; // Lean into corners
+        carGroup.rotation.x = isNosActive ? -0.025 : 0; // Squat on acceleration
+        carGroup.position.x = steerAngle * 1.5;
       }
     } else {
-      // Idle wheel roll
-      wheels.forEach((w) => {
-        w.rotation.x += 0.02;
-      });
+      // Showroom Turntable Mode: Auto-rotate car
       if (carGroup) {
-        carGroup.position.y = 0;
+        carGroup.rotation.y += 0.008;
+        carGroup.position.set(0, 0, 0);
+        carGroup.rotation.z = 0;
+        carGroup.rotation.x = 0;
       }
+      wheelMeshes.forEach((w) => {
+        w.rotation.x += 0.008;
+      });
     }
 
-    // Camera positioning based on spherical coordinates
-    const distance = 7.5;
-    camera.position.x = distance * Math.sin(targetRotationY) * Math.cos(targetRotationX);
-    camera.position.y = Math.max(0.6, distance * Math.sin(targetRotationX));
-    camera.position.z = distance * Math.cos(targetRotationY) * Math.cos(targetRotationX);
-    camera.lookAt(0, 0.45, 0);
+    // 2. Animate NOS Mist Particles
+    if (isNosActive) {
+      nosParticles.forEach((p) => {
+        if (p.mesh.visible) {
+          p.mesh.position.x += p.vx * dt * 8;
+          p.mesh.position.y += p.vy * dt * 8;
+          p.mesh.position.z += p.vz * dt * 8;
+          p.life -= dt * 1.4;
+          p.mesh.material.opacity = Math.max(0, p.life);
+          p.mesh.scale.multiplyScalar(1.05);
+
+          if (p.life <= 0) {
+            p.mesh.position.set(p.side * 0.45, 0.95, 1.4);
+            p.life = 0.8;
+            p.mesh.scale.set(1, 1, 1);
+          }
+        }
+      });
+
+      // Animate Exhaust Flame Particles
+      exhaustParticles.forEach((f) => {
+        if (f.mesh.visible) {
+          f.mesh.position.x += f.vx * dt * 10;
+          f.mesh.position.y += f.vy * dt * 10;
+          f.mesh.position.z += f.vz * dt * 15;
+          f.life -= dt * 3.5;
+          f.mesh.material.opacity = Math.max(0, f.life);
+
+          if (f.life <= 0) {
+            f.mesh.position.set(-0.62 + (Math.random() - 0.5) * 0.08, 0.25, -2.4);
+            f.life = 1.0;
+          }
+        }
+      });
+    }
+
+    // 3. Camera Interpolation
+    if (currentCameraView === 'orbit') {
+      const distance = 7.5;
+      camera.position.x = distance * Math.sin(orbitAngleY) * Math.cos(orbitAngleX);
+      camera.position.y = Math.max(0.5, distance * Math.sin(orbitAngleX));
+      camera.position.z = distance * Math.cos(orbitAngleY) * Math.cos(orbitAngleX);
+      camera.lookAt(0, 0.6, 0);
+    } else {
+      camera.position.lerp(targetCamPos, 0.08);
+      camLookAt.lerp(targetCamLook, 0.08);
+      camera.lookAt(camLookAt);
+
+      // Camera shake during NOS
+      if (isNosActive) {
+        camera.position.x += (Math.random() - 0.5) * 0.04;
+        camera.position.y += (Math.random() - 0.5) * 0.04;
+      }
+    }
 
     renderer.render(scene, camera);
   }
 
-  // Auto initialize on DOM ready
+  // Auto-init on DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initR34Viewer);
   } else {
@@ -693,4 +867,5 @@
   }
 
   window.initR34Viewer = initR34Viewer;
+  window.triggerNosBoost = triggerNosBoost;
 })();

@@ -186,7 +186,7 @@
       </div>
     </section>
 
-    <!-- Nissan Skyline GT-R R34 3D Interactive Showcase -->
+    <!-- Brian's Nissan Skyline GT-R R34 (2 Fast 2 Furious) Interactive 3D Showcase -->
     <section id="r34-showcase" class="container r34-showcase-container">
       <div class="r34-showcase-box">
         <!-- Header Bar -->
@@ -194,15 +194,15 @@
           <div class="r34-badge-title">
             <span class="gtr-badge">GT-R</span>
             <span class="r34-title-text">
-              Nissan Skyline GT-R V-Spec II <span style="color:#64748b;font-weight:400;font-size:13px">(BNR34)</span>
+              Brian's Nissan Skyline GT-R <span style="color:#00f0ff;font-weight:700;">// 2 FAST 2 FURIOUS</span> <span style="color:#64748b;font-weight:400;font-size:13px">(BNR34)</span>
             </span>
           </div>
           <div class="r34-specs-ticker">
-            <span><span class="pulse-dot" style="width:6px;height:6px"></span> TWIN TURBO RB26DETT</span>
+            <span><span class="pulse-dot" style="width:6px;height:6px;background:#00f0ff;box-shadow:0 0 10px #00f0ff"></span> TWIN TURBO RB26DETT</span>
             <span>•</span>
             <span>ATTESA E-TS AWD</span>
             <span>•</span>
-            <span id="r34RevStatus" style="color:#38bdf8">⚡ IDLE: 950 RPM • READY</span>
+            <span id="r34RevStatus" style="color:#00f0ff;font-weight:700;">⚡ BRIAN'S R34 GT-R ACTIVE • 2 FAST 2 FURIOUS SPEC</span>
           </div>
         </div>
 
@@ -213,12 +213,46 @@
           <div class="tech-corner bottom-left"></div>
           <div class="tech-corner bottom-right"></div>
 
-          <!-- Telemetry HUD Overlay -->
+          <!-- Loading Progress Overlay -->
+          <div class="r34-loading-overlay" id="r34LoadingOverlay">
+            <div class="r34-loading-spinner"></div>
+            <div style="font-weight:700;color:#fff;font-size:15px;margin-bottom:4px" id="r34LoadingText">⚡ Loading Brian's R34 GT-R (14.2 MB)...</div>
+            <div class="r34-loading-bar-track">
+              <div class="r34-loading-bar-fill" id="r34LoadingBar"></div>
+            </div>
+          </div>
+
+          <!-- Telemetry HUD Left -->
           <div class="r34-hud-telemetry">
-            <div><span class="cyan">CHASSIS:</span> BNR34 V-SPEC II</div>
-            <div><span class="cyan">AERO:</span> Carbon Lip + High GT Wing</div>
-            <div><span class="cyan">WHEELS:</span> NISMO LMGT4 18"</div>
-            <div><span class="green">INTERACT:</span> Drag to Orbit • Scroll to Zoom</div>
+            <div><span class="cyan">CHASSIS:</span> BNR34-2F2F SPEC</div>
+            <div><span class="cyan">AERO:</span> C-WEST Bodykit + APR GT Wing</div>
+            <div><span class="cyan">WHEELS:</span> HRE 446R 19" 3-Piece</div>
+            <div><span class="green">STATUS:</span> Infinite Highway Run Active</div>
+          </div>
+
+          <!-- Cockpit Speedometer & Tachometer Cluster Right -->
+          <div class="r34-hud-cluster">
+            <div class="gauge-item">
+              <div class="gauge-label">Speed</div>
+              <div class="gauge-val cyan"><span id="r34SpeedMph">128</span> <span class="gauge-unit">MPH</span></div>
+            </div>
+            <div class="gauge-item">
+              <div class="gauge-label">Tachometer</div>
+              <div class="gauge-val"><span id="r34RpmValue">6,800</span> <span class="gauge-unit">RPM</span></div>
+            </div>
+            <div class="gauge-item">
+              <div class="gauge-label">Gear</div>
+              <div class="gauge-val" style="color:#f59e0b">4TH</div>
+            </div>
+            <div class="gauge-item">
+              <div class="gauge-label">NOS</div>
+              <div class="gauge-val" style="color:#00f0ff">100%</div>
+            </div>
+          </div>
+
+          <!-- Steering Keyboard Hint -->
+          <div class="r34-steer-hint">
+            <kbd>A</kbd> <kbd>D</kbd> or <kbd>←</kbd> <kbd>→</kbd> to Steer Car • <kbd>Space</kbd> for NOS Boost
           </div>
 
           <!-- 3D WebGL Canvas Container -->
@@ -226,44 +260,42 @@
 
           <!-- Cockpit Controls Bar -->
           <div class="r34-controls-bar">
-            <!-- Color Customizer -->
-            <div class="r34-color-palette">
-              <span class="r34-color-label">Color:</span>
-              <button class="r34-color-swatch active" data-color="baysideBlue" style="background:#0044cc" title="Bayside Blue"></button>
-              <button class="r34-color-swatch" data-color="midnightPurple" style="background:#3d1a54" title="Midnight Purple III"></button>
-              <button class="r34-color-swatch" data-color="millenniumJade" style="background:#6e7f72" title="Millennium Jade"></button>
-              <button class="r34-color-swatch" data-color="kuroBlack" style="background:#11161f" title="Kuro Black"></button>
-              <button class="r34-color-swatch" data-color="activeRed" style="background:#bb1122" title="Active Red"></button>
-              <button class="r34-color-swatch" data-color="nismoWhite" style="background:#f0f3f6" title="NISMO White"></button>
+            <!-- Camera View Switcher -->
+            <div class="r34-cam-switcher">
+              <span class="r34-color-label">Cam:</span>
+              <button class="r34-cam-btn active" data-view="chase">Chase</button>
+              <button class="r34-cam-btn" data-view="orbit">Orbit</button>
+              <button class="r34-cam-btn" data-view="hood">Hood</button>
+              <button class="r34-cam-btn" data-view="low">Low</button>
             </div>
 
             <!-- Action Toggles -->
             <div class="r34-action-buttons">
-              <button class="r34-toggle-btn active" id="btnR34Lights" title="Toggle Xenon Headlights & Halo Taillights">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                Lights
+              <!-- Big NOS Button -->
+              <button class="r34-rev-btn" id="btnR34Nos" style="background:linear-gradient(135deg, #00d4ff, #0055ff);box-shadow:0 4px 18px rgba(0, 150, 255, 0.5);" title="Trigger Nitrous Oxide Purge & High Speed Boost">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                NOS PURGE & BOOST
               </button>
 
-              <button class="r34-toggle-btn active" id="btnR34Neon" title="Toggle Underglow Neon">
+              <button class="r34-toggle-btn active" id="btnR34DriveMode" title="Switch Highway Drive or 360° Showroom">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Highway Run
+              </button>
+
+              <button class="r34-toggle-btn active" id="btnR34Neon" title="Toggle 2 Fast 2 Furious Blue Neon Underglow">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"></path></svg>
-                Underglow
+                Blue Underglow
               </button>
 
-              <button class="r34-toggle-btn active" id="btnR34Turntable" title="Toggle 360° Turntable Rotation">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
-                Turntable
+              <button class="r34-toggle-btn active" id="btnR34Lights" title="Toggle Xenon Headlights & Halo Taillights">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line></svg>
+                Headlights
               </button>
 
-              <button class="r34-rev-btn" id="btnR34Rev" title="Rev Engine & Boost">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                Rev & Boost
+              <button class="r34-toggle-btn active" id="btnR34Sound" title="Toggle Turbo & NOS Synthesized Sound Effects">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                Audio: ON
               </button>
-
-              <label class="r34-toggle-btn" style="cursor:pointer;" title="Load your custom .glb 3D model">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                Import .GLB
-                <input type="file" id="r34GlbInput" accept=".glb,.gltf" style="display:none">
-              </label>
             </div>
           </div>
         </div>

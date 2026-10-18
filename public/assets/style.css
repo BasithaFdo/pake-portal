@@ -1485,44 +1485,211 @@ footer {
   box-shadow: 0 6px 18px rgba(239, 68, 68, 0.6);
 }
 
-/* Floating Status HUD */
+/* Floating Loading Overlay */
+.r34-loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 11, 20, 0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  transition: opacity 0.4s ease;
+  backdrop-filter: blur(14px);
+}
+
+.r34-loading-spinner {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 3px solid rgba(56, 189, 248, 0.15);
+  border-top-color: #00f0ff;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.r34-loading-bar-track {
+  width: 260px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.r34-loading-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #00f0ff, #3b82f6);
+  border-radius: 999px;
+  transition: width 0.2s ease;
+  box-shadow: 0 0 10px #00f0ff;
+}
+
+/* Floating Status HUD Left */
 .r34-hud-telemetry {
   position: absolute;
   top: 16px;
   left: 20px;
-  background: rgba(7, 11, 20, 0.7);
+  background: rgba(7, 11, 20, 0.78);
   border: 1px solid var(--edge);
-  border-radius: 12px;
-  padding: 10px 14px;
+  border-radius: 14px;
+  padding: 12px 16px;
   font-family: var(--font-mono);
   font-size: 11.5px;
   color: #cbd5e1;
   pointer-events: none;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  z-index: 20;
 }
 
 .r34-hud-telemetry div {
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 
-.r34-hud-telemetry .cyan { color: #38bdf8; font-weight: 600; }
+.r34-hud-telemetry .cyan { color: #00f0ff; font-weight: 700; }
 .r34-hud-telemetry .green { color: #10b981; }
+
+/* Cockpit Cluster Right (Speedometer & Tachometer) */
+.r34-hud-cluster {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: rgba(7, 11, 20, 0.78);
+  border: 1px solid var(--edge);
+  border-radius: 14px;
+  padding: 12px 18px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  backdrop-filter: blur(12px);
+  z-index: 20;
+  pointer-events: none;
+}
+
+.gauge-item {
+  text-align: center;
+}
+
+.gauge-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.gauge-val {
+  font-size: 24px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: #fff;
+  line-height: 1.1;
+}
+
+.gauge-val.cyan {
+  color: #00f0ff;
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+}
+
+.gauge-unit {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--subtle);
+}
+
+/* Camera Switcher Pills */
+.r34-cam-switcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-right: 1px solid var(--edge);
+  padding-right: 12px;
+}
+
+.r34-cam-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid transparent;
+  color: var(--muted);
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.r34-cam-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.r34-cam-btn.active {
+  background: rgba(0, 240, 255, 0.2);
+  border-color: rgba(0, 240, 255, 0.4);
+  color: #00f0ff;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+/* Steering Keyboard Hint */
+.r34-steer-hint {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(11, 18, 33, 0.65);
+  border: 1px solid var(--edge);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  color: var(--muted);
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+  z-index: 15;
+}
+
+.r34-steer-hint kbd {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: var(--font-mono);
+  color: #fff;
+  font-size: 10.5px;
+}
+
+@media (max-width: 900px) {
+  .r34-hud-cluster {
+    display: none;
+  }
+  .r34-steer-hint {
+    display: none;
+  }
+}
 
 @media (max-width: 768px) {
   .r34-canvas-wrapper {
-    height: 380px;
+    height: 400px;
   }
   .r34-controls-bar {
     border-radius: 16px;
     padding: 10px;
+    gap: 10px;
   }
-  .r34-color-palette {
+  .r34-cam-switcher {
     border-right: none;
     padding-right: 0;
-    margin-bottom: 6px;
   }
   .r34-hud-telemetry {
     display: none;
   }
 }
+
 
