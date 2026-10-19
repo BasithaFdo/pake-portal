@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 84" width="420" height="84">
+  <defs>
+    <!-- Background / Shadow Elements -->
+    <linearGradient id="logoBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1329"/>
+      <stop offset="100%" stop-color="#040714"/>
+    </linearGradient>
+
+    <!-- Neon Cyan to Violet Gradient -->
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f5ff"/>
+      <stop offset="40%" stop-color="#38bdf8"/>
+      <stop offset="75%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#d946ef"/>
+    </linearGradient>
+
+    <!-- Hot Accent Gradient -->
+    <linearGradient id="hubPillGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+
+    <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Left Icon Emblem (scaled and positioned) -->
+  <g transform="translate(6, 6) scale(0.56)">
+    <!-- Outer Shield -->
+    <polygon points="64,6 116,28 116,92 64,122 12,92 12,28" 
+             fill="url(#logoBgGrad)" 
+             stroke="rgba(56, 189, 248, 0.4)" 
+             stroke-width="3" />
+    
+    <!-- Inner Accent Stroke -->
+    <polygon points="64,12 110,32 110,88 64,116 18,88 18,32" 
+             fill="none" 
+             stroke="url(#logoGrad)" 
+             stroke-width="2.5" 
+             opacity="0.9" />
+
+    <!-- Dual Rings Motif -->
+    <circle cx="44" cy="46" r="14" fill="none" stroke="#00f5ff" stroke-width="3.5" opacity="0.85"/>
+    <circle cx="44" cy="46" r="4" fill="#ffffff"/>
+    <circle cx="84" cy="46" r="14" fill="none" stroke="#d946ef" stroke-width="3.5" opacity="0.85"/>
+    <circle cx="84" cy="46" r="4" fill="#ffffff"/>
+
+    <!-- Speed S -->
+    <path d="M 88 30 L 46 30 C 34 30, 28 38, 32 50 C 36 62, 54 62, 64 64 C 78 66, 96 68, 96 82 C 96 98, 78 98, 64 98 L 36 98" 
+          fill="none" 
+          stroke="url(#logoGrad)" 
+          stroke-width="7" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"
+          filter="url(#logoGlow)" />
+    
+    <path d="M 82 30 L 50 30 C 40 30, 36 37, 39 46 C 43 56, 58 58, 67 60 C 78 62, 90 65, 90 76 C 90 88, 76 90, 64 90 L 44 90" 
+          fill="none" 
+          stroke="#ffffff" 
+          stroke-width="2.5" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+  </g>
+
+  <!-- Brand Typography -->
+  <g transform="translate(86, 0)">
+    <!-- Main Title: SKYLINE -->
+    <text x="0" y="44" 
+          font-family="'Space Grotesk', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" 
+          font-size="34" 
+          font-weight="800" 
+          letter-spacing="2" 
+          fill="#ffffff">
+      SKYLINE
+    </text>
+
+    <!-- HUB Pill Badge -->
+    <g transform="translate(162, 18)">
+      <rect x="0" y="0" width="76" height="28" rx="6" fill="url(#hubPillGrad)" />
+      <text x="38" y="19" 
+            text-anchor="middle" 
+            font-family="'JetBrains Mono', monospace" 
+            font-size="14" 
+            font-weight="800" 
+            letter-spacing="2" 
+            fill="#030712">
+        HUB
+      </text>
+    </g>
+
+    <!-- Subtitle: Architecture & Tech Core -->
+    <text x="2" y="66" 
+          font-family="'JetBrains Mono', monospace" 
+          font-size="9.5" 
+          font-weight="600" 
+          letter-spacing="2.8" 
+          fill="#94a3b8">
+      DEVELOPER PLATFORM • CLOUD • FIVEM
+    </text>
+  </g>
+</svg>

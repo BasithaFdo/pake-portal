@@ -90,6 +90,18 @@
       modified: '2026-10-15 18:00',
       sha256: '2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae',
       category: 'backups'
+    },
+    {
+      id: 'f-8',
+      name: 'skyline-hub-brand-logo.svg',
+      folder: '/Assets',
+      size: 16384, // 16 KB
+      type: 'img',
+      ext: 'SVG',
+      starred: true,
+      modified: '2026-10-19 14:00',
+      sha256: '7b83ec4a67ef89a01235deac3478912efacb321a457689012345bcde89012345',
+      category: 'media'
     }
   ];
 

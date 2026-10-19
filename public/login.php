@@ -32,6 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sign In | SkyLine Cloud</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/skyline-mark.svg">
+  <link rel="alternate icon" href="/favicon.ico">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
@@ -42,6 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <a class="back" href="/">← Return to Home</a>
 
   <main class="auth">
+    <div style="text-align:center; margin-bottom: 20px;">
+      <a href="/" style="display:inline-block;">
+        <img src="/assets/skyline-logo.svg" alt="SkyLine Hub" style="height: 46px; width: auto; filter: drop-shadow(0 0 10px rgba(0,245,255,0.4));">
+      </a>
+    </div>
     <div class="eyebrow">SECURE VAULT ACCESS</div>
     <h1>Sign In to Cloud</h1>
     <p class="muted">Access your encrypted private cloud storage & files.</p>

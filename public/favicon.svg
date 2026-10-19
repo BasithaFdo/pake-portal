@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="favGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f5ff"/>
+      <stop offset="50%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Shield -->
+  <polygon points="32,2 58,14 58,48 32,62 6,48 6,14" fill="#070d1c" stroke="#38bdf8" stroke-width="2"/>
+  <polygon points="32,6 54,16 54,46 32,58 10,46 10,16" fill="#0f172a" stroke="url(#favGrad)" stroke-width="1.5"/>
+  
+  <!-- Dual Skyline Circles -->
+  <circle cx="23" cy="24" r="6" fill="none" stroke="#00f5ff" stroke-width="2"/>
+  <circle cx="41" cy="24" r="6" fill="none" stroke="#d946ef" stroke-width="2"/>
+  
+  <!-- Speed S Curve -->
+  <path d="M 44 16 L 24 16 C 18 16, 16 21, 18 26 C 20 32, 28 32, 32 34 C 40 36, 47 38, 47 44 C 47 50, 40 50, 32 50 L 19 50" 
+        fill="none" 
+        stroke="url(#favGrad)" 
+        stroke-width="3.5" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+  
+  <!-- Core Node -->
+  <circle cx="32" cy="55" r="2" fill="#00f5ff"/>
+</svg>

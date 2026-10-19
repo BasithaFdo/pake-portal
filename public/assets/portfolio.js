@@ -50,7 +50,7 @@
       { text: '> [OK] Initializing Neural HUD & Canvas Engine...', class: 'log-purple' },
       { text: '> [OK] Loading Three.js WebGL & GLTF Subsystems...', class: 'log-cyan' },
       { text: '> [OK] Mounting Architecture Modules (Full-Stack, RPA, FiveM)...', class: 'log-green' },
-      { text: '> [SYS_READY] Welcome, Operator. Basitha Ninduwara Fernando Portfolio Online.', class: 'log-green' }
+      { text: '> [SYS_READY] Welcome, Operator. SkyLine Hub // Basitha Ninduwara Fernando Online.', class: 'log-green' }
     ];
 
     let currentLog = 0;
@@ -487,7 +487,14 @@
 
     switch (cmd) {
       case 'help':
-        resLine.innerHTML = `<span class="term-ok">> Available:</span> <span class="term-val">skills, projects, fivem, rpa, contact, cv, clear, matrix</span>`;
+        resLine.innerHTML = `<span class="term-ok">> Available:</span> <span class="term-val">skills, projects, fivem, skyline, cloud, rpa, contact, cv, clear, matrix</span>`;
+        break;
+      case 'skyline':
+      case 'hub':
+        resLine.innerHTML = `<span class="term-ok">> SkyLine Hub:</span> <span class="term-val">Unified Developer Ecosystem & 3D WebGL Engine. Lead Architect: Basitha Ninduwara Fernando.</span>`;
+        break;
+      case 'cloud':
+        resLine.innerHTML = `<span class="term-ok">> SkyLine Cloud:</span> <span class="term-val">Encrypted Private Storage Drive & Vault active at /dashboard_preview.html.</span>`;
         break;
       case 'skills':
         resLine.innerHTML = `<span class="term-ok">> Stack:</span> <span class="term-val">PHP/Laravel, MySQL, SQL Server, UiPath, Power Apps, Docker, Linux, Lua, Qbox/QBCore</span>`;
