@@ -3,54 +3,53 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SkyLine Hub — Ultra-Fast PHP & MySQL Portal Platform</title>
-  <meta name="description" content="SkyLine Hub is a modern, high-performance Ubuntu Apache, PHP 8.1+ & MySQL 8 portal platform featuring secure authentication, CSRF protection, and zero-bloat architecture.">
-  <link rel="stylesheet" href="assets/style.css">
-  <style>
-    /* Demo preview switcher toolbar */
-    .preview-toolbar {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 9999;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(59, 130, 246, 0.4);
-      border-radius: 999px;
-      padding: 8px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      backdrop-filter: blur(12px);
-      font-size: 13px;
-      color: #94a3b8;
-    }
-    .preview-toolbar button {
-      background: rgba(59, 130, 246, 0.2);
-      border: 1px solid rgba(59, 130, 246, 0.5);
-      color: #fff;
-      border-radius: 999px;
-      padding: 4px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .preview-toolbar button:hover {
-      background: rgba(59, 130, 246, 0.4);
-    }
-  </style>
+  <title>Basitha Ninduwara Fernando — Full-Stack, RPA & FiveM Developer Portfolio</title>
+  <meta name="description" content="Portfolio of Basitha Ninduwara Fernando — Multi-skilled developer specializing in Full-Stack Web Development, UiPath RPA Automation, and FiveM GTA V Game Server Development.">
+  <meta name="keywords" content="Basitha Ninduwara Fernando, Full-Stack Developer, RPA Developer, UiPath Developer, FiveM Developer, Lua, PHP, Laravel, Docker, MySQL, Sri Lanka Developer">
+  <meta name="author" content="Basitha Ninduwara Fernando">
+  <meta name="theme-color" content="#030712">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Basitha Ninduwara Fernando — Developer Portfolio">
+  <meta property="og:description" content="Intelligent automation, full-stack web platforms, and immersive FiveM multiplayer servers.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="assets/portfolio.css">
 </head>
 <body>
 
-  <!-- Demo Toolbar for Testing States in Static Preview -->
-  <div class="preview-toolbar" id="previewToolbar">
-    <span>💡 Preview State: <strong id="userStateLabel" style="color:#38bdf8;">Guest</strong></span>
-    <button id="toggleAuthBtn">Toggle Logged-In</button>
-  </div>
+  <!-- Custom Cyber Cursor -->
+  <div class="custom-cursor-dot"></div>
+  <div class="custom-cursor-ring"></div>
 
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress-bar"></div>
+
+  <!-- System Bootloader Sequence -->
+  <div id="system-bootloader">
+    <div class="bootloader-terminal">
+      <div class="bootloader-header">
+        <div class="bootloader-dots">
+          <span class="bootloader-dot red"></span>
+          <span class="bootloader-dot yellow"></span>
+          <span class="bootloader-dot green"></span>
+        </div>
+        <span>KERNEL_INIT // BNF_PORTFOLIO_V2.4</span>
+      </div>
+      <div class="bootloader-logs" id="bootloader-logs">
+        <div class="log-cyan">> INITIALIZING HARDWARE SUBSYSTEMS...</div>
+      </div>
+      <div class="bootloader-progress-wrap">
+        <div class="bootloader-progress-bar" id="bootloader-progress"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- Interactive Particle Background Canvas -->
   <canvas id="bg-canvas"></canvas>
@@ -60,730 +59,1627 @@
   <div class="ambient-orb orb-2"></div>
   <div class="ambient-orb orb-3"></div>
 
+  <!-- Cyber Matrix Grid Overlay -->
+  <div class="cyber-grid-overlay"></div>
+
+  <!-- Floating HUD Section Indicator Dots (Desktop) -->
+  <nav class="hud-section-nav" aria-label="Section Navigation">
+    <a class="hud-dot active" href="#hero" data-section="hero" aria-label="Hero Section">
+      <span class="hud-tooltip">Hero // Top</span>
+    </a>
+    <a class="hud-dot" href="#about" data-section="about" aria-label="About Section">
+      <span class="hud-tooltip">About // Profile</span>
+    </a>
+    <a class="hud-dot" href="#skills" data-section="skills" aria-label="Skills Section">
+      <span class="hud-tooltip">Skills // Arsenal</span>
+    </a>
+    <a class="hud-dot" href="#projects" data-section="projects" aria-label="Projects Section">
+      <span class="hud-tooltip">Projects // Systems</span>
+    </a>
+    <a class="hud-dot" href="#fivem" data-section="fivem" aria-label="FiveM Section">
+      <span class="hud-tooltip">FiveM // Virtual Worlds</span>
+    </a>
+    <a class="hud-dot" href="#automation" data-section="automation" aria-label="Automation Section">
+      <span class="hud-tooltip">Automation // RPA</span>
+    </a>
+    <a class="hud-dot" href="#contact" data-section="contact" aria-label="Contact Section">
+      <span class="hud-tooltip">Contact // Transmit</span>
+    </a>
+  </nav>
+
   <!-- Sticky Glassmorphic Navbar -->
   <header class="nav-header">
-    <nav class="nav">
-      <a class="logo" href="#">
-        <span class="logo-badge">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <div class="nav-container">
+      <a class="brand-logo" href="#hero">
+        <div class="brand-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
             <polyline points="2 17 12 22 22 17"></polyline>
             <polyline points="2 12 12 17 22 12"></polyline>
           </svg>
-        </span>
-        SkyLine<span>Hub</span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">BASITHA NINDUWARA</span>
+          <span class="brand-tag">FULL-STACK • RPA • FIVEM</span>
+        </div>
       </a>
 
-      <ul class="nav-menu">
-        <li><a href="#r34-showcase">Skyline 3D</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#architecture">Architecture</a></li>
-        <li><a href="#security">Security</a></li>
-        <li><a href="#faq">FAQ</a></li>
+      <!-- Desktop Nav Links -->
+      <ul class="nav-links">
+        <li><a class="nav-link active" href="#hero">Home</a></li>
+        <li><a class="nav-link" href="#about">About</a></li>
+        <li><a class="nav-link" href="#skills">Skills</a></li>
+        <li><a class="nav-link" href="#projects">Projects</a></li>
+        <li><a class="nav-link" href="#fivem">FiveM Worlds</a></li>
+        <li><a class="nav-link" href="#automation">Automation</a></li>
+        <li><a class="nav-link" href="#contact">Contact</a></li>
       </ul>
 
-      <div class="links" id="navLinks">
-        <a class="ghost" href="login.php">Sign In</a>
-        <a class="btn small" href="register.php">Get Started →</a>
-      </div>
-    </nav>
-  </header>
+      <!-- Action Buttons -->
+      <div class="nav-actions">
+        <!-- Audio Synthesizer Toggle -->
+        <button class="hud-btn" id="btnToggleAudio" aria-label="Toggle Cyber Sound Effects">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+          Audio: MUTED
+        </button>
 
-  <main>
-    <!-- Hero Section -->
-    <section class="hero-wrapper">
-      <div class="container hero">
-        <div class="badge-pill">
-          <span class="pulse-dot"></span>
-          <span>v2.0 Active • Production Ready PHP 8 & MySQL Portal</span>
-        </div>
+        <!-- Interactive Terminal HUD Button -->
+        <button class="hud-btn btn-open-terminal" id="btnNavTerminal" aria-label="Open Interactive Developer Terminal">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          CLI [Ctrl+K]
+        </button>
 
-        <div class="eyebrow">Enterprise-Grade Performance</div>
-        <h1>
-          Build. Connect.<br>
-          <span class="gradient-text">Scale Without Limits.</span>
-        </h1>
+        <!-- CV Modal Trigger -->
+        <button class="cyber-btn cyber-btn-primary btn-open-cv" style="padding: 7px 16px; font-size: 0.82rem;">
+          Download CV
+        </button>
 
-        <p class="hero-subtitle">
-          A secure, blazing-fast PHP 8.1+ and MySQL portal engine with modern session security, CSRF protection, and a sleek glassmorphic UI. Ready to deploy on Apache.
-        </p>
-
-        <div class="actions">
-          <a class="btn" id="primaryCta" href="register.php">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-            Deploy SkyLine Hub Free
-          </a>
-          <a class="ghostbutton" href="#architecture">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-            Explore Architecture
-          </a>
-          <a class="ghostbutton" id="secondaryCta" href="login.php">Existing User? Sign In</a>
-        </div>
-
-        <!-- 3D Interactive Hero Mockup -->
-        <div class="hero-mockup-container">
-          <div class="hero-mockup">
-            <div class="mockup-header">
-              <div class="mockup-dots">
-                <span class="mockup-dot red"></span>
-                <span class="mockup-dot yellow"></span>
-                <span class="mockup-dot green"></span>
-              </div>
-              <div class="mockup-title">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                skyline-node@ubuntu-apache: ~ /var/www/pake-portal
-              </div>
-              <div class="mockup-status-tag">
-                <span class="pulse-dot" style="width:6px;height:6px"></span>
-                LIVE
-              </div>
-            </div>
-
-            <div class="mockup-body">
-              <div class="mockup-stats-grid">
-                <div class="stat-widget">
-                  <div class="label">System Uptime</div>
-                  <div class="value">99.99%</div>
-                  <div class="trend">↑ Continuous Operation</div>
-                </div>
-                <div class="stat-widget">
-                  <div class="label">Response Latency</div>
-                  <div class="value" id="live-latency">14ms</div>
-                  <div class="trend">⚡ Sub-millisecond PDO</div>
-                </div>
-                <div class="stat-widget">
-                  <div class="label">Queries Processed</div>
-                  <div class="value" id="live-queries">12,840</div>
-                  <div class="trend">🛡️ 100% Prepared Statements</div>
-                </div>
-                <div class="stat-widget">
-                  <div class="label">Session Integrity</div>
-                  <div class="value">Active</div>
-                  <div class="trend">🔒 SameSite Strict Cookies</div>
-                </div>
-              </div>
-
-              <div class="mockup-terminal">
-                <div class="terminal-logs">
-                  <div class="terminal-line"><span class="cyan">[BOOT]</span> PHP 8.1 PDO Engine Initialized</div>
-                  <div class="terminal-line"><span class="purple">[AUTH]</span> CSRF Hash Tokens Generated (HMAC-SHA256)</div>
-                  <div class="terminal-line"><span class="green">[OK]</span> MySQL UTF8MB4 Unicode connection established</div>
-                  <div class="terminal-line"><span class="dim">[SYS]</span> VirtualHost packet listener active on port 443</div>
-                </div>
-                <div class="terminal-status-bar">
-                  <span>Host: Ubuntu Linux 22.04 LTS</span>
-                  <span>PHP Engine: v8.1+</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Brian's Nissan Skyline GT-R R34 (2 Fast 2 Furious) Interactive 3D Showcase -->
-    <section id="r34-showcase" class="container r34-showcase-container">
-      <div class="r34-showcase-box">
-        <!-- Header Bar -->
-        <div class="r34-header-bar">
-          <div class="r34-badge-title">
-            <span class="gtr-badge">GT-R</span>
-            <span class="r34-title-text">
-              Brian's Nissan Skyline GT-R <span style="color:#00f0ff;font-weight:700;">// 2 FAST 2 FURIOUS</span> <span style="color:#64748b;font-weight:400;font-size:13px">(BNR34)</span>
-            </span>
-          </div>
-          <div class="r34-specs-ticker">
-            <span><span class="pulse-dot" style="width:6px;height:6px;background:#00f0ff;box-shadow:0 0 10px #00f0ff"></span> TWIN TURBO RB26DETT</span>
-            <span>•</span>
-            <span>ATTESA E-TS AWD</span>
-            <span>•</span>
-            <span id="r34RevStatus" style="color:#00f0ff;font-weight:700;">⚡ BRIAN'S R34 GT-R ACTIVE • 2 FAST 2 FURIOUS SPEC</span>
-          </div>
-        </div>
-
-        <!-- 3D Canvas Area -->
-        <div class="r34-canvas-wrapper" id="r34CanvasWrapper">
-          <div class="tech-corner top-left"></div>
-          <div class="tech-corner top-right"></div>
-          <div class="tech-corner bottom-left"></div>
-          <div class="tech-corner bottom-right"></div>
-
-          <!-- Loading Progress Overlay -->
-          <div class="r34-loading-overlay" id="r34LoadingOverlay">
-            <div class="r34-loading-spinner"></div>
-            <div style="font-weight:700;color:#fff;font-size:15px;margin-bottom:4px" id="r34LoadingText">⚡ Loading Brian's R34 GT-R (14.2 MB)...</div>
-            <div class="r34-loading-bar-track">
-              <div class="r34-loading-bar-fill" id="r34LoadingBar"></div>
-            </div>
-          </div>
-
-          <!-- Telemetry HUD Left -->
-          <div class="r34-hud-telemetry">
-            <div><span class="cyan">CHASSIS:</span> BNR34-2F2F SPEC</div>
-            <div><span class="cyan">AERO:</span> C-WEST Bodykit + APR GT Wing</div>
-            <div><span class="cyan">WHEELS:</span> HRE 446R 19" 3-Piece</div>
-            <div><span class="green">STATUS:</span> Infinite Highway Run Active</div>
-          </div>
-
-          <!-- Cockpit Speedometer & Tachometer Cluster Right -->
-          <div class="r34-hud-cluster">
-            <div class="gauge-item">
-              <div class="gauge-label">Speed</div>
-              <div class="gauge-val cyan"><span id="r34SpeedMph">128</span> <span class="gauge-unit">MPH</span></div>
-            </div>
-            <div class="gauge-item">
-              <div class="gauge-label">Tachometer</div>
-              <div class="gauge-val"><span id="r34RpmValue">6,800</span> <span class="gauge-unit">RPM</span></div>
-            </div>
-            <div class="gauge-item">
-              <div class="gauge-label">Gear</div>
-              <div class="gauge-val" style="color:#f59e0b">4TH</div>
-            </div>
-            <div class="gauge-item">
-              <div class="gauge-label">NOS</div>
-              <div class="gauge-val" style="color:#00f0ff">100%</div>
-            </div>
-          </div>
-
-          <!-- Steering Keyboard Hint -->
-          <div class="r34-steer-hint">
-            <kbd>A</kbd> <kbd>D</kbd> or <kbd>←</kbd> <kbd>→</kbd> to Steer Car • <kbd>Space</kbd> for NOS Boost
-          </div>
-
-          <!-- 3D WebGL Canvas Container -->
-          <div id="r34-3d-canvas"></div>
-
-          <!-- Cockpit Controls Bar -->
-          <div class="r34-controls-bar">
-            <!-- Camera View Switcher -->
-            <div class="r34-cam-switcher">
-              <span class="r34-color-label">Cam:</span>
-              <button class="r34-cam-btn active" data-view="chase">Chase</button>
-              <button class="r34-cam-btn" data-view="orbit">Orbit</button>
-              <button class="r34-cam-btn" data-view="hood">Hood</button>
-              <button class="r34-cam-btn" data-view="low">Low</button>
-            </div>
-
-            <!-- Action Toggles -->
-            <div class="r34-action-buttons">
-              <!-- Big NOS Button -->
-              <button class="r34-rev-btn" id="btnR34Nos" style="background:linear-gradient(135deg, #00d4ff, #0055ff);box-shadow:0 4px 18px rgba(0, 150, 255, 0.5);" title="Trigger Nitrous Oxide Purge & High Speed Boost">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                NOS PURGE & BOOST
-              </button>
-
-              <button class="r34-toggle-btn active" id="btnR34DriveMode" title="Switch Highway Drive or 360° Showroom">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Highway Run
-              </button>
-
-              <button class="r34-toggle-btn active" id="btnR34Neon" title="Toggle 2 Fast 2 Furious Blue Neon Underglow">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"></path></svg>
-                Blue Underglow
-              </button>
-
-              <button class="r34-toggle-btn active" id="btnR34Lights" title="Toggle Xenon Headlights & Halo Taillights">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line></svg>
-                Headlights
-              </button>
-
-              <button class="r34-toggle-btn active" id="btnR34Sound" title="Toggle Turbo & NOS Synthesized Sound Effects">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                Audio: ON
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Metrics Ribbon -->
-    <div class="container">
-      <div class="metrics-ribbon">
-        <div class="metric-item">
-          <div class="metric-number" data-counter-target="99.99" data-counter-suffix="%">99.99%</div>
-          <div class="metric-label">Guaranteed System Reliability</div>
-        </div>
-        <div class="metric-item">
-          <div class="metric-number" data-counter-target="15" data-counter-prefix="< " data-counter-suffix="ms">< 15ms</div>
-          <div class="metric-label">Average Server Response Time</div>
-        </div>
-        <div class="metric-item">
-          <div class="metric-number" data-counter-target="256" data-counter-suffix="-bit">256-bit</div>
-          <div class="metric-label">Cryptographic Protection</div>
-        </div>
-        <div class="metric-item">
-          <div class="metric-number" data-counter-target="0" data-counter-suffix=" Bloat">0 Bloat</div>
-          <div class="metric-label">Pure Native Web Tech</div>
-        </div>
+        <!-- Mobile Nav Toggle -->
+        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
       </div>
     </div>
+  </header>
 
-    <!-- Core Features Section -->
-    <section id="features" class="section">
-      <div class="container">
-        <div class="section-header">
-          <div class="eyebrow">BUILT FOR SPEED & RELIABILITY</div>
-          <h2 class="section-title">Engineered with Precision</h2>
-          <p class="section-desc">
-            SkyLine Hub replaces heavyweight bloatware with crisp, efficient PHP and MySQL architecture designed for maximum speed and simplicity.
-          </p>
-        </div>
+  <main class="portfolio-main">
 
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m18 16 4-4-4-4"></path>
-                <path d="m6 8-4 4 4 4"></path>
-                <path d="m14.5 4-5 16"></path>
-              </svg>
-            </div>
-            <h3>Modern PHP 8 Core</h3>
-            <p>Strict typing, fast PDO prepared statements, and zero framework overhead ensure near-instantaneous page generation.</p>
-            <span class="card-badge">PHP 8.1+ Strict</span>
-          </div>
+    <!-- =========================================================================
+         SECTION 1: HERO SECTION
+         ========================================================================= -->
+    <section class="hero-section" id="hero">
+      <div class="section-wrap" style="padding-top: 40px; padding-bottom: 20px;">
+        <div class="hero-grid">
 
-          <div class="feature-card">
-            <div class="card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-              </svg>
-            </div>
-            <h3>Optimized MySQL 8 Storage</h3>
-            <p>Full utf8mb4 multi-language unicode charset, structured indexing, and isolated least-privilege database user permissions.</p>
-            <span class="card-badge">InnoDB + utf8mb4</span>
-          </div>
-
-          <div class="feature-card">
-            <div class="card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
-            </div>
-            <h3>CSRF & Session Security</h3>
-            <p>Automated cryptographic token verification for state mutations, SameSite cookie protection, and session regeneration on login.</p>
-            <span class="card-badge">Strict Security</span>
-          </div>
-
-          <div class="feature-card">
-            <div class="card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="2" y1="12" x2="22" y2="12"></line>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-              </svg>
-            </div>
-            <h3>Apache 2.4 Ready</h3>
-            <p>Production-tailored VirtualHost configuration with directory traversal safeguards, symbolic link controls, and custom error logs.</p>
-            <span class="card-badge">VirtualHost Config</span>
-          </div>
-
-          <div class="feature-card">
-            <div class="card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2v20"></path>
-                <path d="m17 5-5-3-5 3"></path>
-                <path d="m17 19-5 3-5-3"></path>
-                <path d="M2 12h20"></path>
-                <path d="m5 7-3 5 3 5"></path>
-                <path d="m19 7 3 5-3 5"></path>
-              </svg>
-            </div>
-            <h3>Glassmorphic Responsive UI</h3>
-            <p>Sleek dark-mode aesthetic with hardware-accelerated backdrop blur, dynamic micro-interactions, and responsive layouts on all screens.</p>
-            <span class="card-badge">Pure Vanilla CSS</span>
-          </div>
-
-          <div class="feature-card">
-            <div class="card-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-              </svg>
-            </div>
-            <h3>Instant Extensibility</h3>
-            <p>Clean modular code foundation that easily scales from a single portal into enterprise SaaS dashboards or API gateways.</p>
-            <span class="card-badge">Modular Architecture</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Architecture & Code Showcase -->
-    <section id="architecture" class="section">
-      <div class="container">
-        <div class="section-header">
-          <div class="eyebrow">DEPLOYMENT & ARCHITECTURE</div>
-          <h2 class="section-title">Production Code Ready</h2>
-          <p class="section-desc">
-            Explore the clean configuration files that power SkyLine Hub on Ubuntu Linux.
-          </p>
-        </div>
-
-        <div class="architecture-tabs-container">
-          <div class="tabs-nav">
-            <div class="tab-buttons">
-              <button class="tab-btn active" data-tab="tab-apache">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                pake-portal.conf
-              </button>
-              <button class="tab-btn" data-tab="tab-sql">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-                database/schema.sql
-              </button>
-              <button class="tab-btn" data-tab="tab-bootstrap">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                bootstrap.php
-              </button>
-              <button class="tab-btn" data-tab="tab-config">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                config.example.php
-              </button>
-            </div>
-            <button class="copy-btn">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              <span>Copy Code</span>
-            </button>
-          </div>
-
-          <!-- Tab Pane 1: Apache Conf -->
-          <div id="tab-apache" class="tab-pane active">
-            <pre class="code-pre"><code><span class="comment"># /etc/apache2/sites-available/pake-portal.conf</span>
-&lt;VirtualHost *:80&gt;
-    ServerName <span class="string">YOUR_SERVER_IP_OR_DOMAIN</span>
-    DocumentRoot <span class="string">/var/www/pake-portal/public</span>
-
-    &lt;Directory <span class="string">/var/www/pake-portal/public</span>&gt;
-        <span class="keyword">Options</span> -Indexes +FollowSymLinks
-        <span class="keyword">AllowOverride</span> None
-        <span class="keyword">Require</span> all granted
-    &lt;/Directory&gt;
-
-    <span class="comment"># Logging configuration</span>
-    ErrorLog ${APACHE_LOG_DIR}/pake-portal-error.log
-    CustomLog ${APACHE_LOG_DIR}/pake-portal-access.log combined
-&lt;/VirtualHost&gt;</code></pre>
-          </div>
-
-          <!-- Tab Pane 2: SQL Schema -->
-          <div id="tab-sql" class="tab-pane">
-            <pre class="code-pre"><code><span class="comment">-- MySQL UTF8MB4 Schema Setup</span>
-<span class="keyword">CREATE DATABASE</span> pake_portal <span class="keyword">CHARACTER SET</span> utf8mb4 <span class="keyword">COLLATE</span> utf8mb4_unicode_ci;
-
-<span class="keyword">CREATE TABLE</span> users (
-    id <span class="var">INT UNSIGNED AUTO_INCREMENT PRIMARY KEY</span>,
-    name <span class="var">VARCHAR(100) NOT NULL</span>,
-    email <span class="var">VARCHAR(190) NOT NULL UNIQUE</span>,
-    password_hash <span class="var">VARCHAR(255) NOT NULL</span>,
-    created_at <span class="var">TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>
-) <span class="keyword">ENGINE</span>=InnoDB <span class="keyword">DEFAULT CHARSET</span>=utf8mb4;</code></pre>
-          </div>
-
-          <!-- Tab Pane 3: Bootstrap PHP -->
-          <div id="tab-bootstrap" class="tab-pane">
-            <pre class="code-pre"><code><span class="keyword">&lt;?php</span>
-<span class="keyword">declare</span>(strict_types=1);
-
-<span class="var">$config</span> = <span class="keyword">require</span> <span class="func">dirname</span>(__DIR__) . <span class="string">'/config.php'</span>;
-
-<span class="var">$pdo</span> = <span class="keyword">new</span> <span class="func">PDO</span>(
-    <span class="string">'mysql:host='</span> . <span class="var">$config</span>[<span class="string">'db_host'</span>] . <span class="string">';dbname='</span> . <span class="var">$config</span>[<span class="string">'db_name'</span>] . <span class="string">';charset=utf8mb4'</span>,
-    <span class="var">$config</span>[<span class="string">'db_user'</span>],
-    <span class="var">$config</span>[<span class="string">'db_pass'</span>],
-    [
-        <span class="func">PDO::ATTR_ERRMODE</span> => <span class="func">PDO::ERRMODE_EXCEPTION</span>,
-        <span class="func">PDO::ATTR_DEFAULT_FETCH_MODE</span> => <span class="func">PDO::FETCH_ASSOC</span>,
-        <span class="func">PDO::ATTR_EMULATE_PREPARES</span> => <span class="keyword">false</span>,
-    ]
-);
-
-<span class="comment">// Secure session initialization</span>
-<span class="func">ini_set</span>(<span class="string">'session.use_strict_mode'</span>, <span class="string">'1'</span>);
-<span class="func">session_start</span>();</code></pre>
-          </div>
-
-          <!-- Tab Pane 4: Config PHP -->
-          <div id="tab-config" class="tab-pane">
-            <pre class="code-pre"><code><span class="keyword">&lt;?php</span>
-<span class="comment">// config.php - Keep outside public root, do NOT commit to Git</span>
-<span class="keyword">return</span> [
-    <span class="string">'db_host'</span> => <span class="string">'127.0.0.1'</span>,
-    <span class="string">'db_name'</span> => <span class="string">'pake_portal'</span>,
-    <span class="string">'db_user'</span> => <span class="string">'pake_user'</span>,
-    <span class="string">'db_pass'</span> => <span class="string">'YOUR_NEW_STRONG_PASSWORD'</span>,
-];</code></pre>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Security Spotlight -->
-    <section id="security" class="section">
-      <div class="container">
-        <div class="security-section">
-          <div class="security-list">
-            <div class="eyebrow">UNCOMPROMISING PROTECTION</div>
-            <h2 class="section-title" style="text-align: left; margin-bottom: 20px;">Built for Defensive Security</h2>
-
-            <div class="security-item">
-              <div class="security-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-              </div>
-              <div>
-                <h4>CSRF Shield</h4>
-                <p>Every POST request requires a cryptographically strong anti-forgery token, preventing unauthorized actions from third-party sites.</p>
-              </div>
+          <!-- Left Column: Bio, Roles, CTAs -->
+          <div class="hero-content">
+            <div class="hero-status-pill">
+              <span class="status-ping-dot"></span>
+              <span>ONLINE // AVAILABLE FOR CONTRACTS & COLLABORATION</span>
             </div>
 
-            <div class="security-item">
-              <div class="security-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-              </div>
-              <div>
-                <h4>Zero SQL Injection Vector</h4>
-                <p>Emulated prepares are explicitly disabled (`PDO::ATTR_EMULATE_PREPARES => false`), forcing native prepared statements at the MySQL protocol level.</p>
-              </div>
+            <h1 class="hero-name">
+              <span class="name-gradient">BASITHA NINDUWARA FERNANDO</span>
+            </h1>
+
+            <div class="hero-role-wrapper">
+              <span class="role-prefix">></span>
+              <span class="role-typing" id="heroRoleText">Full-Stack Software Developer</span>
             </div>
 
-            <div class="security-item">
-              <div class="security-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
-              </div>
-              <div>
-                <h4>Adaptive Password Hashing</h4>
-                <p>Passwords are never stored in plaintext. Hashed using PHP's native `PASSWORD_DEFAULT` (Bcrypt) with automated salt generation.</p>
-              </div>
-            </div>
-
-            <div class="security-item">
-              <div class="security-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path><path d="m14.83 14.83 4.24 4.24"></path><path d="m9.17 14.83-4.24 4.24"></path></svg>
-              </div>
-              <div>
-                <h4>Strict Session Governance</h4>
-                <p>Enforces `session.use_strict_mode = 1`, `HttpOnly = true`, and `SameSite = Lax` flags to neutralize XSS cookie exfiltration.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="security-card-visual">
-            <div class="visual-badge">
-              <span class="pulse-dot" style="width:6px;height:6px"></span>
-              Secured Environment
-            </div>
-            <h3>Hardened By Design</h3>
-            <p>
-              Unlike bloated CMS portals with thousands of unchecked third-party plugins, SkyLine Hub provides an airtight attack surface with direct, auditable code.
+            <p class="hero-intro-text">
+              "I build intelligent automation solutions, powerful full-stack web applications, scalable backend systems, and immersive FiveM gaming experiences. From enterprise workflow automation to custom multiplayer game servers, I transform complex ideas into functional digital solutions."
             </p>
-            <div style="background: rgba(10, 16, 30, 0.7); border-radius: 12px; padding: 18px; border: 1px solid var(--edge);">
-              <div style="font-family: var(--font-mono); font-size: 13px; color: #38bdf8; margin-bottom: 8px;">✓ Apache Options -Indexes</div>
-              <div style="font-family: var(--font-mono); font-size: 13px; color: #38bdf8; margin-bottom: 8px;">✓ Credentials isolated outside /public</div>
-              <div style="font-family: var(--font-mono); font-size: 13px; color: #38bdf8; margin-bottom: 8px;">✓ HTML entities sanitization with ENT_QUOTES</div>
-              <div style="font-family: var(--font-mono); font-size: 13px; color: #38bdf8;">✓ Timing attack mitigated password verify</div>
+
+            <div class="hero-cta-group">
+              <a class="cyber-btn cyber-btn-primary" href="#projects">
+                <span>View Projects</span>
+                <span class="btn-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </span>
+              </a>
+
+              <a class="cyber-btn cyber-btn-secondary" href="#contact">
+                <span>Contact Me</span>
+              </a>
+
+              <button class="cyber-btn cyber-btn-purple btn-open-cv">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Download CV</span>
+              </button>
             </div>
+
+            <!-- Social Links Row -->
+            <div class="hero-social-row">
+              <span class="hero-social-label">Coordinates //</span>
+
+              <a class="social-icon-btn" href="https://github.com/BasithaFdo" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              </a>
+
+              <a class="social-icon-btn" href="https://www.linkedin.com/in/basitha-fernando/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              </a>
+
+              <a class="social-icon-btn copy-email-btn" href="mailto:basitha.fernando@example.com" aria-label="Email Me">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </a>
+
+              <button class="social-icon-btn btn-open-terminal" aria-label="Open CLI Terminal">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: Avatar & Code Terminal -->
+          <div class="hero-visual-card">
+
+            <!-- Floating Tech Badges -->
+            <div class="floating-tech-badges">
+              <div class="floating-badge badge-pos-1">
+                <span style="color:var(--cyan);">PHP 8.2 & Laravel</span>
+              </div>
+              <div class="floating-badge badge-pos-2">
+                <span style="color:var(--emerald);">UiPath REFramework</span>
+              </div>
+              <div class="floating-badge badge-pos-3">
+                <span style="color:var(--purple);">FiveM Qbox & Lua</span>
+              </div>
+            </div>
+
+            <!-- Developer Holographic Avatar Area -->
+            <div class="developer-avatar-wrapper">
+              <div class="avatar-hologram-frame">
+                <span class="avatar-initials">BNF</span>
+                <div class="avatar-scanline"></div>
+              </div>
+              <div class="avatar-meta">
+                <div class="avatar-fullname">Basitha Ninduwara Fernando</div>
+                <div class="avatar-title">Multi-Disciplinary Software Engineer</div>
+                <div class="avatar-location">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  Colombo, Sri Lanka • Global Remote
+                </div>
+              </div>
+            </div>
+
+            <!-- Animated Code Terminal -->
+            <div class="hero-terminal-card">
+              <div class="terminal-header-bar">
+                <div class="bootloader-dots">
+                  <span class="bootloader-dot red"></span>
+                  <span class="bootloader-dot yellow"></span>
+                  <span class="bootloader-dot green"></span>
+                </div>
+                <span class="terminal-title">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M10 4v4"></path><path d="M2 8h20"></path></svg>
+                  bash — basitha@dev-workstation:~
+                </span>
+                <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--emerald);">LIVE</span>
+              </div>
+
+              <div class="terminal-body" id="heroTerminalOutput">
+                <div class="term-line">
+                  <span class="term-prompt">$</span> <span class="term-cmd">basitha.init()</span>
+                </div>
+                <div class="term-line">
+                  <span class="term-ok">> [OK] Core Stack:</span> <span class="term-val">PHP / Laravel / UiPath / Lua / Docker</span>
+                </div>
+                <div class="term-line">
+                  <span class="term-ok">> [OK] Focus:</span> <span class="term-val">Enterprise RPA & Multi-Tier Architecture</span>
+                </div>
+                <div class="term-line">
+                  <span class="term-ok">> [OK] Gaming:</span> <span class="term-val">GTA V FiveM Server Infrastructure & NUI</span>
+                </div>
+                <div class="term-line">
+                  <span class="term-key">> [STATUS]</span> <span class="term-val">Open for Innovation & Enterprise Projects</span>
+                </div>
+              </div>
+
+              <div class="terminal-interactive-input">
+                <span class="term-prompt" style="padding-left: 18px;">$</span>
+                <input type="text" class="terminal-input-field" id="heroTerminalInput" placeholder="type 'help', 'skills', 'projects', 'cv'..." autocomplete="off" spellcheck="false">
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 2: ABOUT ME SECTION
+         ========================================================================= -->
+    <section class="section-wrap" id="about">
+      <div class="section-header">
+        <div class="section-tag">// 01. PROFILE & SPECIALIZATION</div>
+        <h2 class="section-title">
+          Versatile Engineer. <span class="gradient-text">Automation Architect.</span>
+        </h2>
+        <p class="section-desc">
+          I am a versatile software developer with cross-disciplinary expertise spanning enterprise software engineering, intelligent process automation, resilient database design, DevOps infrastructure, and multiplayer game server architecture.
+        </p>
+      </div>
+
+      <!-- Intro & Telemetry Counters -->
+      <div class="about-intro-grid">
+        <div class="about-bio-card">
+          <p class="about-bio-text">
+            My engineering philosophy centers on **efficiency, scalability, and seamless user experiences**. Whether engineering unattended enterprise software robots in UiPath to eliminate thousands of hours of manual friction, or structuring complex multiplayer GTA V roleplay ecosystems running custom Lua scripts at 64Hz tick rates, I engineer digital solutions that simply perform.
+          </p>
+          <p class="about-bio-text" style="margin-bottom: 0;">
+            With hands-on proficiency in Docker containerization, Linux server deployment, high-throughput SQL database tuning, and full-stack web applications, I bring end-to-end technical leadership to mission-critical platforms.
+          </p>
+        </div>
+
+        <!-- Telemetry Counters -->
+        <div class="about-telemetry-grid">
+          <div class="telemetry-card">
+            <div class="telemetry-val">50+</div>
+            <div class="telemetry-label">Enterprise Workflows Automated</div>
+          </div>
+          <div class="telemetry-card">
+            <div class="telemetry-val">15+</div>
+            <div class="telemetry-label">Custom FiveM Resources & Frameworks</div>
+          </div>
+          <div class="telemetry-card">
+            <div class="telemetry-val">99.9%</div>
+            <div class="telemetry-label">Production Server Deployment Uptime</div>
+          </div>
+          <div class="telemetry-card">
+            <div class="telemetry-val">100K+</div>
+            <div class="telemetry-label">Optimized Database Transactions</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Primary Specialties Cards -->
+      <div class="specialties-grid">
+        <!-- Specialty 1: Full-Stack -->
+        <div class="specialty-card">
+          <div class="specialty-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          </div>
+          <h3 class="specialty-title">Full-Stack Web Development</h3>
+          <p class="specialty-desc">
+            Building robust frontend interfaces, scalable backend APIs, database-driven applications, and hardened production web platforms using modern MVC architectures, PHP, Laravel, and JavaScript.
+          </p>
+          <div class="specialty-tags">
+            <span class="spec-tag">PHP 8.2</span>
+            <span class="spec-tag">Laravel</span>
+            <span class="spec-tag">REST APIs</span>
+            <span class="spec-tag">MySQL</span>
+            <span class="spec-tag">Security</span>
+          </div>
+        </div>
+
+        <!-- Specialty 2: RPA & Automation -->
+        <div class="specialty-card">
+          <div class="specialty-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+          </div>
+          <h3 class="specialty-title">RPA & Business Automation</h3>
+          <p class="specialty-desc">
+            Automating repetitive enterprise processes using UiPath Studio & Orchestrator, integrating disparate business systems, orchestrating queues, and building self-healing unattended automation pipelines.
+          </p>
+          <div class="specialty-tags">
+            <span class="spec-tag">UiPath Studio</span>
+            <span class="spec-tag">Orchestrator</span>
+            <span class="spec-tag">REFramework</span>
+            <span class="spec-tag">Power Apps</span>
+            <span class="spec-tag">SQL Integration</span>
+          </div>
+        </div>
+
+        <!-- Specialty 3: FiveM Game Dev -->
+        <div class="specialty-card">
+          <div class="specialty-icon-box">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+          </div>
+          <h3 class="specialty-title">FiveM Game Development</h3>
+          <p class="specialty-desc">
+            Creating custom GTA V multiplayer server experiences, high-performance Lua scripts, Qbox/QBCore framework engineering, bespoke NUI interfaces, MLO integrations, and dedicated hosting administration.
+          </p>
+          <div class="specialty-tags">
+            <span class="spec-tag">Lua Scripting</span>
+            <span class="spec-tag">Qbox / QBCore</span>
+            <span class="spec-tag">ox_lib</span>
+            <span class="spec-tag">Custom NUI</span>
+            <span class="spec-tag">txAdmin</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Frequently Asked Questions -->
-    <section id="faq" class="section">
-      <div class="container">
-        <div class="section-header">
-          <div class="eyebrow">GOT QUESTIONS?</div>
-          <h2 class="section-title">Frequently Asked Questions</h2>
-          <p class="section-desc">
-            Everything you need to know about setting up and running SkyLine Hub.
-          </p>
+    <!-- =========================================================================
+         SECTION 3: TECHNICAL SKILLS SECTION
+         ========================================================================= -->
+    <section class="section-wrap" id="skills">
+      <div class="section-header">
+        <div class="section-tag">// 02. TECHNICAL ARSENAL</div>
+        <h2 class="section-title">
+          Categorized Technologies & <span class="gradient-text">Engineering Capabilities</span>
+        </h2>
+        <p class="section-desc">
+          A comprehensive breakdown of enterprise technologies, frameworks, and developer tools I utilize to engineer resilient software architectures. Filter by discipline or search directly.
+        </p>
+      </div>
+
+      <!-- Filter Toolbar & Search Bar -->
+      <div class="skills-filter-toolbar">
+        <div class="skills-search-wrapper">
+          <span class="skills-search-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </span>
+          <input type="text" class="skills-search-input" id="skillSearchInput" placeholder="Filter skills by keyword (e.g. Docker, Lua, UiPath, Laravel)...">
         </div>
 
-        <div class="faq-grid">
-          <div class="faq-item">
-            <button class="faq-question">
-              <span>How do I deploy SkyLine Hub on Ubuntu Apache?</span>
-              <span class="faq-icon">+</span>
+        <div class="skills-category-tabs">
+          <button class="skill-tab-btn active" data-category="all">All Skills</button>
+          <button class="skill-tab-btn" data-category="fullstack">Full-Stack Web Dev</button>
+          <button class="skill-tab-btn" data-category="database">Database Development</button>
+          <button class="skill-tab-btn" data-category="rpa">RPA & Automation</button>
+          <button class="skill-tab-btn" data-category="devops">DevOps & Server Admin</button>
+          <button class="skill-tab-btn" data-category="tools">API & Dev Tools</button>
+          <button class="skill-tab-btn" data-category="fivem">FiveM / GTA V</button>
+        </div>
+
+        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--cyan);" id="skillsCountBadge">
+          Displaying all technical skills
+        </div>
+      </div>
+
+      <!-- Categorized Skills Cards Grid (Complete, non-truncated list matching user prompt) -->
+      <div class="skills-grid" id="skillsGridContainer">
+
+        <!-- Full-Stack Web Development -->
+        <div class="skill-card" data-category="fullstack">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">PHP</span><span class="skill-category-label">Full-Stack Web</span></div>
+        </div>
+        <div class="skill-card" data-category="fullstack">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon></svg></div>
+          <div class="skill-info"><span class="skill-name">Laravel</span><span class="skill-category-label">Full-Stack Web</span></div>
+        </div>
+        <div class="skill-card" data-category="fullstack">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></div>
+          <div class="skill-info"><span class="skill-name">HTML5</span><span class="skill-category-label">Full-Stack Web</span></div>
+        </div>
+        <div class="skill-card" data-category="fullstack">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4-8 4-8-4 8-4z"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">CSS3</span><span class="skill-category-label">Full-Stack Web</span></div>
+        </div>
+        <div class="skill-card" data-category="fullstack">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">JavaScript</span><span class="skill-category-label">Full-Stack Web</span></div>
+        </div>
+        <div class="skill-card" data-category="fullstack">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"></rect><rect x="2" y="14" width="20" height="8" rx="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg></div>
+          <div class="skill-info"><span class="skill-name">REST API Development</span><span class="skill-category-label">Full-Stack Web</span></div>
+        </div>
+        <div class="skill-card" data-category="fullstack">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect></svg></div>
+          <div class="skill-info"><span class="skill-name">Backend Development</span><span class="skill-category-label">Full-Stack Web</span></div>
+        </div>
+        <div class="skill-card" data-category="fullstack">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg></div>
+          <div class="skill-info"><span class="skill-name">Frontend Development</span><span class="skill-category-label">Full-Stack Web</span></div>
+        </div>
+        <div class="skill-card" data-category="fullstack">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"></rect></svg></div>
+          <div class="skill-info"><span class="skill-name">Responsive Web Design</span><span class="skill-category-label">Full-Stack Web</span></div>
+        </div>
+        <div class="skill-card" data-category="fullstack">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></div>
+          <div class="skill-info"><span class="skill-name">API Integration</span><span class="skill-category-label">Full-Stack Web</span></div>
+        </div>
+        <div class="skill-card" data-category="fullstack">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">Web Application Security</span><span class="skill-category-label">Full-Stack Web</span></div>
+        </div>
+
+        <!-- Database Development -->
+        <div class="skill-card" data-category="database">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">MySQL</span><span class="skill-category-label">Database Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="database">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">Microsoft SQL Server</span><span class="skill-category-label">Database Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="database">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
+          <div class="skill-info"><span class="skill-name">SQL Query Optimization</span><span class="skill-category-label">Database Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="database">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg></div>
+          <div class="skill-info"><span class="skill-name">Stored Procedures</span><span class="skill-category-label">Database Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="database">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg></div>
+          <div class="skill-info"><span class="skill-name">Database Design</span><span class="skill-category-label">Database Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="database">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></div>
+          <div class="skill-info"><span class="skill-name">Reporting & Data Integration</span><span class="skill-category-label">Database Dev</span></div>
+        </div>
+
+        <!-- RPA & Enterprise Automation -->
+        <div class="skill-card" data-category="rpa">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">UiPath Studio</span><span class="skill-category-label">RPA Automation</span></div>
+        </div>
+        <div class="skill-card" data-category="rpa">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></div>
+          <div class="skill-info"><span class="skill-name">UiPath Orchestrator</span><span class="skill-category-label">RPA Automation</span></div>
+        </div>
+        <div class="skill-card" data-category="rpa">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg></div>
+          <div class="skill-info"><span class="skill-name">Robotic Process Automation</span><span class="skill-category-label">RPA Automation</span></div>
+        </div>
+        <div class="skill-card" data-category="rpa">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div>
+          <div class="skill-info"><span class="skill-name">Power Apps</span><span class="skill-category-label">RPA Automation</span></div>
+        </div>
+        <div class="skill-card" data-category="rpa">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
+          <div class="skill-info"><span class="skill-name">Workflow Automation</span><span class="skill-category-label">RPA Automation</span></div>
+        </div>
+        <div class="skill-card" data-category="rpa">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">Business Process Automation</span><span class="skill-category-label">RPA Automation</span></div>
+        </div>
+        <div class="skill-card" data-category="rpa">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">API Automation</span><span class="skill-category-label">RPA Automation</span></div>
+        </div>
+        <div class="skill-card" data-category="rpa">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">Unattended Automation</span><span class="skill-category-label">RPA Automation</span></div>
+        </div>
+        <div class="skill-card" data-category="rpa">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">Enterprise System Integration</span><span class="skill-category-label">RPA Automation</span></div>
+        </div>
+
+        <!-- DevOps & Server Administration -->
+        <div class="skill-card" data-category="devops">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">Docker</span><span class="skill-category-label">DevOps & Cloud</span></div>
+        </div>
+        <div class="skill-card" data-category="devops">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">Docker Compose</span><span class="skill-category-label">DevOps & Cloud</span></div>
+        </div>
+        <div class="skill-card" data-category="devops">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg></div>
+          <div class="skill-info"><span class="skill-name">Git</span><span class="skill-category-label">DevOps & Cloud</span></div>
+        </div>
+        <div class="skill-card" data-category="devops">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">GitHub</span><span class="skill-category-label">DevOps & Cloud</span></div>
+        </div>
+        <div class="skill-card" data-category="devops">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"></rect><rect x="2" y="14" width="20" height="8" rx="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg></div>
+          <div class="skill-info"><span class="skill-name">Linux</span><span class="skill-category-label">DevOps & Cloud</span></div>
+        </div>
+        <div class="skill-card" data-category="devops">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg></div>
+          <div class="skill-info"><span class="skill-name">Ubuntu Server</span><span class="skill-category-label">DevOps & Cloud</span></div>
+        </div>
+        <div class="skill-card" data-category="devops">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">Apache</span><span class="skill-category-label">DevOps & Cloud</span></div>
+        </div>
+        <div class="skill-card" data-category="devops">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">Nginx</span><span class="skill-category-label">DevOps & Cloud</span></div>
+        </div>
+        <div class="skill-card" data-category="devops">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"></rect><rect x="2" y="14" width="20" height="8" rx="2"></rect></svg></div>
+          <div class="skill-info"><span class="skill-name">VPS Hosting</span><span class="skill-category-label">DevOps & Cloud</span></div>
+        </div>
+        <div class="skill-card" data-category="devops">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">SSL Configuration</span><span class="skill-category-label">DevOps & Cloud</span></div>
+        </div>
+        <div class="skill-card" data-category="devops">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+          <div class="skill-info"><span class="skill-name">Server Deployment</span><span class="skill-category-label">DevOps & Cloud</span></div>
+        </div>
+        <div class="skill-card" data-category="devops">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">Application Hosting</span><span class="skill-category-label">DevOps & Cloud</span></div>
+        </div>
+        <div class="skill-card" data-category="devops">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">Production Troubleshooting</span><span class="skill-category-label">DevOps & Cloud</span></div>
+        </div>
+
+        <!-- API & Development Tools -->
+        <div class="skill-card" data-category="tools">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+          <div class="skill-info"><span class="skill-name">Postman</span><span class="skill-category-label">API Tools</span></div>
+        </div>
+        <div class="skill-card" data-category="tools">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"></rect><rect x="2" y="14" width="20" height="8" rx="2"></rect></svg></div>
+          <div class="skill-info"><span class="skill-name">REST APIs</span><span class="skill-category-label">API Tools</span></div>
+        </div>
+        <div class="skill-card" data-category="tools">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">Visual Studio Code</span><span class="skill-category-label">API Tools</span></div>
+        </div>
+        <div class="skill-card" data-category="tools">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">JSON</span><span class="skill-category-label">API Tools</span></div>
+        </div>
+        <div class="skill-card" data-category="tools">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">API Testing</span><span class="skill-category-label">API Tools</span></div>
+        </div>
+
+        <!-- FiveM / GTA V Development -->
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon></svg></div>
+          <div class="skill-info"><span class="skill-name">FiveM Server Development</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></div>
+          <div class="skill-info"><span class="skill-name">Lua Scripting</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg></div>
+          <div class="skill-info"><span class="skill-name">QBCore Framework</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg></div>
+          <div class="skill-info"><span class="skill-name">Qbox Framework</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon></svg></div>
+          <div class="skill-info"><span class="skill-name">ESX Framework Integration</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">ox_lib / ox_inventory</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect></svg></div>
+          <div class="skill-info"><span class="skill-name">Custom FiveM NUI</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">HTML / CSS / JS Interfaces</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline></svg></div>
+          <div class="skill-info"><span class="skill-name">Custom FiveM Scripts</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg></div>
+          <div class="skill-info"><span class="skill-name">MLO Installation & Integration</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">Custom Vehicles & Maps</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"></rect><rect x="2" y="14" width="20" height="8" rx="2"></rect></svg></div>
+          <div class="skill-info"><span class="skill-name">Game Server Hosting</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">txAdmin Configuration</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
+          <div class="skill-info"><span class="skill-name">Performance Optimization</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+        <div class="skill-card" data-category="fivem">
+          <div class="skill-icon-wrap"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg></div>
+          <div class="skill-info"><span class="skill-name">FiveM Database Integration</span><span class="skill-category-label">FiveM Game Dev</span></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 4: FEATURED PROJECTS SECTION
+         ========================================================================= -->
+    <section class="section-wrap" id="projects">
+      <div class="section-header">
+        <div class="section-tag">// 03. SELECTED PORTFOLIO</div>
+        <h2 class="section-title">
+          Mission-Critical Systems & <span class="gradient-text">Production Deployments</span>
+        </h2>
+        <p class="section-desc">
+          Featured engineering projects spanning enterprise process automation, full-stack business solutions, containerized infrastructures, and multiplayer game servers. Click any card to inspect system architecture.
+        </p>
+      </div>
+
+      <!-- Project Category Filters -->
+      <div class="projects-filter-bar">
+        <button class="project-filter-btn active" data-filter="all">All Projects (7)</button>
+        <button class="project-filter-btn" data-filter="fullstack">Full-Stack Web</button>
+        <button class="project-filter-btn" data-filter="rpa">RPA & Automation</button>
+        <button class="project-filter-btn" data-filter="fivem">FiveM Gaming</button>
+        <button class="project-filter-btn" data-filter="devops">DevOps & Cloud</button>
+      </div>
+
+      <!-- Project Cards Grid -->
+      <div class="projects-grid">
+
+        <!-- Project 1: Enterprise RPA Automation Platform -->
+        <div class="project-card" data-category="rpa">
+          <div class="project-banner">
+            <div class="project-banner-grid"></div>
+            <div class="project-mockup-frame">
+              <div class="mockup-header-dots">
+                <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+              </div>
+              <div class="mockup-content-snippet">
+                > UiPath.Orchestrator.QueueItem[TX-9042]<br>
+                > Status: Processing -> SUCCESS<br>
+                > REFramework State: RunTransaction()<br>
+                > Exceptions: 0 | Latency: 1.48s
+              </div>
+            </div>
+            <span class="project-badge-corner">Enterprise RPA</span>
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Enterprise RPA Automation Platform</h3>
+            <p class="project-desc">
+              High-throughput UiPath-based automation platform managing end-to-end enterprise workflows, queue orchestration, transaction retries, and automated operational reporting across legacy desktop apps and modern APIs.
+            </p>
+            <div class="project-tags">
+              <span class="p-tag">UiPath Studio</span>
+              <span class="p-tag">Orchestrator</span>
+              <span class="p-tag">REFramework</span>
+              <span class="p-tag">SQL Server</span>
+              <span class="p-tag">C# / VB.NET</span>
+            </div>
+            <div class="project-footer-actions">
+              <button class="project-arch-link" data-project="rpa-platform">
+                <span>View Architecture</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <div class="project-ext-links">
+                <a class="project-btn-icon" href="#automation" aria-label="Simulate Workflow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2: Full-Stack Business Web Application -->
+        <div class="project-card" data-category="fullstack">
+          <div class="project-banner">
+            <div class="project-banner-grid"></div>
+            <div class="project-mockup-frame">
+              <div class="mockup-header-dots">
+                <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+              </div>
+              <div class="mockup-content-snippet">
+                > HTTP/2 200 OK — /api/v1/business/metrics<br>
+                > Auth: Bearer JWT [RBAC_ADMIN]<br>
+                > MySQL Stored Proc Execution: 32ms<br>
+                > CSRF Protected & Rate-Limited
+              </div>
+            </div>
+            <span class="project-badge-corner">Full-Stack Web</span>
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Full-Stack Business Web Application</h3>
+            <p class="project-desc">
+              PHP, Laravel, and MySQL production operational application with secure role-based access control (RBAC), RESTful APIs, data validation, and real-time administrative reporting.
+            </p>
+            <div class="project-tags">
+              <span class="p-tag">PHP 8.2</span>
+              <span class="p-tag">Laravel</span>
+              <span class="p-tag">MySQL 8</span>
+              <span class="p-tag">REST API</span>
+              <span class="p-tag">Responsive UI</span>
+            </div>
+            <div class="project-footer-actions">
+              <button class="project-arch-link" data-project="business-webapp">
+                <span>View Architecture</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <div class="project-ext-links">
+                <a class="project-btn-icon" href="https://github.com/BasithaFdo" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3: Dockerized Web Application Deployment -->
+        <div class="project-card" data-category="devops">
+          <div class="project-banner">
+            <div class="project-banner-grid"></div>
+            <div class="project-mockup-frame">
+              <div class="mockup-header-dots">
+                <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+              </div>
+              <div class="mockup-content-snippet">
+                > docker compose up -d --build<br>
+                > [✓] nginx_proxy (Port 80/443 SSL)<br>
+                > [✓] php_fpm_runtime (Workers: 8)<br>
+                > [✓] mysql_production (Encrypted Volume)
+              </div>
+            </div>
+            <span class="project-badge-corner">DevOps & Cloud</span>
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Dockerized Web Application Deployment</h3>
+            <p class="project-desc">
+              Containerized PHP application environment built using Docker and Docker Compose with Nginx reverse proxy, MySQL service isolation, automated Certbot SSL renewals, and hardened Ubuntu Linux hosting.
+            </p>
+            <div class="project-tags">
+              <span class="p-tag">Docker</span>
+              <span class="p-tag">Docker Compose</span>
+              <span class="p-tag">Nginx</span>
+              <span class="p-tag">Ubuntu Server</span>
+              <span class="p-tag">SSL / TLS</span>
+            </div>
+            <div class="project-footer-actions">
+              <button class="project-arch-link" data-project="docker-deployment">
+                <span>View Architecture</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <div class="project-ext-links">
+                <a class="project-btn-icon" href="https://github.com/BasithaFdo" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4: Automation Monitoring Dashboard -->
+        <div class="project-card" data-category="rpa">
+          <div class="project-banner">
+            <div class="project-banner-grid"></div>
+            <div class="project-mockup-frame">
+              <div class="mockup-header-dots">
+                <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+              </div>
+              <div class="mockup-content-snippet">
+                > Robot Cluster Health: 100% Online<br>
+                > Queue Throughput: 142 items/hr<br>
+                > Avg Handling Time (AHT): 2.1s<br>
+                > Success Rate: 99.8% (0 Critical)
+              </div>
+            </div>
+            <span class="project-badge-corner">Monitoring & RPA</span>
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Automation Monitoring Dashboard</h3>
+            <p class="project-desc">
+              Centralized dashboard tracking automation job telemetry, Orchestrator queue statuses, process exceptions, MTTR analytics, and hardware performance metrics with live threshold alerting.
+            </p>
+            <div class="project-tags">
+              <span class="p-tag">PHP / JS</span>
+              <span class="p-tag">UiPath API</span>
+              <span class="p-tag">SQL Server</span>
+              <span class="p-tag">Chart.js</span>
+              <span class="p-tag">WebSockets</span>
+            </div>
+            <div class="project-footer-actions">
+              <button class="project-arch-link" data-project="automation-dashboard">
+                <span>View Architecture</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <div class="project-ext-links">
+                <a class="project-btn-icon" href="#automation" aria-label="Explore Automation"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 5: PAKE FiveM Gaming Server -->
+        <div class="project-card" data-category="fivem">
+          <div class="project-banner">
+            <div class="project-banner-grid"></div>
+            <div class="project-mockup-frame">
+              <div class="mockup-header-dots">
+                <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+              </div>
+              <div class="mockup-content-snippet">
+                > PAKE SERVER // GTA V MULTIPLAYER<br>
+                > Framework: Qbox / QBCore + ox_lib<br>
+                > Server Tick Rate: 64Hz | 0.02ms Resmon<br>
+                > Custom Economy, Vehicles & MLOs
+              </div>
+            </div>
+            <span class="project-badge-corner" style="border-color:var(--purple); color:#d8b4fe;">FiveM Flagship</span>
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">PAKE FiveM Gaming Server</h3>
+            <p class="project-desc">
+              Custom GTA V FiveM multiplayer server featuring bespoke roleplay systems, Qbox/QBCore framework integration, custom Lua resources, ox_inventory, and low-latency MariaDB architecture.
+            </p>
+            <div class="project-tags">
+              <span class="p-tag">Lua 5.4</span>
+              <span class="p-tag">Qbox Framework</span>
+              <span class="p-tag">ox_lib</span>
+              <span class="p-tag">MariaDB</span>
+              <span class="p-tag">txAdmin</span>
+            </div>
+            <div class="project-footer-actions">
+              <button class="project-arch-link" data-project="pake-fivem">
+                <span>View Architecture</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <div class="project-ext-links">
+                <a class="project-btn-icon" href="#fivem" aria-label="3D FiveM Showcase"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 6: FiveM Custom Admin Dashboard -->
+        <div class="project-card" data-category="fivem">
+          <div class="project-banner">
+            <div class="project-banner-grid"></div>
+            <div class="project-mockup-frame">
+              <div class="mockup-header-dots">
+                <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+              </div>
+              <div class="mockup-content-snippet">
+                > STAFF PORTAL — DISCORD OAUTH2 OK<br>
+                > Player Lookup: CID #8812 (Online)<br>
+                > Inventory: ox_inventory JSON parsed<br>
+                > Remote Action: txAdmin Command Executed
+              </div>
+            </div>
+            <span class="project-badge-corner">FiveM & Web</span>
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">FiveM Custom Admin Dashboard</h3>
+            <p class="project-desc">
+              Web-based administration suite integrated with live FiveM server APIs, allowing staff to query player information, manage inventories, audit game logs, and dispatch server commands remotely.
+            </p>
+            <div class="project-tags">
+              <span class="p-tag">PHP</span>
+              <span class="p-tag">MySQL</span>
+              <span class="p-tag">Discord OAuth2</span>
+              <span class="p-tag">txAdmin API</span>
+              <span class="p-tag">REST</span>
+            </div>
+            <div class="project-footer-actions">
+              <button class="project-arch-link" data-project="fivem-admin-dashboard">
+                <span>View Architecture</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <div class="project-ext-links">
+                <a class="project-btn-icon" href="#fivem" aria-label="FiveM Section"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 7: Custom FiveM NUI Systems -->
+        <div class="project-card" data-category="fivem">
+          <div class="project-banner">
+            <div class="project-banner-grid"></div>
+            <div class="project-mockup-frame">
+              <div class="mockup-header-dots">
+                <span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span>
+              </div>
+              <div class="mockup-content-snippet">
+                > NUI Event: 'openVehicleCatalog'<br>
+                > CEF Hardware Acceleration: 60 FPS<br>
+                > Lua Callback: RegisterNUICallback()<br>
+                > Procedural Web Audio Click Synced
+              </div>
+            </div>
+            <span class="project-badge-corner">FiveM Frontend</span>
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">Custom FiveM NUI Systems</h3>
+            <p class="project-desc">
+              Interactive in-game graphical user interfaces (NUI) including dealership catalogs, vehicle customization menus, banking tablets, and administrative menus engineered for 60 FPS in CEF.
+            </p>
+            <div class="project-tags">
+              <span class="p-tag">HTML5 / CSS3</span>
+              <span class="p-tag">JavaScript</span>
+              <span class="p-tag">Lua NUI Bridge</span>
+              <span class="p-tag">CEF Browser</span>
+              <span class="p-tag">Cyberpunk HUD</span>
+            </div>
+            <div class="project-footer-actions">
+              <button class="project-arch-link" data-project="fivem-nui">
+                <span>View Architecture</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <div class="project-ext-links">
+                <a class="project-btn-icon" href="#fivem" aria-label="Explore FiveM"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 5: FIVEM DEVELOPMENT SHOWCASE (CYBERPUNK GAMING)
+         ========================================================================= -->
+    <section class="section-wrap fivem-section" id="fivem">
+      <div class="fivem-heading-wrap">
+        <div class="section-tag" style="background:rgba(157,78,221,0.15); border-color:var(--border-purple); color:#d8b4fe;">
+          // 04. VIRTUAL WORLDS & GAMING ENGINE
+        </div>
+        <h2 class="section-title">
+          "Beyond Web Development — <span class="gradient-text" style="background: linear-gradient(135deg, #ffffff 0%, #c084fc 50%, var(--cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">I Build Virtual Worlds."</span>
+        </h2>
+        <p class="section-desc" style="margin: 0 auto;">
+          From custom Lua game logic and reactive in-game NUI interfaces to high-tick game server administration, I architect complete multiplayer ecosystems inside GTA V FiveM.
+        </p>
+      </div>
+
+      <!-- 3D Three.js Interactive Vehicle / Showroom Canvas -->
+      <div class="fivem-3d-showcase-box">
+        <div class="canvas-hud-toolbar">
+          <div class="hud-title-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Brian's Nissan Skyline GT-R R34 // Interactive WebGL 3D Engine</span>
+            <span class="hud-pill-tag">Three.js + GLTF</span>
+          </div>
+
+          <div class="hud-control-group">
+            <button class="hud-btn active" id="btnR34DriveMode" aria-label="Toggle Highway Drive Mode">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Highway Run
             </button>
-            <div class="faq-answer">
-              Clone this repository into <code>/var/www/pake-portal</code>, import <code>database/schema.sql</code> into your MySQL server, copy <code>config.example.php</code> to <code>config.php</code> with your database credentials, and point an Apache VirtualHost to the <code>/public</code> directory.
+
+            <button class="hud-btn active" id="btnR34Neon" aria-label="Toggle Neon Underglow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"></path></svg>
+              Neon Underglow
+            </button>
+
+            <button class="hud-btn active" id="btnR34Lights" aria-label="Toggle Xenon Headlights">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line></svg>
+              Headlights
+            </button>
+
+            <button class="hud-btn active" id="btnR34Sound" aria-label="Toggle Turbo Audio Sound">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+              Audio: ON
+            </button>
+
+            <button class="cyber-btn cyber-btn-primary" id="btnR34Nos" style="padding: 7px 16px; font-size: 0.8rem;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              NOS Boost [Space]
+            </button>
+          </div>
+        </div>
+
+        <div class="canvas-interactive-area" id="r34-canvas-wrapper">
+          <!-- 3D Three.js Canvas Container -->
+          <div id="r34-3d-canvas"></div>
+
+          <!-- Camera Selection Tray -->
+          <div class="camera-views-tray">
+            <button class="r34-cam-btn active" data-view="chase">Chase Cam</button>
+            <button class="r34-cam-btn" data-view="orbit">360° Orbit</button>
+            <button class="r34-cam-btn" data-view="hood">Hood Cam</button>
+            <button class="r34-cam-btn" data-view="low">Low Angle</button>
+          </div>
+
+          <!-- Viewport HUD Overlay -->
+          <div class="viewport-hud-overlay">
+            <div>INTERACTIVE VIEWPORT: <span>DRAG TO ROTATE // A/D OR ARROWS TO STEER</span></div>
+            <div>TURBO ENGINE: <span>TWIN-TURBOCHARGED RB26DETT // PROCEDURAL SOUND SYNTHESIS</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured PAKE FiveM Server Card -->
+      <div class="fivem-featured-server-card">
+        <div class="pake-server-grid">
+
+          <div class="pake-server-info">
+            <div class="pake-server-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon></svg>
+              FLAGSHIP FIVEM SERVER
+            </div>
+            <h3 class="pake-server-title">PAKE Gaming Community</h3>
+            <p class="pake-server-desc">
+              A high-performance custom GTA V multiplayer roleplay ecosystem built from the ground up on modern Qbox & QBCore architecture, featuring custom Lua resources, balanced economies, low-latency MariaDB databases, and bespoke NUI interfaces.
+            </p>
+
+            <ul class="pake-feature-checklist">
+              <li class="pake-check-item">
+                <span class="check-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                Qbox & QBCore Hybrid Architecture
+              </li>
+              <li class="pake-check-item">
+                <span class="check-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                ox_lib & ox_inventory Integration
+              </li>
+              <li class="pake-check-item">
+                <span class="check-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                Sub-0.03ms Client Resmon Optimization
+              </li>
+              <li class="pake-check-item">
+                <span class="check-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                Bespoke Cyberpunk Garages & NUI Hud
+              </li>
+              <li class="pake-check-item">
+                <span class="check-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                Custom MLO Interiors & Map Streams
+              </li>
+              <li class="pake-check-item">
+                <span class="check-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                txAdmin Remote Deployment & Backups
+              </li>
+            </ul>
+
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+              <a class="cyber-btn cyber-btn-primary" href="https://discord.gg" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6h-2a4 4 0 0 0-4 4v2"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="18" r="3"></circle></svg>
+                <span>Join PAKE Discord Community</span>
+              </a>
+
+              <button class="cyber-btn cyber-btn-secondary project-arch-link" data-project="pake-fivem">
+                <span>View Server Architecture</span>
+              </button>
             </div>
           </div>
 
-          <div class="faq-item">
-            <button class="faq-question">
-              <span>Why is the configuration file outside the public directory?</span>
-              <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-answer">
-              Keeping <code>config.php</code> outside the <code>public/</code> DocumentRoot ensures database credentials and API secrets can never be leaked or accessed over HTTP, even in the event of an Apache misconfiguration.
+          <!-- Server Telemetry Box -->
+          <div class="fivem-status-box">
+            <div class="status-box-header">
+              <span class="status-box-title">txAdmin Telemetry // Live Status</span>
+              <span style="display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:0.75rem; color:var(--emerald);">
+                <span class="status-ping-dot"></span> 24/7 ONLINE
+              </span>
+            </div>
+
+            <div class="server-metric-row">
+              <span class="metric-key">Server Cluster</span>
+              <span class="metric-val">PAKE Roleplay [Asia / Global]</span>
+            </div>
+            <div class="server-metric-row">
+              <span class="metric-key">Client Latency</span>
+              <span class="metric-val" id="fivemPingDisplay">18 ms (Ultra-Low)</span>
+            </div>
+            <div class="server-metric-row">
+              <span class="metric-key">Server Tick Rate</span>
+              <span class="metric-val" style="color:var(--cyan);">64.0 Hz (Zero Hitches)</span>
+            </div>
+            <div class="server-metric-row">
+              <span class="metric-key">Active Player Capacity</span>
+              <span class="metric-val" id="fivemPlayersDisplay">48 / 128 Active Slots</span>
+            </div>
+            <div class="server-metric-row">
+              <span class="metric-key">Framework Core</span>
+              <span class="metric-val">Qbox + ox_core v2.8</span>
+            </div>
+            <div class="server-metric-row">
+              <span class="metric-key">txAdmin Version</span>
+              <span class="metric-val">v7.2.1 (Automated Restarts)</span>
+            </div>
+            <div class="server-metric-row" style="border-bottom:none;">
+              <span class="metric-key">Security Shield</span>
+              <span class="metric-val online">Anti-Cheat & Token Auth</span>
             </div>
           </div>
 
-          <div class="faq-item">
-            <button class="faq-question">
-              <span>Can I customize the dashboard and add custom pages?</span>
-              <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-answer">
-              Yes! SkyLine Hub is designed as a clean foundational architecture. You can easily add new PHP endpoints in <code>public/</code> and simply include <code>bootstrap.php</code> to inherit authenticated sessions, PDO queries, and security helpers.
-            </div>
-          </div>
+        </div>
+      </div>
 
-          <div class="faq-item">
-            <button class="faq-question">
-              <span>Does SkyLine Hub support HTTPS / SSL?</span>
-              <span class="faq-icon">+</span>
-            </button>
-            <div class="faq-answer">
-              Yes. The session handler automatically detects HTTPS traffic and enables the <code>Secure</code> cookie attribute flag, preventing session cookie transmission over unencrypted connections. You can easily enable Let's Encrypt Certbot on Apache.
-            </div>
-          </div>
+      <!-- FiveM 11 Capabilities Grid -->
+      <div class="fivem-capabilities-grid">
+        <div class="fivem-cap-card">
+          <div class="cap-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon></svg></div>
+          <h4 class="cap-title">FiveM Server Development</h4>
+          <p class="cap-desc">Full server architecture setup from ground zero, directory structures, resource loading order, and clean config separation.</p>
+        </div>
+        <div class="fivem-cap-card">
+          <div class="cap-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></div>
+          <h4 class="cap-title">Custom Lua Scripts</h4>
+          <p class="cap-desc">Bespoke client/server Lua 5.4 scripts implementing unique jobs, robbery systems, weapon handling, and player interactions.</p>
+        </div>
+        <div class="fivem-cap-card">
+          <div class="cap-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect></svg></div>
+          <h4 class="cap-title">Qbox / QBCore Development</h4>
+          <p class="cap-desc">Deep mastery of Qbox and QBCore lifecycle, metadata player items, crafting tables, and decoupled resource modules.</p>
+        </div>
+        <div class="fivem-cap-card">
+          <div class="cap-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect></svg></div>
+          <h4 class="cap-title">Custom NUI Design</h4>
+          <p class="cap-desc">Crafting responsive HTML5, CSS3, and JavaScript user interfaces rendered seamlessly inside the FiveM Chromium Embedded Framework.</p>
+        </div>
+        <div class="fivem-cap-card">
+          <div class="cap-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg></div>
+          <h4 class="cap-title">MLO & Map Integration</h4>
+          <p class="cap-desc">Optimizing ytyp, ymap, and interior collisions for custom buildings, car dealerships, police precincts, and hospital wings.</p>
+        </div>
+        <div class="fivem-cap-card">
+          <div class="cap-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path></svg></div>
+          <h4 class="cap-title">Custom Vehicles</h4>
+          <p class="cap-desc">Handling meta tuning, custom engine sounds, livery streaming, high-poly mesh optimization, and handling balance.</p>
+        </div>
+        <div class="fivem-cap-card">
+          <div class="cap-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"></rect><rect x="2" y="14" width="20" height="8" rx="2"></rect></svg></div>
+          <h4 class="cap-title">Server Hosting & Deployment</h4>
+          <p class="cap-desc">Configuring dedicated Linux and Windows game servers, firewall ports, DDoS mitigation, and automatic startup scripts.</p>
+        </div>
+        <div class="fivem-cap-card">
+          <div class="cap-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
+          <h4 class="cap-title">FiveM Server Optimization</h4>
+          <p class="cap-desc">Profiling resmon milliseconds, eliminating while true loops, caching natives, and optimizing texture dictionaries.</p>
+        </div>
+        <div class="fivem-cap-card">
+          <div class="cap-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
+          <h4 class="cap-title">txAdmin Configuration</h4>
+          <p class="cap-desc">Setting up automated database backups, scheduled restarts with server warnings, discord webhooks, and ban lists.</p>
+        </div>
+        <div class="fivem-cap-card">
+          <div class="cap-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6h-2a4 4 0 0 0-4 4v2"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="18" r="3"></circle></svg></div>
+          <h4 class="cap-title">Discord Integration</h4>
+          <p class="cap-desc">Automated role synchronization, ban logging, whitelist verification, and live player count bot webhooks.</p>
+        </div>
+        <div class="fivem-cap-card">
+          <div class="cap-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line></svg></div>
+          <h4 class="cap-title">FiveM Web Dashboards</h4>
+          <p class="cap-desc">Web administration panels connected via REST endpoints for real-time player bans, economy audits, and player inventory inspection.</p>
         </div>
       </div>
     </section>
 
-    <!-- Call to Action Banner -->
-    <section class="section" style="padding-top: 20px;">
-      <div class="container">
-        <div class="cta-banner">
-          <h2>Ready to Launch Your High-Performance Portal?</h2>
-          <p>
-            Deploy SkyLine Hub to your production environment in minutes with zero dependencies and maximum reliability.
+    <!-- =========================================================================
+         SECTION 6: AUTOMATION & RPA SHOWCASE
+         ========================================================================= -->
+    <section class="section-wrap automation-section" id="automation">
+      <div class="section-header">
+        <div class="section-tag">// 05. INTELLIGENT AUTOMATION</div>
+        <h2 class="section-title">
+          "Automating Workflows. <span class="gradient-text">Accelerating Business."</span>
+        </h2>
+        <p class="section-desc">
+          Architecting resilient, unattended software robots that eliminate manual friction, reduce human error, and orchestrate complex enterprise data pipelines across legacy and cloud systems.
+        </p>
+      </div>
+
+      <!-- Visual Interactive Workflow Pipeline -->
+      <div class="rpa-pipeline-container">
+        <div class="pipeline-header">
+          <div class="pipeline-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Interactive Enterprise RPA Pipeline Architecture</span>
+          </div>
+          <span class="pipeline-hint">CLICK ANY STAGE TO INSPECT ARCHITECTURE LOGIC</span>
+        </div>
+
+        <div class="pipeline-flow-wrapper">
+          <!-- Step 1 -->
+          <div class="flow-step-node active" data-step="0">
+            <div class="step-node-num">STAGE 01</div>
+            <div class="step-node-title">Business Request</div>
+            <div class="step-node-sub">Email / Trigger / Webhook</div>
+          </div>
+
+          <div class="pipeline-arrow-divider">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="flow-step-node" data-step="1">
+            <div class="step-node-num">STAGE 02</div>
+            <div class="step-node-title">UiPath Robot</div>
+            <div class="step-node-sub">Dispatcher & Performer</div>
+          </div>
+
+          <div class="pipeline-arrow-divider">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="flow-step-node" data-step="2">
+            <div class="step-node-num">STAGE 03</div>
+            <div class="step-node-title">API / Database</div>
+            <div class="step-node-sub">REST & SQL Transactions</div>
+          </div>
+
+          <div class="pipeline-arrow-divider">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="flow-step-node" data-step="3">
+            <div class="step-node-num">STAGE 04</div>
+            <div class="step-node-title">Business System</div>
+            <div class="step-node-sub">SAP / ERP / Legacy Apps</div>
+          </div>
+
+          <div class="pipeline-arrow-divider">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="flow-step-node" data-step="4">
+            <div class="step-node-num">STAGE 05</div>
+            <div class="step-node-title">Reporting Dashboard</div>
+            <div class="step-node-sub">PowerBI & Audit Logs</div>
+          </div>
+        </div>
+
+        <!-- Selected Step Inspector Box -->
+        <div class="pipeline-detail-inspector" id="pipelineInspector">
+          <!-- Populated dynamically by portfolio.js -->
+        </div>
+      </div>
+
+      <!-- Live Interactive RPA Queue Simulator -->
+      <div class="rpa-simulator-card">
+        <div class="sim-header">
+          <div class="sim-title">
+            <span style="color:var(--cyan);">></span> Live Unattended Robot Queue Execution Simulator
+          </div>
+          <button class="cyber-btn cyber-btn-primary" id="btnRunRpaSim" style="padding: 8px 18px; font-size: 0.85rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span>Run RPA Robot Simulation</span>
+          </button>
+        </div>
+
+        <div class="sim-terminal-screen" id="rpaSimScreen">
+          <div class="sim-log-cyan">> UiPath Robot Unattended Cluster: STANDBY // Ready for queue dispatch</div>
+          <div>> Press 'Run RPA Robot Simulation' to trigger automated queue transaction lifecycle.</div>
+        </div>
+      </div>
+
+      <!-- Automation 7 Capabilities Showcase Grid -->
+      <div class="automation-caps-grid">
+        <div class="auto-cap-card">
+          <div class="auto-icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></div>
+          <h4 class="auto-title">Automated Data Processing</h4>
+          <p class="auto-desc">Extracting, parsing, and normalizing high-volume enterprise document feeds, invoices, PDFs, and spreadsheets with zero data loss.</p>
+        </div>
+
+        <div class="auto-cap-card">
+          <div class="auto-icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2"></rect><rect x="2" y="14" width="20" height="8" rx="2"></rect></svg></div>
+          <h4 class="auto-title">Enterprise System Integration</h4>
+          <p class="auto-desc">Bridging modern REST/SOAP APIs with legacy on-premise Win32 applications, ERPs, CRMs, and SAP modules without modifying legacy code.</p>
+        </div>
+
+        <div class="auto-cap-card">
+          <div class="auto-icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
+          <h4 class="auto-title">Queue-Based Automation</h4>
+          <p class="auto-desc">Architecting scalable Dispatcher/Performer topologies utilizing UiPath Orchestrator Queues for dynamic workload distribution across robot pools.</p>
+        </div>
+
+        <div class="auto-cap-card">
+          <div class="auto-icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+          <h4 class="auto-title">Error Handling & Retries</h4>
+          <p class="auto-desc">Bulletproof REFramework exception handling separating System Exceptions (auto-retry with exponential backoff) from Business Exceptions.</p>
+        </div>
+
+        <div class="auto-cap-card">
+          <div class="auto-icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg></div>
+          <h4 class="auto-title">UiPath Orchestrator Monitoring</h4>
+          <p class="auto-desc">Configuring environment assets, encrypted credential storage, automated robot schedules, license utilization, and health alerts.</p>
+        </div>
+
+        <div class="auto-cap-card">
+          <div class="auto-icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div>
+          <h4 class="auto-title">Power Apps Solutions</h4>
+          <p class="auto-desc">Designing rapid internal employee portals, approval request forms, and canvas apps integrated with automated backend RPA robots.</p>
+        </div>
+
+        <div class="auto-cap-card">
+          <div class="auto-icon-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg></div>
+          <h4 class="auto-title">SQL-Driven Reporting</h4>
+          <p class="auto-desc">Aggregating automated transaction logs into structured SQL tables for PowerBI telemetry dashboards and executive operational reports.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 7: CONTACT SECTION
+         ========================================================================= -->
+    <section class="section-wrap" id="contact">
+      <div class="section-header">
+        <div class="section-tag">// 06. TRANSMIT & COLLABORATE</div>
+        <h2 class="section-title">
+          Initialize Contact. <span class="gradient-text">Let's Build Something Exceptional.</span>
+        </h2>
+        <p class="section-desc">
+          Whether you need enterprise RPA workflow automation, a scalable full-stack web application, or custom FiveM server development, let's discuss your project goals.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+
+        <!-- Left Column: Direct Coordinates -->
+        <div class="contact-info-card">
+          <h3 class="contact-info-title">Direct Channels</h3>
+          <p class="contact-info-desc">
+            Feel free to reach out directly via email, connect on professional networks, or schedule a technical consultation.
           </p>
-          <div class="actions" style="justify-content: center;">
-            <a class="btn" id="bottomCta" href="register.php">
-              Create Free Account →
+
+          <div class="contact-channel-list">
+            <!-- Email -->
+            <div class="contact-channel-item">
+              <div class="channel-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+              <div class="channel-meta">
+                <span class="channel-label">Email Address</span>
+                <span class="channel-val">basitha.fernando@example.com</span>
+              </div>
+              <button class="copy-badge-btn copy-email-btn" aria-label="Copy Email">Copy</button>
+            </div>
+
+            <!-- LinkedIn -->
+            <a class="contact-channel-item" href="https://www.linkedin.com/in/basitha-fernando/" target="_blank" rel="noopener noreferrer">
+              <div class="channel-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              </div>
+              <div class="channel-meta">
+                <span class="channel-label">Professional Network</span>
+                <span class="channel-val">linkedin.com/in/basitha-fernando</span>
+              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </a>
+
+            <!-- GitHub -->
+            <a class="contact-channel-item" href="https://github.com/BasithaFdo" target="_blank" rel="noopener noreferrer">
+              <div class="channel-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              </div>
+              <div class="channel-meta">
+                <span class="channel-label">Source Code Repositories</span>
+                <span class="channel-val">github.com/BasithaFdo</span>
+              </div>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+
+            <!-- Location -->
+            <div class="contact-channel-item">
+              <div class="channel-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div class="channel-meta">
+                <span class="channel-label">Base Location</span>
+                <span class="channel-val">Colombo, Sri Lanka (UTC +5:30) • Remote Worldwide</span>
+              </div>
+            </div>
           </div>
         </div>
+
+        <!-- Right Column: Interactive Contact Form -->
+        <div class="contact-form-card">
+          <form id="portfolioContactForm">
+            <div class="form-group-row">
+              <div class="form-group">
+                <label class="form-label" for="contactName">Your Name *</label>
+                <input type="text" class="form-input" id="contactName" placeholder="e.g. Alex Mercer" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="contactEmail">Your Email *</label>
+                <input type="email" class="form-input" id="contactEmail" placeholder="alex@company.com" required>
+              </div>
+            </div>
+
+            <div class="form-group-row">
+              <div class="form-group">
+                <label class="form-label" for="contactCategory">Project Domain</label>
+                <select class="form-select" id="contactCategory">
+                  <option value="Full-Stack Web Application">Full-Stack Web Development</option>
+                  <option value="Enterprise RPA & Automation">Enterprise RPA & Automation</option>
+                  <option value="FiveM Game Server Development">FiveM Game Server Development</option>
+                  <option value="Database & Architecture Consulting">Database & DevOps Consulting</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="contactSubject">Subject</label>
+                <input type="text" class="form-input" id="contactSubject" placeholder="e.g. Automation Architecture Project">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="contactMessage">Project Details & Requirements *</label>
+              <textarea class="form-textarea" id="contactMessage" placeholder="Describe your project scope, requirements, or technical goals..." required></textarea>
+            </div>
+
+            <button type="submit" class="cyber-btn cyber-btn-primary" style="width:100%;">
+              <span>Transmit Message</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </form>
+        </div>
+
       </div>
     </section>
+
   </main>
 
-  <!-- Modern Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <a class="logo" href="#">
-            <span class="logo-badge">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                <polyline points="2 17 12 22 22 17"></polyline>
-                <polyline points="2 12 12 17 22 12"></polyline>
-              </svg>
-            </span>
-            SkyLine<span>Hub</span>
-          </a>
-          <p>
-            A high-performance PHP 8 & MySQL starter portal engine built for security, speed, and modern developer ergonomics.
-          </p>
-        </div>
-
-        <div class="footer-links-group">
-          <div class="footer-col">
-            <h5>Product</h5>
-            <ul>
-              <li><a href="#features">Features</a></li>
-              <li><a href="#architecture">Architecture</a></li>
-              <li><a href="#security">Security</a></li>
-              <li><a href="#faq">FAQ</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-col">
-            <h5>Account</h5>
-            <ul>
-              <li><a href="login.php">Sign In</a></li>
-              <li><a href="register.php">Create Account</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-col">
-            <h5>Stack</h5>
-            <ul>
-              <li><span style="color:var(--muted)">Ubuntu Linux</span></li>
-              <li><span style="color:var(--muted)">Apache 2.4</span></li>
-              <li><span style="color:var(--muted)">PHP 8.1+</span></li>
-              <li><span style="color:var(--muted)">MySQL 8</span></li>
-            </ul>
-          </div>
-        </div>
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-copy">
+        © 2026 <span>Basitha Ninduwara Fernando</span>. All systems operational. Built with high-performance CSS & WebGL.
       </div>
 
-      <div class="footer-bottom">
-        <div>© 2026 SkyLine Hub. All rights reserved.</div>
-        <div class="status-indicator">
-          <span class="pulse-dot" style="width:6px;height:6px"></span>
-          <span>All Systems Operational</span>
-        </div>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <button class="hud-btn btn-open-terminal" style="font-size:0.75rem;">
+          Terminal [Ctrl+K]
+        </button>
+        <a class="footer-back-top" href="#hero">
+          <span>Back to Top</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
+        </a>
       </div>
     </div>
   </footer>
 
-  <!-- Interactive Scripts -->
+  <!-- =========================================================================
+       MODALS: ARCHITECTURE INSPECTOR, CV VIEWER, INTERACTIVE CLI TERMINAL
+       ========================================================================= -->
+
+  <!-- 1. Project Architecture Deep-Dive Modal -->
+  <div class="cyber-modal-backdrop" id="projectArchModal" role="dialog" aria-modal="true" aria-labelledby="modalProjectTitle">
+    <div class="cyber-modal-box">
+      <div class="cyber-modal-header">
+        <h3 class="modal-header-title" id="modalProjectTitle">System Architecture Breakdown</h3>
+        <button class="modal-close-btn" aria-label="Close modal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="cyber-modal-body" id="modalProjectBody">
+        <!-- Injected via portfolio.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Interactive CV / Resume Modal -->
+  <div class="cyber-modal-backdrop" id="cvModal" role="dialog" aria-modal="true" aria-labelledby="modalCvTitle">
+    <div class="cyber-modal-box" style="max-width: 900px;">
+      <div class="cyber-modal-header">
+        <h3 class="modal-header-title" id="modalCvTitle">Curriculum Vitae — Basitha Ninduwara Fernando</h3>
+        <div style="display:flex; gap:8px;">
+          <button class="hud-btn" onclick="window.print()" style="font-size:0.75rem;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Print / PDF
+          </button>
+          <button class="modal-close-btn" aria-label="Close modal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+      <div class="cyber-modal-body">
+        <div style="border-bottom:1px solid var(--border-subtle); padding-bottom:16px; margin-bottom:20px;">
+          <h2 style="font-family:var(--font-display); color:#fff; font-size:1.6rem; margin-bottom:4px;">BASITHA NINDUWARA FERNANDO</h2>
+          <div style="color:var(--cyan); font-family:var(--font-mono); font-size:0.85rem; margin-bottom:8px;">
+            Full-Stack Software Developer • RPA Automation Developer • FiveM Game Developer
+          </div>
+          <div style="color:var(--text-dim); font-size:0.82rem;">
+            Colombo, Sri Lanka • basitha.fernando@example.com • github.com/BasithaFdo • linkedin.com/in/basitha-fernando
+          </div>
+        </div>
+
+        <div style="margin-bottom:22px;">
+          <h4 style="font-family:var(--font-mono); color:var(--cyan); font-size:0.85rem; text-transform:uppercase; margin-bottom:8px;">// PROFESSIONAL SUMMARY</h4>
+          <p style="color:var(--text-muted); line-height:1.7;">
+            Versatile, results-driven software engineer with proven experience designing and deploying high-impact enterprise process automation (UiPath REFramework), production full-stack web applications (PHP, Laravel, MySQL), scalable database architectures, and high-tick multiplayer gaming infrastructure (FiveM Lua, Qbox/QBCore). Adept at diagnosing complex production bottlenecks and leading zero-downtime server deployments.
+          </p>
+        </div>
+
+        <div style="margin-bottom:22px;">
+          <h4 style="font-family:var(--font-mono); color:var(--cyan); font-size:0.85rem; text-transform:uppercase; margin-bottom:8px;">// CORE TECHNICAL COMPETENCIES</h4>
+          <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px; font-size:0.88rem;">
+            <div>
+              <strong style="color:#fff;">Full-Stack Web:</strong> PHP, Laravel, HTML5, CSS3, JavaScript, REST APIs, Security, MVC Architecture
+            </div>
+            <div>
+              <strong style="color:#fff;">RPA & Automation:</strong> UiPath Studio, Orchestrator, REFramework, Power Apps, API Automation
+            </div>
+            <div>
+              <strong style="color:#fff;">Database Systems:</strong> MySQL, Microsoft SQL Server, Stored Procedures, Query Tuning, Reporting
+            </div>
+            <div>
+              <strong style="color:#fff;">DevOps & Servers:</strong> Docker, Docker Compose, Linux, Ubuntu, Apache, Nginx, SSL, txAdmin
+            </div>
+            <div>
+              <strong style="color:#fff;">Gaming & Virtual Worlds:</strong> FiveM Server Dev, Lua Scripting, Qbox, QBCore, ox_lib, NUI Design
+            </div>
+            <div>
+              <strong style="color:#fff;">Tools & Testing:</strong> Postman, Git, GitHub, VS Code, JSON, API Performance Profiling
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:22px;">
+          <h4 style="font-family:var(--font-mono); color:var(--cyan); font-size:0.85rem; text-transform:uppercase; margin-bottom:8px;">// SELECTED PRODUCTION PROJECTS</h4>
+          <div style="margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; color:#fff; font-weight:600;">
+              <span>Enterprise RPA Automation Platform (UiPath)</span>
+              <span style="font-family:var(--font-mono); color:var(--emerald); font-size:0.8rem;">Production</span>
+            </div>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-top:2px;">
+              Designed unattended robot dispatcher & performer handling 45,000+ transactional queue items with 99.8% accuracy.
+            </p>
+          </div>
+          <div style="margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; color:#fff; font-weight:600;">
+              <span>PAKE FiveM Multiplayer Server (Lua & Qbox)</span>
+              <span style="font-family:var(--font-mono); color:var(--purple); font-size:0.8rem;">Live Operations</span>
+            </div>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-top:2px;">
+              Engineered proprietary game scripts, custom NUI CEF applications, and low-latency MariaDB pipelines at 64Hz tick rate.
+            </p>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; color:#fff; font-weight:600;">
+              <span>Dockerized Business Operations Platform (Laravel & Nginx)</span>
+              <span style="font-family:var(--font-mono); color:var(--cyan); font-size:0.8rem;">Deployed</span>
+            </div>
+            <p style="color:var(--text-muted); font-size:0.85rem; margin-top:2px;">
+              Implemented containerized PHP application hosting with isolated database volumes, automated Certbot SSL, and zero-downtime rolling updates.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Interactive CLI Terminal Modal -->
+  <div class="cyber-modal-backdrop" id="terminalModal" role="dialog" aria-modal="true" aria-labelledby="modalTerminalTitle">
+    <div class="cyber-modal-box" style="max-width: 780px;">
+      <div class="cyber-modal-header">
+        <div class="bootloader-dots">
+          <span class="bootloader-dot red"></span>
+          <span class="bootloader-dot yellow"></span>
+          <span class="bootloader-dot green"></span>
+        </div>
+        <h3 class="modal-header-title" id="modalTerminalTitle" style="font-family:var(--font-mono); font-size:0.9rem; color:var(--cyan);">
+          BASITHA_OS // INTERACTIVE DEVELOPER SHELL
+        </h3>
+        <button class="modal-close-btn" aria-label="Close modal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="cyber-modal-body" style="background:#02050c; padding:18px;">
+        <div id="modalTerminalOutput" style="font-family:var(--font-mono); font-size:0.82rem; line-height:1.7; min-height:240px; max-height:360px; overflow-y:auto;">
+          <div class="term-line">
+            <span class="term-ok">> BASITHA_OS v2.4 (x86_64-pc-cyber)</span>
+          </div>
+          <div class="term-line">
+            <span class="term-val">> Type <strong style="color:var(--cyan);">'help'</strong> to see available commands or <strong style="color:var(--purple);">'skills'</strong>, <strong style="color:var(--emerald);">'projects'</strong>, <strong style="color:var(--pink);">'matrix'</strong>.</span>
+          </div>
+        </div>
+
+        <div class="terminal-interactive-input" style="padding-left:0; margin-top:14px;">
+          <span class="term-prompt">$</span>
+          <input type="text" class="terminal-input-field" id="modalTerminalInput" placeholder="enter command..." autocomplete="off" spellcheck="false">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div id="cyber-toast" role="alert" aria-live="assertive"></div>
+
+  <!-- Three.js & GLTF Subsystems -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+
+  <!-- 3D R34 Animation & WebGL Viewer -->
   <script src="assets/r34_viewer.js"></script>
-  <script src="assets/landing.js"></script>
 
-  <!-- Static Preview Auth State Simulator -->
-  <script>
-    const toggleBtn = document.getElementById('toggleAuthBtn');
-    const userLabel = document.getElementById('userStateLabel');
-    const navLinks = document.getElementById('navLinks');
-    const primaryCta = document.getElementById('primaryCta');
-    const secondaryCta = document.getElementById('secondaryCta');
-    const bottomCta = document.getElementById('bottomCta');
-    let isLoggedIn = false;
+  <!-- Main Portfolio Interactive Engine -->
+  <script src="assets/portfolio.js"></script>
 
-    toggleBtn.addEventListener('click', () => {
-      isLoggedIn = !isLoggedIn;
-      if (isLoggedIn) {
-        userLabel.textContent = 'Admin (Logged In)';
-        userLabel.style.color = '#34d399';
-        navLinks.innerHTML = `
-          <a class="btn small" href="dashboard_preview.html">Dashboard (Admin)</a>
-          <button class="ghost" onclick="toggleBtn.click()">Logout</button>
-        `;
-        primaryCta.innerHTML = `
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14"></path>
-            <path d="m12 5 7 7-7 7"></path>
-          </svg>
-          Open Your Cloud Drive
-        `;
-        primaryCta.href = 'dashboard_preview.html';
-        secondaryCta.style.display = 'none';
-        bottomCta.textContent = 'Go to Cloud Drive →';
-        bottomCta.href = 'dashboard_preview.html';
-      } else {
-        userLabel.textContent = 'Guest';
-        userLabel.style.color = '#38bdf8';
-        navLinks.innerHTML = `
-          <a class="ghost" href="login.php">Sign In</a>
-          <a class="btn small" href="register.php">Get Started →</a>
-        `;
-        primaryCta.innerHTML = `
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14"></path>
-            <path d="m12 5 7 7-7 7"></path>
-          </svg>
-          Deploy SkyLine Hub Free
-        `;
-        primaryCta.href = 'register.php';
-        secondaryCta.style.display = 'inline-flex';
-        bottomCta.textContent = 'Create Free Account →';
-        bottomCta.href = 'register.php';
-      }
-    });
-  </script>
 </body>
 </html>
