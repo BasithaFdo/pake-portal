@@ -1679,6 +1679,94 @@ if (is_file($cfgFile)) {
     </div>
   </div>
 
+  <!-- =============================================================================
+       CYBER AI CHATBOT WIDGET ("NEXUS-AI // BASITHA COPILOT")
+       ============================================================================= -->
+  <div class="cyber-chat-widget" id="cyberChatWidget">
+    <div class="chat-widget-teaser" id="chatWidgetTeaser" title="Click to chat with Basitha's AI Copilot">
+      <span style="font-size:1.1rem; line-height:1;">⚡</span>
+      <span>Chat with Nexus AI</span>
+    </div>
+    <button class="chat-widget-btn" id="chatWidgetBtn" aria-label="Open Nexus AI Copilot Chat" title="Open Nexus AI Copilot">
+      <div class="chat-beacon-dot"></div>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Chatbot Floating Window -->
+  <div class="cyber-chat-window" id="cyberChatWindow" role="dialog" aria-modal="true" aria-labelledby="chatBotTitle">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="chat-header-identity">
+        <div class="chat-avatar-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        <div class="chat-header-text">
+          <div class="chat-bot-name" id="chatBotTitle">
+            NEXUS AI <span style="font-size:0.65rem; padding:1px 5px; background:rgba(0,240,255,0.15); border:1px solid var(--cyan); border-radius:4px; color:var(--cyan); font-family:var(--font-mono);">COPILOT</span>
+          </div>
+          <div class="chat-bot-status">
+            <span class="live-dot" style="width:6px; height:6px;"></span>
+            Online // Knowledge Base Active
+          </div>
+        </div>
+      </div>
+      <div class="chat-header-controls">
+        <button class="chat-ctrl-btn" id="btnChatSound" title="Toggle Chat Sounds" aria-label="Toggle Sound">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+        <button class="chat-ctrl-btn" id="btnChatClear" title="Clear Chat History" aria-label="Clear Chat">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+        </button>
+        <button class="chat-ctrl-btn close" id="btnChatClose" title="Close Chat" aria-label="Close Chat">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Messages Container -->
+    <div class="chat-messages-container" id="chatMessagesContainer">
+      <!-- Populated dynamically by portfolio.js renderWelcomeMessage() -->
+    </div>
+
+    <!-- Quick Chips -->
+    <div class="chat-quick-chips">
+      <button class="chat-chip" data-query="Who is Basitha?">👤 About</button>
+      <button class="chat-chip" data-query="What skills do you have?">⚡ Skills</button>
+      <button class="chat-chip" data-query="Tell me about your FiveM development">🎮 FiveM</button>
+      <button class="chat-chip" data-query="How do you build RPA automation with UiPath?">🤖 UiPath RPA</button>
+      <button class="chat-chip" data-query="Show me your web development projects">📁 Projects</button>
+      <button class="chat-chip" data-query="How can I hire Basitha?">💼 Hire Me</button>
+      <button class="chat-chip" data-query="Purge the Skyline NOS boost!">🚀 NOS Boost</button>
+    </div>
+
+    <!-- Input Bar -->
+    <div class="chat-input-bar">
+      <input type="text" class="chat-input-field" id="chatInputField" placeholder="Ask Nexus AI anything about Basitha..." autocomplete="off" spellcheck="false">
+      <button class="chat-send-btn" id="chatSendBtn" aria-label="Send Message" title="Send (Enter)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+  </div>
+
   <!-- Toast Notification System -->
   <div id="cyber-toast" role="alert" aria-live="assertive"></div>
 

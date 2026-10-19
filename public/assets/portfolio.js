@@ -33,6 +33,7 @@
     initRpaSimulator();
     initContactForm();
     initModalsAndShortcuts();
+    initCyberChatbot();
   });
 
   /* =============================================================================
@@ -1045,6 +1046,410 @@
       "'": '&#39;',
       '"': '&quot;'
     }[tag] || tag));
+  }
+
+  /* =============================================================================
+   * 15. CYBER AI CHATBOT ENGINE ("NEXUS-AI // BASITHA COPILOT")
+   * ============================================================================= */
+  function initCyberChatbot() {
+    const chatWidget = document.getElementById('cyberChatWidget');
+    const chatTeaser = document.getElementById('chatWidgetTeaser');
+    const chatBtn = document.getElementById('chatWidgetBtn');
+    const chatWindow = document.getElementById('cyberChatWindow');
+    const chatCloseBtn = document.getElementById('btnChatClose');
+    const chatClearBtn = document.getElementById('btnChatClear');
+    const chatSoundBtn = document.getElementById('btnChatSound');
+    const chatMessages = document.getElementById('chatMessagesContainer');
+    const chatInput = document.getElementById('chatInputField');
+    const chatSendBtn = document.getElementById('chatSendBtn');
+    const chatChips = document.querySelectorAll('.chat-chip');
+
+    if (!chatWindow || !chatMessages || !chatInput) return;
+
+    let chatSoundActive = true;
+
+    // Toggle Chat Window
+    function toggleChat(open) {
+      const isOpen = open !== undefined ? open : !chatWindow.classList.contains('open');
+      if (isOpen) {
+        chatWindow.classList.add('open');
+        playAudio('modal');
+        setTimeout(() => chatInput.focus(), 150);
+      } else {
+        chatWindow.classList.remove('open');
+        playAudio('click');
+      }
+    }
+
+    if (chatBtn) chatBtn.addEventListener('click', () => toggleChat());
+    if (chatTeaser) chatTeaser.addEventListener('click', () => toggleChat(true));
+    if (chatCloseBtn) chatCloseBtn.addEventListener('click', () => toggleChat(false));
+
+    // Sound toggle
+    if (chatSoundBtn) {
+      chatSoundBtn.addEventListener('click', () => {
+        chatSoundActive = !chatSoundActive;
+        chatSoundBtn.style.color = chatSoundActive ? 'var(--cyan)' : 'var(--text-dim)';
+        showToast(chatSoundActive ? 'Chat Audio: ENABLED' : 'Chat Audio: MUTED');
+      });
+    }
+
+    // Clear Conversation
+    if (chatClearBtn) {
+      chatClearBtn.addEventListener('click', () => {
+        chatMessages.innerHTML = '';
+        renderWelcomeMessage();
+        playAudio('click');
+        showToast('Chat history cleared');
+      });
+    }
+
+    // Quick suggestion chips
+    chatChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const query = chip.getAttribute('data-query') || chip.textContent.trim();
+        chatInput.value = query;
+        handleUserSend();
+      });
+    });
+
+    // Send on button click or Enter key
+    if (chatSendBtn) {
+      chatSendBtn.addEventListener('click', handleUserSend);
+    }
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleUserSend();
+      }
+    });
+
+    // Delegate Action Buttons clicked inside Chatbot messages
+    chatMessages.addEventListener('click', (e) => {
+      const target = e.target.closest('.chat-action-btn');
+      if (!target) return;
+      const action = target.getAttribute('data-action');
+      handleChatAction(action);
+    });
+
+    function handleChatAction(action) {
+      playAudio('click');
+      switch (action) {
+        case 'projects':
+          scrollToSection('projects');
+          showToast('Navigating to Featured Projects...');
+          break;
+        case 'fivem':
+          scrollToSection('fivem');
+          showToast('Navigating to FiveM Showcase...');
+          break;
+        case 'skills':
+          scrollToSection('skills');
+          showToast('Navigating to Technical Skills...');
+          break;
+        case 'automation':
+          scrollToSection('automation');
+          showToast('Navigating to Automation & RPA Pipeline...');
+          break;
+        case 'contact':
+          scrollToSection('contact');
+          showToast('Navigating to Contact Section...');
+          break;
+        case 'cv':
+          openCvModal();
+          break;
+        case 'email':
+          navigator.clipboard.writeText('basitha.fernando@example.com').then(() => {
+            showToast('Email copied! Opening mail client...');
+            setTimeout(() => {
+              window.location.href = 'mailto:basitha.fernando@example.com?subject=Project%20Inquiry%20via%20Portfolio';
+            }, 500);
+          });
+          break;
+        case 'nos':
+          if (window.triggerNosBoost) {
+            window.triggerNosBoost();
+            showToast('Twin-Turbo Nitrous Oxide Purge Engaged! 🚀');
+          }
+          break;
+        case 'rpasim':
+          scrollToSection('automation');
+          const runBtn = document.getElementById('btnRunRpaSim');
+          if (runBtn) {
+            setTimeout(() => runBtn.click(), 600);
+          }
+          break;
+      }
+    }
+
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        // Close on mobile
+        if (window.innerWidth < 640) {
+          toggleChat(false);
+        }
+      }
+    }
+
+    function handleUserSend() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      appendMessage('user', text);
+      chatInput.value = '';
+      if (chatSoundActive) playAudio('click');
+
+      // Show typing indicator
+      const typingEl = showTypingIndicator();
+
+      // Simulate thoughtful response delay
+      const responseDelay = Math.min(Math.max(text.length * 15, 450), 900);
+      setTimeout(() => {
+        if (typingEl && typingEl.parentNode) {
+          typingEl.parentNode.removeChild(typingEl);
+        }
+        const reply = generateAiResponse(text);
+        appendMessage('bot', reply.text, reply.actions);
+        if (chatSoundActive) playAudio('success');
+      }, responseDelay);
+    }
+
+    function appendMessage(sender, content, actions = []) {
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `chat-msg ${sender}`;
+
+      let actionsHtml = '';
+      if (actions && actions.length > 0) {
+        actionsHtml = `
+          <div class="chat-action-tray">
+            ${actions.map(a => `<button class="chat-action-btn" data-action="${a.action}">${a.label}</button>`).join('')}
+          </div>
+        `;
+      }
+
+      msgDiv.innerHTML = `
+        <div class="chat-bubble">
+          <div>${content}</div>
+          ${actionsHtml}
+          <div class="chat-msg-time">${timeStr}</div>
+        </div>
+      `;
+
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+      const div = document.createElement('div');
+      div.className = 'chat-msg bot';
+      div.innerHTML = `
+        <div class="chat-typing-indicator">
+          <div class="chat-typing-dot"></div>
+          <div class="chat-typing-dot"></div>
+          <div class="chat-typing-dot"></div>
+        </div>
+      `;
+      chatMessages.appendChild(div);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      return div;
+    }
+
+    function renderWelcomeMessage() {
+      appendMessage('bot', `
+        <strong>Greetings! I am Nexus AI</strong>, Basitha Ninduwara Fernando's interactive portfolio copilot. 
+        <br><br>
+        I have full access to his verified technical architecture across <strong>Full-Stack Web Development</strong>, <strong>Enterprise RPA Automation (UiPath)</strong>, and <strong>FiveM Game Server Architecture</strong>.
+        <br><br>
+        How can I assist you with your project today?
+      `, [
+        { label: '💼 View Skills', action: 'skills' },
+        { label: '📁 Featured Projects', action: 'projects' },
+        { label: '🎮 FiveM Worlds', action: 'fivem' },
+        { label: '🤖 RPA Pipeline', action: 'automation' },
+        { label: '📄 Open CV', action: 'cv' },
+        { label: '✉️ Contact Basitha', action: 'contact' }
+      ]);
+    }
+
+    // Knowledge Base Decision Engine
+    function generateAiResponse(rawQuery) {
+      const q = rawQuery.toLowerCase();
+
+      // 1. Identity & Overview
+      if (q.includes('who are you') || q.includes('who is basitha') || q.includes('about basitha') || q.includes('what do you do') || q.includes('hello') || q.includes('hi') || q.includes('hey')) {
+        return {
+          text: `<strong>Basitha Ninduwara Fernando</strong> is a multi-disciplinary software engineer specializing in three high-impact disciplines:<br><br>
+          • <strong>Full-Stack Web Platforms</strong> (PHP 8.2, Laravel, MySQL, REST APIs)<br>
+          • <strong>Intelligent Enterprise Automation</strong> (UiPath Studio, Orchestrator, REFramework, Unattended Bots)<br>
+          • <strong>FiveM Multiplayer Game Systems</strong> (Lua 5.4, Qbox/QBCore, ox_lib, Custom NUI)<br><br>
+          He is based in <strong>Colombo, Sri Lanka</strong> and works with clients and enterprises globally.`,
+          actions: [
+            { label: '📁 Explore Projects', action: 'projects' },
+            { label: '📄 View CV', action: 'cv' },
+            { label: '✉️ Get in Touch', action: 'contact' }
+          ]
+        };
+      }
+
+      // 2. Technical Skills & Stack
+      if (q.includes('skill') || q.includes('stack') || q.includes('technolog') || q.includes('language') || q.includes('tools')) {
+        return {
+          text: `Basitha's <strong>technical arsenal</strong> includes:<br><br>
+          • <strong>Backend & Web:</strong> PHP 8.2, Laravel, REST API Architecture, HTML5, CSS3, JavaScript, Web Security & CSRF hardening.<br>
+          • <strong>Database Systems:</strong> MySQL, Microsoft SQL Server, Stored Procedures, Index Tuning, Partitioning.<br>
+          • <strong>RPA Automation:</strong> UiPath Studio, Orchestrator, REFramework, Power Apps, API Automation, Unattended Bots.<br>
+          • <strong>Gaming & FiveM:</strong> Lua 5.4, Qbox Framework, QBCore, ox_lib, ox_inventory, Custom NUI (CEF), txAdmin.<br>
+          • <strong>DevOps:</strong> Docker, Docker Compose, Linux, Ubuntu Server, Nginx, Apache, SSL / Certbot.`,
+          actions: [
+            { label: '⚡ Jump to Skills Section', action: 'skills' },
+            { label: '📄 Inspect Resume', action: 'cv' }
+          ]
+        };
+      }
+
+      // 3. Full-Stack Web Development
+      if (q.includes('full stack') || q.includes('fullstack') || q.includes('php') || q.includes('laravel') || q.includes('web dev') || q.includes('backend') || q.includes('frontend') || q.includes('api') || q.includes('mysql') || q.includes('sql server') || q.includes('database')) {
+        return {
+          text: `In <strong>Full-Stack Development</strong>, Basitha engineers robust business software:<br><br>
+          • <strong>MVC & API Architecture:</strong> Strict separation of concerns in PHP/Laravel with parameterized Eloquent ORM, secure authentication, and rate-limited REST endpoints.<br>
+          • <strong>Database Optimization:</strong> Sub-40ms query execution in MySQL and Microsoft SQL Server utilizing stored procedures, foreign key indexing, and optimized transaction boundaries.<br>
+          • <strong>Security First:</strong> Hardened against SQL Injection, CSRF, and XSS vulnerabilities.`,
+          actions: [
+            { label: '📁 View Full-Stack Project', action: 'projects' },
+            { label: '✉️ Inquire for Web Development', action: 'contact' }
+          ]
+        };
+      }
+
+      // 4. RPA & UiPath Automation
+      if (q.includes('rpa') || q.includes('uipath') || q.includes('automation') || q.includes('orchestrator') || q.includes('reframework') || q.includes('bot') || q.includes('robot') || q.includes('power app') || q.includes('unattended')) {
+        return {
+          text: `In <strong>Robotic Process Automation (RPA)</strong>, Basitha specializes in enterprise-grade software robots:<br><br>
+          • <strong>UiPath REFramework:</strong> State-machine architecture enforcing clean separation between System Exceptions (auto-retry with exponential backoff) and Business Exceptions.<br>
+          • <strong>Transactional Queues:</strong> Scalable Dispatcher & Performer models distributing items across robot clusters with 99.8% transactional accuracy.<br>
+          • <strong>Legacy & Cloud Integration:</strong> Automating desktop Win32 applications, ERPs (SAP), web portals, and SQL audit tables.<br>
+          • <strong>Proven Metric:</strong> Over 45,000+ queue items processed, saving 18+ hours per week in repetitive overhead!`,
+          actions: [
+            { label: '🤖 Explore RPA Pipeline', action: 'automation' },
+            { label: '⚡ Run Live Robot Simulation', action: 'rpasim' }
+          ]
+        };
+      }
+
+      // 5. FiveM / GTA V Game Development
+      if (q.includes('fivem') || q.includes('gta') || q.includes('gaming') || q.includes('lua') || q.includes('pake') || q.includes('qbox') || q.includes('qbcore') || q.includes('ox_lib') || q.includes('ox_inventory') || q.includes('nui') || q.includes('server')) {
+        return {
+          text: `Basitha is a renowned <strong>FiveM Game Server Developer</strong> and lead architect of the <strong>PAKE FiveM Server</strong>:<br><br>
+          • <strong>High-Performance Framework:</strong> Engineered with Qbox / QBCore hybrid core and ox_lib running at <strong>64Hz tick rate</strong> with sub-0.03ms client resmon.<br>
+          • <strong>Custom NUI Systems:</strong> Responsive, hardware-accelerated interfaces (dealership catalogs, banking tablets, dynamic HUDs) rendered at 60 FPS in CEF.<br>
+          • <strong>Full Server Infrastructure:</strong> MariaDB async database pooling, custom MLO map collision tuning, custom vehicles, txAdmin automation, and DDoS protection.`,
+          actions: [
+            { label: '🎮 View FiveM Showcase', action: 'fivem' },
+            { label: '🚀 Test 3D Skyline NOS Boost', action: 'nos' }
+          ]
+        };
+      }
+
+      // 6. Featured Projects
+      if (q.includes('project') || q.includes('work') || q.includes('portfolio') || q.includes('showcase') || q.includes('built') || q.includes('case study')) {
+        return {
+          text: `Basitha has engineered <strong>7 featured production platforms</strong> on this website:<br><br>
+          1. <strong>Enterprise RPA Automation Platform</strong> (UiPath REFramework & Orchestrator)<br>
+          2. <strong>Full-Stack Business Web Application</strong> (PHP 8.2, Laravel, MySQL 8)<br>
+          3. <strong>Dockerized Web Application Deployment</strong> (Docker Compose, Nginx, SSL)<br>
+          4. <strong>Automation Monitoring Dashboard</strong> (UiPath REST API & Live Metrics)<br>
+          5. <strong>PAKE FiveM Gaming Server</strong> (Lua 5.4, Qbox, ox_lib, 64Hz)<br>
+          6. <strong>FiveM Custom Admin Dashboard</strong> (Staff Portal & Discord OAuth2)<br>
+          7. <strong>Custom FiveM NUI Systems</strong> (In-game 60 FPS CEF interfaces)<br><br>
+          Click below to inspect full system architecture diagrams for each project!`,
+          actions: [
+            { label: '📁 Jump to Projects Grid', action: 'projects' },
+            { label: '📄 Open Resume', action: 'cv' }
+          ]
+        };
+      }
+
+      // 7. CV / Resume
+      if (q.includes('cv') || q.includes('resume') || q.includes('download cv') || q.includes('pdf') || q.includes('experience')) {
+        return {
+          text: `You can review Basitha Ninduwara Fernando's complete <strong>Curriculum Vitae</strong> directly inside the portfolio! It includes all employment history, verified core competencies, project metrics, and technical proficiencies.<br><br>
+          You can also print or export it directly to PDF.`,
+          actions: [
+            { label: '📄 Open Interactive CV Viewer', action: 'cv' },
+            { label: '✉️ Request Full Dossier', action: 'contact' }
+          ]
+        };
+      }
+
+      // 8. Contact & Hire
+      if (q.includes('hire') || q.includes('contact') || q.includes('email') || q.includes('available') || q.includes('rate') || q.includes('freelance') || q.includes('cost') || q.includes('quote') || q.includes('location') || q.includes('sri lanka')) {
+        return {
+          text: `Basitha is currently <strong>ONLINE & AVAILABLE</strong> for enterprise contract engagements, RPA automation consultation, full-stack web builds, and FiveM game server architecture!<br><br>
+          • <strong>Location:</strong> Colombo, Sri Lanka (UTC +5:30) • Works seamlessly with global remote teams.<br>
+          • <strong>Email:</strong> <code>basitha.fernando@example.com</code><br>
+          • <strong>GitHub:</strong> <a href="https://github.com/BasithaFdo" target="_blank" style="color:var(--cyan);">github.com/BasithaFdo</a><br>
+          • <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/basitha-fernando/" target="_blank" style="color:var(--cyan);">linkedin.com/in/basitha-fernando</a>`,
+          actions: [
+            { label: '✉️ Jump to Contact Form', action: 'contact' },
+            { label: '📋 Copy Email & Dispatch', action: 'email' }
+          ]
+        };
+      }
+
+      // 9. Easter Eggs
+      if (q.includes('nos') || q.includes('car') || q.includes('skyline') || q.includes('r34') || q.includes('boost') || q.includes('drift')) {
+        if (window.triggerNosBoost) window.triggerNosBoost();
+        return {
+          text: `🚀 <strong>Nitrous Oxide (NOS) purge initiated!</strong> Twin-turbocharged RB26DETT spooled up with procedural blow-off valve flutter! Check out the 3D Skyline canvas in the FiveM section.`,
+          actions: [
+            { label: '🎮 View 3D R34 Skyline', action: 'fivem' },
+            { label: '🚀 Purge NOS Again', action: 'nos' }
+          ]
+        };
+      }
+
+      if (q.includes('matrix')) {
+        triggerMatrixEffect();
+        return {
+          text: `🕶️ <em>"Wake up, Neo... The Matrix has you. Follow the white rabbit."</em><br><br>Matrix protocol visual overlay active!`,
+          actions: [
+            { label: '💻 Open Terminal [Ctrl+K]', action: 'projects' }
+          ]
+        };
+      }
+
+      if (q.includes('joke')) {
+        return {
+          text: `😄 <strong>Developer Humor:</strong><br><br>
+          • Why do programmers always prefer dark mode?<br>
+          <em>Because light attracts bugs!</em><br><br>
+          • There are 10 types of people in the world: those who understand binary, and those who don't.`,
+          actions: [
+            { label: '💼 View Real Skills', action: 'skills' }
+          ]
+        };
+      }
+
+      // Default Fallback
+      return {
+        text: `I am trained on all technical aspects of <strong>Basitha Ninduwara Fernando's</strong> engineering portfolio.<br><br>
+        Feel free to ask me about his <strong>Full-Stack web expertise</strong>, <strong>UiPath RPA automation</strong>, <strong>FiveM GTA V game server engineering</strong>, <strong>specific project architectures</strong>, or <strong>how to hire him</strong> for your project!`,
+        actions: [
+          { label: '💼 Technical Stack', action: 'skills' },
+          { label: '📁 Featured Projects', action: 'projects' },
+          { label: '🎮 FiveM Worlds', action: 'fivem' },
+          { label: '🤖 RPA Pipeline', action: 'automation' },
+          { label: '📄 View CV', action: 'cv' },
+          { label: '✉️ Contact Basitha', action: 'contact' }
+        ]
+      };
+    }
+
+    // Initial greeting
+    renderWelcomeMessage();
   }
 
   // Expose global helpers
